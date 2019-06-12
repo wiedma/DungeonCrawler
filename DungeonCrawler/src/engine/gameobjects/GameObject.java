@@ -24,6 +24,7 @@ abstract public class GameObject {
 	 */
 	private Animator animator; //TODO
 	
+	
 	/**
 	 * Z-position for rendering. Objects are rendered in ascending z-position order.
 	 */

@@ -27,20 +27,20 @@ public class Engine {
 	public static void startMainLoop() {
 		(new Thread() {
 			public void run() {
-				boolean pause;
+				boolean paused;
 				
 				while(true) {
 					
 					// --MAIN LOOP
 					
-					pause = GUIManager.shouldPause();
-					if(!pause) {
+					paused = GUIManager.shouldPause();
+					if(!paused) {
 						for(GameObject gameObject : sceneActive.getGameObjects()) {
 							gameObject.update();
 						}
 					}
 					for(GameObject gameObject : sceneActive.getGameObjects()) {
-						gameObject.animationStep(pause, deltaTime);
+						gameObject.animationStep(paused, deltaTime);
 					}
 					//TODO rendern
 					
