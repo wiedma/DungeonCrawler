@@ -2,6 +2,7 @@ package engine;
 
 import engine.gameobjects.GameObject;
 import engine.gui.GUIManager;
+import engine.window.Window;
 
 /**
  * The main engine for the game. Incluedes game-loop and basic functionalities
@@ -19,12 +20,21 @@ public class Engine {
 	/**
 	 * Scene that is being displayed
 	 */
-	private static Scene sceneActive;
+	private static Scene sceneActive = new Scene();
+	
+	
+	private static Window window;
+	
+	public static void init() {
+		window = new Window();
+		
+		startMainLoop();
+	}
 	
 	/**
 	 * Starts the game on call
 	 */
-	public static void startMainLoop() {
+	private static void startMainLoop() {
 		(new Thread() {
 			public void run() {
 				boolean paused;
@@ -44,6 +54,7 @@ public class Engine {
 					}
 					
 					sceneActive.sortByRenderOrder();
+					
 					
 					//TODO rendern
 					
@@ -72,5 +83,9 @@ public class Engine {
 	 */
 	public static double deltaTime() {
 		return deltaTime;
+	}
+	
+	public static Scene getSceneActive() {
+		return sceneActive;
 	}
 }

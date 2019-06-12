@@ -19,21 +19,26 @@ public class Scene {
 	 * @return ArrayList of all GameObjects
 	 */
 	public ArrayList<GameObject> getGameObjects() {
-		//TODO: return all GameObjects
-		return null;
+		return gameObjects;
 	}
 	
+	/**
+	 * sortes GameObjects in ascending absolute Z Value. This order is maintained throughout this frame and used beyond.
+	 */
 	public void sortByRenderOrder() {
-		int gameObjectAmount = gameObjects.size();		
+		int gameObjectAmount = gameObjects.size();
 		GameObject cacheGameObject;
 		for(int i = 0; i < gameObjectAmount - 1; i++) {
-			
 			if(gameObjects.get(i).getZAbsolute() > gameObjects.get(i + 1).getZAbsolute()) {
 				cacheGameObject = gameObjects.get(i);
 				gameObjects.set(i, gameObjects.get(i + 1));
 				gameObjects.set(i + 1, cacheGameObject);
-				i -= 2;
+				i -= i == 0 ? 1 : 2;
 			}
 		}
+	}
+	
+	public void addGameObject(GameObject gameObject) {
+		this.gameObjects.add(gameObject);
 	}
 }

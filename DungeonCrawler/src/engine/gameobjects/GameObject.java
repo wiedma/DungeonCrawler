@@ -22,13 +22,13 @@ abstract public class GameObject {
 	/**
 	 * The animator of this GameObject
 	 */
-	private Animator animator; //TODO
+	protected Animator animator; //TODO
 	
 	
 	/**
 	 * Z-position for rendering. Objects are rendered in ascending z-position order. Will be added to Y Coordinate of this GameObject to get its absolute Z Value
 	 */
-	private double zPositionOffset = 0.5D;	//TODO use in sorting
+	protected double zPositionOffset = 0.5D;	//TODO use in sorting
 	
 	/**
 	 * Initialized this GameObject
