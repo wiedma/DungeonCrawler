@@ -26,7 +26,7 @@ abstract public class GameObject {
 	
 	
 	/**
-	 * Z-position for rendering. Objects are rendered in ascending z-position order.
+	 * Z-position for rendering. Objects are rendered in ascending z-position order. Will be added to Y Coordinate of this GameObject to get its absolute Z Value
 	 */
 	private double zPositionOffset = 0.5D;	//TODO use in sorting
 	
@@ -47,5 +47,12 @@ abstract public class GameObject {
 	 */
 	public void animationStep(boolean gamePaused, double deltaTime) {
 		animator.update(gamePaused, deltaTime);
+	}
+	
+	/**
+	 * @return returns absolute z Value for render order. Position of this GameObject is factored in
+	 */
+	public double getZAbsolute() {
+		return this.y + this.zPositionOffset;
 	}
 }

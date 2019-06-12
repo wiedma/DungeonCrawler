@@ -42,6 +42,9 @@ public class Engine {
 					for(GameObject gameObject : sceneActive.getGameObjects()) {
 						gameObject.animationStep(paused, deltaTime);
 					}
+					
+					sceneActive.sortByRenderOrder();
+					
 					//TODO rendern
 					
 					//TODO delay and set deltaTime
