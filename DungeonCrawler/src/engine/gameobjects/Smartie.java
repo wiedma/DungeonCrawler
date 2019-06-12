@@ -1,5 +1,10 @@
 package engine.gameobjects;
 
-public class Smartie extends DynamicGameObject {
-
+/**
+ * Superclass of all GameObjects with an AI
+ * @author Marco, Daniel
+ *
+ */
+abstract public class Smartie extends DynamicGameObject {
+	//TODO: implement AI basics
 }
