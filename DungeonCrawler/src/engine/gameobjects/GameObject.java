@@ -13,7 +13,7 @@ abstract public class GameObject {
 	
 	private double zPositionOffset = 0.5D;	//TODO use in sorting
 	
-	abstract void start();
+	public abstract void start();
 	
-	abstract void update();	
+	public abstract void update();	
 }
