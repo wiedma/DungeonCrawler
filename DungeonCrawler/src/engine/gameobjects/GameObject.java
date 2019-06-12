@@ -2,6 +2,7 @@ package engine.gameobjects;
 
 import engine.animation.Animator;
 import engine.hitbox.Hitbox;
+import engine.sprites.Sprite;
 /**
  * Basic superclass for all Objects in a scene. Every object within this game must be a subclass of GameObject
  * @author Marco, Daniel
@@ -23,7 +24,6 @@ abstract public class GameObject {
 	 * The animator of this GameObject
 	 */
 	protected Animator animator; //TODO
-	
 	
 	/**
 	 * Z-position for rendering. Objects are rendered in ascending z-position order. Will be added to Y Coordinate of this GameObject to get its absolute Z Value
@@ -54,5 +54,9 @@ abstract public class GameObject {
 	 */
 	public double getZAbsolute() {
 		return this.y + this.zPositionOffset;
+	}
+	
+	public Sprite getCurrentSprite() {
+		return animator.getCurrentSprite();
 	}
 }

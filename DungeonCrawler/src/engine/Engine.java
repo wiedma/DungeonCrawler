@@ -55,8 +55,8 @@ public class Engine {
 					
 					sceneActive.sortByRenderOrder();
 					
-					
 					//TODO rendern
+					window.repaint();
 					
 					//TODO delay and set deltaTime
 					
