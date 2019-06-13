@@ -20,7 +20,7 @@ public class SpriteLoader {
 			return spritesheets.get(sheetFile.getAbsolutePath());
 		}
 		
-		Spritesheet sheet = Spritesheet.loadSpritesheetFromFile(sheetFile);
+		Spritesheet sheet = new Spritesheet(sheetFile);
 		spritesheets.put(sheetFile.getAbsolutePath(), sheet);
 		return sheet;
 	}

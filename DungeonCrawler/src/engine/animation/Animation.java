@@ -3,6 +3,7 @@ package engine.animation;
 import engine.sprites.Sprite;
 import engine.sprites.SpriteLoader;
 import engine.sprites.Spritesheet;
+import engine.window.DrawComp;
 
 /**
  * Contains any relevant info on an animation
@@ -20,6 +21,11 @@ public class Animation {
 	 * Index of the first sprite of this animation in the spritesheet
 	 */
 	private int startIndex;
+	
+	/**
+	 * 
+	 */
+	private int startRow;
 	
 	/**
 	 * Number of sprites this animation contains
@@ -57,9 +63,10 @@ public class Animation {
 	 */
 	private Spritesheet spritesheet;
 	
-	public Animation(String name, int startIndex, int length, double delayBetweenSprites, boolean canBePaused, String pathToSpritesheet, String animationAfterThis) {
+	public Animation(String name, int startIndex, int startRow, int length, double delayBetweenSprites, boolean canBePaused, String pathToSpritesheet, String animationAfterThis) {
 		this.name = name;
 		this.startIndex = startIndex;
+		this.startRow = startRow;
 		this.currentIndex = startIndex;
 		this.length = length;
 		this.delayBetweenSprites = delayBetweenSprites;
@@ -109,9 +116,16 @@ public class Animation {
 		return canBePaused;
 	}
 	
+	/**
+	 * @return returns the current sprite. If it is isnt conform with the given spriteScale ({@link DrawComp#getSpriteScale()}), the spritesheet will reload the file and rescale itself
+	 */
 	public Sprite getCurrentSprite() {
+		if(DrawComp.getSpriteScale() != this.spritesheet.getSpriteScale()) {
+			this.spritesheet.reload();
+		}
 		//TODO: return sprite which is currently being displayed
-		return null;
+		
+		return spritesheet.getSpriteMatrix()[this.startIndex + this.currentIndex][this.startRow];		
 	}
 	
 	/**
