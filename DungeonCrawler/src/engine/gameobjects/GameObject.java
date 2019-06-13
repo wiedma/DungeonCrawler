@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import engine.animation.Animation;
 import engine.hitbox.Hitbox;
+import engine.sprites.Sprite;
 /**
  * Basic superclass for all Objects in a scene. Every object within this game must be a subclass of GameObject
  * @author Marco, Daniel
@@ -66,17 +67,6 @@ abstract public class GameObject {
 	public abstract void update();	
 	
 	/**
-	 * @return returns absolute z Value for render order. Position of this GameObject is factored in
-	 */
-	public double getZAbsolute() {
-		return this.y + this.zPositionOffset;
-	}
-	
-	public Image getCurrentSpriteImage() {
-		return currentAnimation.getSprite(currentSpriteIndex).getImage();
-	}
-	
-	/**
 	 * Checks if the sprite is to be changed and does so
 	 * @param gamePaused true, if game is currently paused
 	 * @param deltaTime time since last frame update
@@ -120,5 +110,32 @@ abstract public class GameObject {
 			return true;
 		}
 		return false;
+	}
+	
+	////////////////////////
+	//////////////////////// GETTERS
+	////////////////////////
+	
+	/**
+	 * @return returns absolute z Value for render order. Position of this GameObject is factored in
+	 */
+	public double getZAbsolute() {
+		return this.y + this.zPositionOffset;
+	}
+	
+	public Sprite getCurrentSprite() {
+		return currentAnimation.getSprite(currentSpriteIndex);
+	}
+	
+	public Image getCurrentImage() {
+		return getCurrentSprite().getImage();
+	}
+	
+	public double getX() {
+		return this.x;
+	}
+	
+	public double getY() {
+		return this.y;
 	}
 }

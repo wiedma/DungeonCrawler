@@ -3,7 +3,6 @@ package engine;
 import engine.gameobjects.GameObject;
 import engine.gui.GUIManager;
 import engine.window.Window;
-import junittests.JUnitTestGameObject;
 
 /**
  * The main engine for the game. Incluedes game-loop and basic functionalities
@@ -12,18 +11,6 @@ import junittests.JUnitTestGameObject;
  */
 public class Engine {
 	//TODO
-	
-	public static void main(String[] args) {
-		Engine.init();
-		
-		//add GameObjects to scene
-		Scene scene = new Scene();
-		
-		for(int i = 0; i < 50; i++)
-			scene.addGameObject(new JUnitTestGameObject(Math.random()));
-		
-		Engine.loadScene(scene);
-	}
 	
 	/**
 	 * real time since last frame-update

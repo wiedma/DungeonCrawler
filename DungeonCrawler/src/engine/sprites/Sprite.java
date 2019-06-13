@@ -63,4 +63,12 @@ public class Sprite {
 			return (this.image = spritesheet.extractSprite(x, y, width, height));
 		}
 	}
+	
+	public int getWidth() {
+		return this.width;
+	}
+	
+	public int getHeight() {
+		return this.height;
+	}
 }

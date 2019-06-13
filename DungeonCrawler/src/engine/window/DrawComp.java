@@ -8,6 +8,7 @@ import javax.swing.JComponent;
 import engine.Engine;
 import engine.Scene;
 import engine.gameobjects.GameObject;
+import engine.sprites.Sprite;
 
 public class DrawComp extends JComponent {
 	
@@ -20,10 +21,23 @@ public class DrawComp extends JComponent {
 	
 	@Override
 	public void paintComponent(Graphics g) {
+		
+		double pxPerTile = spriteScale * SPRITE_SIZE_PX_ORIGINAL;
+		
+		Sprite sprite;
 		Image img;
 		Scene scene = Engine.getSceneActive();
 		for(GameObject gameObject : scene.getGameObjects()) {
-			img = gameObject.getCurrentSpriteImage();
+			sprite = gameObject.getCurrentSprite();
+			img = sprite.getImage();
+			
+			g.drawImage(img,
+					(int) (   (gameObject.getX() - (sprite.getWidth()/2d)) * pxPerTile   ),
+					(int) (   (gameObject.getY() - (sprite.getHeight()/2d)) * pxPerTile   ),
+					(int)     (sprite.getWidth() * pxPerTile),
+					(int)     (sprite.getHeight() * pxPerTile),
+					null
+			);
 			//TODO draw Sprite on relative position			
 		}
 	}
