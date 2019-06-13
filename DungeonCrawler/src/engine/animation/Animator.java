@@ -34,10 +34,14 @@ public class Animator {
 		currentAnimation.setTimeUntilNextSprite(currentAnimation.getTimeUntilNextSprite() - deltaTime);
 		//If the counter reaches zero
 		if(currentAnimation.getTimeUntilNextSprite() <= 0) {
-			//update animation
-			currentAnimation.next();
 			//new counter = old counter + delay
 			currentAnimation.setTimeUntilNextSprite(currentAnimation.getTimeUntilNextSprite() + currentAnimation.getDelayBetweenSprites());
+			
+			//update animation, if it finished, check if the Animator should switch to another Animation
+			if(currentAnimation.next() && currentAnimation.shouldSwitchToOtherAnimationOnFinish()) {
+				//switch Animation
+				this.setCurrentAnimation(currentAnimation.getAnimationAfterThis());
+			}
 		}
 	}
 	
