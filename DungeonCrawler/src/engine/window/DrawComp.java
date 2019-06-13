@@ -23,7 +23,7 @@ public class DrawComp extends JComponent {
 		Image img;
 		Scene scene = Engine.getSceneActive();
 		for(GameObject gameObject : scene.getGameObjects()) {
-			img = gameObject.getCurrentSpriteImage(spriteScale);
+			img = gameObject.getCurrentSpriteImage();
 			//TODO draw Sprite on relative position			
 		}
 	}

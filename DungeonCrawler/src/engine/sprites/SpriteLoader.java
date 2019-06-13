@@ -16,12 +16,14 @@ public class SpriteLoader {
 	
 	public static Spritesheet request(String pathToSpritesheet) {
 		File sheetFile = new File(pathToSpritesheet);
-		if(spritesheets.containsKey(sheetFile.getAbsolutePath())) {
-			return spritesheets.get(sheetFile.getAbsolutePath());
+		String  absolutePath = sheetFile.getAbsolutePath();
+		
+		if(spritesheets.containsKey(absolutePath)) {
+			return spritesheets.get(absolutePath);
 		}
 		
 		Spritesheet sheet = new Spritesheet(sheetFile);
-		spritesheets.put(sheetFile.getAbsolutePath(), sheet);
+		spritesheets.put(absolutePath, sheet);
 		return sheet;
 	}
 }

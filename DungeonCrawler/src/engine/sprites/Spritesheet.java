@@ -1,7 +1,11 @@
 package engine.sprites;
 
 import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
 import java.io.File;
 import java.io.IOException;
 
@@ -12,62 +16,64 @@ import engine.window.DrawComp;
 public class Spritesheet {
 	
 	/**
-	 * a matrix of Sprites as depicted in the SpriteSheet Image File.
-	 * <br> [xDimension][yDimension]
-	 */
-	private Sprite[][] spritesheet;
-	
-	/**
-	 * the spriteScale that these sprite have<br>
+	 * the spriteScale of {@link Spritesheet#imageScaled}<br>
 	 * see {@linkplain DrawComp#getSpriteScale()} for further reference
 	 */
 	private double spriteScale;
 	
+	/**
+	 * the path of this spritesheets File
+	 */
 	private String sheetFilePath;
+	
+	/**
+	 * the scaled version of the entire spritesheet, basically the spritesheet file but scaled up
+	 */
+	private BufferedImage imageScaled;
 	
 	public Spritesheet(File sheetFile) {
 		this.sheetFilePath = sheetFile.getAbsolutePath();
-//		loadSpritesheetFromFile(sheetFile);
+		loadSpritesheetFromFile(sheetFile);
 	}
 	
 	/**
 	 * loads the given spritesheet file into a matrix of Sprites, each one scaled up to the spriteScale {@link DrawComp#getSpriteSizeScaled()}
 	 * @param sheetFile path to the file the spritesheet should be loaded from
 	 */
-	//TODO: Daniel schaut sich's dann mal an hat er gesagt
-//	private void loadSpritesheetFromFile(File sheetFile) {
-//		this.spriteScale = DrawComp.getSpriteScale();
-//		int spriteSizeOriginal = DrawComp.SPRITE_SIZE_PX_ORIGINAL;
-//		
-//		try {
-//			BufferedImage img = ImageIO.read(sheetFile);
-//			
-//			spritesheet = new Sprite[(int) (img.getWidth()/spriteSizeOriginal)][(int) (img.getHeight()/spriteSizeOriginal)];
-//			
-//			for(int x = 0; x < spritesheet.length; x++) {
-//				for(int y = 0; y < spritesheet[x].length; y++) {					
-//					spritesheet[x][y] = new Sprite(							
-//							img.getSubimage(x*spriteSizeOriginal, y*spriteSizeOriginal, spriteSizeOriginal, spriteSizeOriginal).getScaledInstance((int) (spriteSizeOriginal * this.spriteScale), (int) (spriteSizeOriginal * this.spriteScale), Image.SCALE_DEFAULT)
-//					);
-//				}	
-//			}
-//		} catch(IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
-	
-	public Sprite[][] getSpriteMatrix(){
-		return this.spritesheet;
+	private void loadSpritesheetFromFile(File sheetFile) {
+		
+		this.spriteScale = DrawComp.getSpriteScale();
+		
+		try {
+			BufferedImage imageUnscaled = ImageIO.read(sheetFile);
+			
+			//scale this picture, and at the same time get a BufferedImage out of it			
+			BufferedImageOp op = new AffineTransformOp(
+					AffineTransform.getScaleInstance(spriteScale, spriteScale),
+					new RenderingHints(RenderingHints.KEY_INTERPOLATION,
+							RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR
+					)
+			);
+			this.imageScaled = op.filter(imageUnscaled, null);
+			
+//			this.imageScaled = ((ToolkitImage) imageUnscaled.getScaledInstance((int) (imageUnscaled.getWidth(null) * this.spriteScale), (int) (imageUnscaled.getHeight(null) * this.spriteScale), Image.SCALE_DEFAULT)).getBufferedImage();			
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	/**
-	 * this will reload the entire spritesheet and scale all sprites with the spriteScale given at {@link DrawComp#getSpriteScale()}}
-	 */
-	public void reload() {
-//		this.loadSpritesheetFromFile(new File(this.sheetFilePath));
+	public Image extractSprite(int xTiles, int yTiles, int widthTiles, int heightTiles) {
+		checkScale();
+		
+		int imageScaledSize = (int) (DrawComp.SPRITE_SIZE_PX_ORIGINAL * DrawComp.getSpriteScale());
+					
+		return this.imageScaled.getSubimage(xTiles * imageScaledSize, yTiles * imageScaledSize, widthTiles * imageScaledSize, heightTiles * imageScaledSize);
 	}
 	
-	public double getSpriteScale() {
-		return this.spriteScale;
+	public void checkScale() {
+		if(this.spriteScale == DrawComp.getSpriteScale())
+			return;
+		
+		this.loadSpritesheetFromFile(new File(this.sheetFilePath));
 	}
 }

@@ -2,6 +2,8 @@ package engine.sprites;
 
 import java.awt.Image;
 
+import engine.window.DrawComp;
+
 public class Sprite {
 	//TODO: implement Sprites
 	
@@ -47,22 +49,18 @@ public class Sprite {
 		this.spritesheet = SpriteLoader.request(sheetPath);
 	}
 	
-	public Image getImage(double scale) {
-		if(scale == currentScale) {
-			return this.image;			
-		}
-		else {
-			reload(scale);
-			return this.image;
-		}
-	}
-	
 	/**
-	 * Reloads the image to match the new scale
-	 * @param scale new scale of the image
+	 * getter function to retrieve the image encapsulated by this Sprite Object
+	 * <br> if the given scale {@link DrawComp#getSpriteScale()} does not coincide with the scale of this Sprite (or image), the Sprite Object will gently ask the {@link Spritesheet} to extract a new image from itself (which will then be of correct scale)
+	 * @param scale
+	 * @return
 	 */
-	public void reload(double scale) {
-		//TODO: reload the image to match the new scale
+	public Image getImage() {
+		if(DrawComp.getSpriteScale() == currentScale) {
+			return this.image;
+		} else {
+			//extract image from spritesheet
+			return (this.image = spritesheet.extractSprite(x, y, width, height));
+		}
 	}
-	
 }

@@ -72,8 +72,8 @@ abstract public class GameObject {
 		return this.y + this.zPositionOffset;
 	}
 	
-	public Image getCurrentSpriteImage(double scale) {
-		return currentAnimation.getSprite(currentSpriteIndex).getImage(scale);
+	public Image getCurrentSpriteImage() {
+		return currentAnimation.getSprite(currentSpriteIndex).getImage();
 	}
 	
 	/**
