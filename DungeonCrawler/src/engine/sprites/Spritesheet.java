@@ -41,7 +41,7 @@ public class Spritesheet {
 		try {
 			BufferedImage img = ImageIO.read(sheetFile);
 			
-			spritesheet = new Sprite[(int) (img.getWidth()/DrawComp.SPRITE_SIZE_PX_ORIGINAL)][(int) (img.getHeight()/DrawComp.SPRITE_SIZE_PX_ORIGINAL)];
+			spritesheet = new Sprite[(int) (img.getWidth()/spriteSizeOriginal)][(int) (img.getHeight()/spriteSizeOriginal)];
 			
 			for(int x = 0; x < spritesheet.length; x++) {
 				for(int y = 0; y < spritesheet[x].length; y++) {					
