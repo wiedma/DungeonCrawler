@@ -27,33 +27,34 @@ public class Spritesheet {
 	
 	public Spritesheet(File sheetFile) {
 		this.sheetFilePath = sheetFile.getAbsolutePath();
-		loadSpritesheetFromFile(sheetFile);
+//		loadSpritesheetFromFile(sheetFile);
 	}
 	
 	/**
 	 * loads the given spritesheet file into a matrix of Sprites, each one scaled up to the spriteScale {@link DrawComp#getSpriteSizeScaled()}
-	 * @param sheetFile
+	 * @param sheetFile path to the file the spritesheet should be loaded from
 	 */
-	private void loadSpritesheetFromFile(File sheetFile) {
-		this.spriteScale = DrawComp.getSpriteScale();
-		int spriteSizeOriginal = DrawComp.SPRITE_SIZE_PX_ORIGINAL;
-		
-		try {
-			BufferedImage img = ImageIO.read(sheetFile);
-			
-			spritesheet = new Sprite[(int) (img.getWidth()/spriteSizeOriginal)][(int) (img.getHeight()/spriteSizeOriginal)];
-			
-			for(int x = 0; x < spritesheet.length; x++) {
-				for(int y = 0; y < spritesheet[x].length; y++) {					
-					spritesheet[x][y] = new Sprite(							
-							img.getSubimage(x*spriteSizeOriginal, y*spriteSizeOriginal, spriteSizeOriginal, spriteSizeOriginal).getScaledInstance((int) (spriteSizeOriginal * this.spriteScale), (int) (spriteSizeOriginal * this.spriteScale), Image.SCALE_DEFAULT)
-					);
-				}	
-			}
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-	}
+	//TODO: Daniel schaut sich's dann mal an hat er gesagt
+//	private void loadSpritesheetFromFile(File sheetFile) {
+//		this.spriteScale = DrawComp.getSpriteScale();
+//		int spriteSizeOriginal = DrawComp.SPRITE_SIZE_PX_ORIGINAL;
+//		
+//		try {
+//			BufferedImage img = ImageIO.read(sheetFile);
+//			
+//			spritesheet = new Sprite[(int) (img.getWidth()/spriteSizeOriginal)][(int) (img.getHeight()/spriteSizeOriginal)];
+//			
+//			for(int x = 0; x < spritesheet.length; x++) {
+//				for(int y = 0; y < spritesheet[x].length; y++) {					
+//					spritesheet[x][y] = new Sprite(							
+//							img.getSubimage(x*spriteSizeOriginal, y*spriteSizeOriginal, spriteSizeOriginal, spriteSizeOriginal).getScaledInstance((int) (spriteSizeOriginal * this.spriteScale), (int) (spriteSizeOriginal * this.spriteScale), Image.SCALE_DEFAULT)
+//					);
+//				}	
+//			}
+//		} catch(IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public Sprite[][] getSpriteMatrix(){
 		return this.spritesheet;
@@ -63,7 +64,7 @@ public class Spritesheet {
 	 * this will reload the entire spritesheet and scale all sprites with the spriteScale given at {@link DrawComp#getSpriteScale()}}
 	 */
 	public void reload() {
-		this.loadSpritesheetFromFile(new File(this.sheetFilePath));
+//		this.loadSpritesheetFromFile(new File(this.sheetFilePath));
 	}
 	
 	public double getSpriteScale() {

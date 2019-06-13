@@ -6,5 +6,8 @@ package engine.gameobjects;
  *
  */
 abstract public class DynamicGameObject extends GameObject {
+	public DynamicGameObject() {
+		super(0, 0, null, null, null);
+	}
 	//TODO: implement speeds
 }

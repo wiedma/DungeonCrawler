@@ -1,13 +1,13 @@
 package engine.window;
 
 import java.awt.Graphics;
+import java.awt.Image;
 
 import javax.swing.JComponent;
 
 import engine.Engine;
 import engine.Scene;
 import engine.gameobjects.GameObject;
-import engine.sprites.Sprite;
 
 public class DrawComp extends JComponent {
 	
@@ -20,10 +20,10 @@ public class DrawComp extends JComponent {
 	
 	@Override
 	public void paintComponent(Graphics g) {
-		Sprite s;
+		Image img;
 		Scene scene = Engine.getSceneActive();
 		for(GameObject gameObject : scene.getGameObjects()) {
-			s = gameObject.getCurrentSprite();
+			img = gameObject.getCurrentSpriteImage(spriteScale);
 			//TODO draw Sprite on relative position			
 		}
 	}
