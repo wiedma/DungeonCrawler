@@ -12,38 +12,57 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
+import javax.swing.JSplitPane;
 import javax.swing.Timer;
 
 import engine.gameobjects.GameObject;
 import engine.sprites.Sprite;
 import engine.window.DrawComp;
 
-public class LeveleditorDrawCompObjects extends JComponent implements ComponentListener, MouseListener {
-	
+/**
+ * <p>This class is a JComponent that is added to the main Leveleditor. Its purpose is to show the user a pallet of {@link GameObject GameObjects} as specified in <it>Leveleditor.fillObjectChooser(..)</it>.
+ * It is seperated from the main Scenes' DrawComp through a {@link JSplitPane}. While the user drags that SplitPanes Split Element, this Component will ensure that all objects
+ * are visible to the user at all times in a nicely way. By setting {@link LeveleditorDrawCompObjects#setContinuousResort(boolean) setContinuousResort(boolean)} to false, this component will only process the
+ * heavy sorting algorithm after the user finishes the resizing process. This ensures lower CPU cost. For further reference, see the arguments documentation as linked above.</p>
+ * @author Marco, Daniel
+ */
+public class LeveleditorDrawCompObjects extends JComponent implements ComponentListener, MouseListener {	
+	private static final long serialVersionUID = 6730035525378342464L;
+
 	/**
 	 * ArrayList containing all GameObjects displayed in this GameObjectChooser. Their positions will be treated as their top-left position, their width in the chooser will be their sprite's width
 	 */
 	private ArrayList<GameObject> gameObjectsSorted;
 	
+	/**
+	 * specifes how many Tiles / Sprites fit into this component horizontally at this moment
+	 */
 	private int widthTiles;
 		
 	/**
-	 * this specifies if, while this component is being resized, the Objects in the GameObjectChooser should be resorted continuously or only once after the resort is finished
+	 * <p>this specifies if, while this component is being resized, the Objects in the GameObjectChooser should be resorted continuously or only once after the resort is finished.
+	 * Setting this to false lowers the CPU-Load during resizing</p>
 	 */
 	private boolean continuousResort = true;
 	
 	/**
-	 * <p>this is only used, when {@link LeveleditorDrawCompObjects#continuousResort} is equal to false.</p>
-	 * <p>this timer will be activated whenever the user resizes this component. The timer will be reset any time the user continues to throw a Resized Event at this component<br>
-	 * If the timer finishes, the user must have finished resizing the component and all GameObjects can be resorted to fit nicely into the GameObjectChooser</p>
+	 * <p>this is only used, when {@link LeveleditorDrawCompObjects#continuousResort continuousResort} is equal to false, meaning continuous resort is deactivated</p>
+	 * <p>this timer will be started whenever the user resizes this component. The timer will be reset any time this component gets resized.<br>
+	 * If the timer finishes, the user must have finished resizing the component and all GameObjects can be resorted to fit nicely into the GameObjectChooser, because if
+	 * the timer was still running, the user is still in the means of resizing it</p>
 	 * <p>(only doing this after the user finished resizing ensures a lag-free resizing process, without having to resort all GameObjects hundreds of times during the process)</p> 
 	 */
 	private Timer timerResort;
 	
-	private int mousePosXLastFrame = -1, mousePosYLastFrame = -1;
-	private GameObject mouseHoverGameObject;
+	/**
+	 * the {@link GameObject} that is currently being hovered over by the user/mouse
+	 */
+	private GameObject mouseHoverGameObject;	
 	private final Color colorObjectChooserHover = new Color(1f, 0f, 0f, 0.3f);
 	
+	/**
+	 * the most recent {@link GameObject} that the user has selected(clicked on)
+	 */
 	private GameObject selectedGameObject;
 	private final Color colorSelectedGameObject = new Color(1f, 0f, 0f);
 	
@@ -98,12 +117,20 @@ public class LeveleditorDrawCompObjects extends JComponent implements ComponentL
 		}
 	}
 	
+	/**
+	 * Adds and sorts any number GameObjects into this ObjectChoosers list of sorted GameObjects and places it somewhere it fits
+	 * @param gameObjects The GameObjects to sort in
+	 */
 	public void addGameObjects(GameObject... gameObjects) {
 		for(GameObject gameObject : gameObjects) {
 			sortObject(gameObject);
 		}
 	}
 	
+	/**
+	 * sorts a GameObject into this ObjectChoosers list of sorted GameObjects and places it somewhere it fits 
+	 * @param gameObject The GameObject to sort in
+	 */
 	private void sortObject(GameObject gameObject) {
 		boolean collision;
 		for(int y = 0; ; y++) {
@@ -157,6 +184,10 @@ public class LeveleditorDrawCompObjects extends JComponent implements ComponentL
 			resortAll();
 	}
 	
+	/**
+	 * Takes all GameObjects out of the {@link LeveleditorDrawCompObjects#gameObjectsSorted} (gameObjectsSorted ArrayList) and resorts them back in.
+	 * This will be called after this component finished it's resizing (for further reference see:{@link LeveleditorDrawCompObjects#continuousResort})
+	 */
 	private void resortAll() {
 		//cache all gameObjects
 		GameObject[] gameObjectsSortedOLD = gameObjectsSorted.toArray(new GameObject[0]);
@@ -168,12 +199,24 @@ public class LeveleditorDrawCompObjects extends JComponent implements ComponentL
 	}
 	
 	/**
-	 * called every frame, checks if mouse is hovering over this component. If it is, it gets the Objects the mouse is hovering on and stores it in //TODO (link variable)
+	 * cache variable: If the current mouse position coincides with this position (and it's y component) the currently being hovered over {@link LeveleditorDrawCompObjects#mouseHoverGameObject} (GameObject) 
+	 * doesn't need to be recalculated again
+	 */
+	private int mousePosXLastFrame = -1;
+	/**
+	 * cache variable: If the current mouse position coincides with this position (and it's x component) the currently being hovered over {@link LeveleditorDrawCompObjects#mouseHoverGameObject} (GameObject) 
+	 * doesn't need to be recalculated again
+	 */
+	private int mousePosYLastFrame = -1;
+	/**
+	 * called every frame, checks if mouse is hovering over this component. If it is, it gets the Objects the mouse is hovering on and stores it in {@link LeveleditorDrawCompObjects#mouseHoverGameObject}
 	 */
 	public void processMouseHover() {
 		Point mousePos = this.getMousePosition();
-		if(mousePos == null)
+		if(mousePos == null) {
+			this.mouseHoverGameObject = null;
 			return;
+		}
 		
 		//check if the mouse didn't move at all
 		if(mousePos.x == this.mousePosXLastFrame && mousePos.y == this.mousePosYLastFrame) {
@@ -185,6 +228,10 @@ public class LeveleditorDrawCompObjects extends JComponent implements ComponentL
 		}
 	}
 	
+	/**
+	 * @param posPx The mouse position relative to this component in pixel
+	 * @return returns the GameObject the Mouse is hovering over, or null
+	 */
 	private GameObject getGameObjectAtPosPx(Point posPx) {
 		double pxPerTile = getPxPerTile();
 		
@@ -232,10 +279,6 @@ public class LeveleditorDrawCompObjects extends JComponent implements ComponentL
 	public void componentShown(ComponentEvent e) {}
 
 	public void componentHidden(ComponentEvent e) {}
-	
-	private double getPxPerTile() {
-		return DrawComp.getSpriteScale() * DrawComp.SPRITE_SIZE_PX_ORIGINAL; 
-	}
 
 	public void mouseClicked(MouseEvent e) {
 		this.selectedGameObject = getGameObjectAtPosPx(e.getPoint());
@@ -248,4 +291,22 @@ public class LeveleditorDrawCompObjects extends JComponent implements ComponentL
 	public void mouseEntered(MouseEvent e) {}
 
 	public void mouseExited(MouseEvent e) {}
+	
+	/////////////////
+	///////////////// SETTERS
+	/////////////////
+	
+	public void setContinuousResort(boolean continuousResort) {
+		this.continuousResort = continuousResort;
+	}	
+	
+	/////////////////	
+	///////////////// GETTERS
+	/////////////////
+	
+	private double getPxPerTile() {
+		return DrawComp.getSpriteScale() * DrawComp.SPRITE_SIZE_PX_ORIGINAL; 
+	}
+	
+	
 }

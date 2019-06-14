@@ -17,8 +17,14 @@ public class Leveleditor extends JFrame {
 		new Leveleditor();
 	}
 	
-	
+	/**
+	 * <p>The DrawComp that will draw the Scene in its current state</p>
+	 */
 	private LeveleditorDrawCompScene dcScene;
+	/**
+	 * <p>The DrawComp that enable the user to choose from a pallete of different GameObjects to place in the Scene.
+	 * To add GameObjects to this list see {@link Leveleditor#fillObjectChooser(LeveleditorDrawCompObjects) fillObjectChooser(..)} for further reference</p>
+	 */
 	private LeveleditorDrawCompObjects dcObjects;
 	
 	public Leveleditor() {
@@ -75,6 +81,9 @@ public class Leveleditor extends JFrame {
 		});
 	}
 	
+	/**
+	 * starts the Leveleditos 'Main-Loop' asynchronously
+	 */
 	private void startLoopThread() {
 		(new Thread() {
 			public void run() {
