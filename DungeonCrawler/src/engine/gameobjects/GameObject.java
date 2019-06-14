@@ -138,4 +138,16 @@ abstract public class GameObject {
 	public double getY() {
 		return this.y;
 	}
+	
+	////////////////////////
+	//////////////////////// SETTERS
+	////////////////////////
+	
+	public void setX(double x) {
+		this.x = x;
+	}
+	
+	public void setY(double y) {
+		this.y = y;
+	}
 }
