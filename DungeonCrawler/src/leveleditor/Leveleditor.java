@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import engine.Scene;
 import engine.gameobjects.GameObject;
 import engine.window.KeyRegister;
 import junittests.JUnitTestGameObject;
@@ -50,19 +51,20 @@ public class Leveleditor extends JFrame {
 	 */
 	private LeveleditorObjectChooser dcObjects;
 	
+	private Scene sceneActive;
+	
 	public Leveleditor() {
+		//create empty scene
+		this.sceneActive = new Scene();
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
-		this.addKeyListener(KeyRegister.getKeyRegister());
-		
-		
+		this.addKeyListener(KeyRegister.getKeyRegister());		
 		this.initJFrameStructure();
-		
-		
-		this.startLoopThread();
-		
 		this.pack();
 		this.setLocationRelativeTo(null);
-		this.setVisible(true);
+		this.setVisible(true);	
+		
+		this.startLoopThread();
 	}
 	
 	private void initJFrameStructure() {
@@ -122,6 +124,8 @@ public class Leveleditor extends JFrame {
 					dcScene.processMouseHover();
 					dcObjects.processMouseHover();
 					
+					sceneActive.sortByRenderOrder();
+					
 					dcScene.repaint();
 					dcObjects.repaint();
 					
@@ -139,5 +143,9 @@ public class Leveleditor extends JFrame {
 	
 	public GameObject getSelectedObject() {
 		return this.dcObjects.getSelectedObject();
+	}
+	
+	public Scene getSceneActive() {
+		return this.sceneActive;
 	}
 }

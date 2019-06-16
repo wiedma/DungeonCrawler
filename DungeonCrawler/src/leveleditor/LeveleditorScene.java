@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import javax.swing.JComponent;
 
-import engine.Engine;
 import engine.Scene;
 import engine.gameobjects.GameObject;
 import engine.sprites.Sprite;
@@ -41,7 +40,7 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 	@Override
 	public void paintComponent(Graphics g) {		
 		
-		Scene scene = Engine.getSceneActive();
+		Scene scene = this.leveleditor.getSceneActive();
 		double pxPerTile = spriteScale * DrawComp.SPRITE_SIZE_PX_ORIGINAL;
 		
 		
@@ -94,7 +93,7 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 				//check if there is already a GameObject at the same Position (hold CONTROL to circumvent that)
 				boolean collision = false;
 				if(!cacheKeyRegister.isKeyDown(KeyEvent.VK_CONTROL)) {
-					ArrayList<GameObject> gameObjects = Engine.getSceneActive().getGameObjects();
+					ArrayList<GameObject> gameObjects = this.leveleditor.getSceneActive().getGameObjects();
 					for(GameObject gameObjectScene : gameObjects) {
 						if(gameObjectScene.getX() == x && gameObjectScene.getY() == y) {
 							collision = true;
@@ -108,8 +107,8 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 					gameObjectNew.setX(x); //TODO Camera position miteinberechnen
 					gameObjectNew.setY(y); //TODO Camera position miteinberechnen
 					
-					Engine.getSceneActive().addGameObject(gameObjectNew);
-					System.out.println("placed");
+					this.leveleditor.getSceneActive().addGameObject(gameObjectNew);
+//					System.out.println("placed");
 				}
 			}
 		}
