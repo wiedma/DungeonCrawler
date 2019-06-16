@@ -26,7 +26,7 @@ public class Leveleditor extends JFrame {
 	/**
 	 * <p>The DrawComp that will draw the Scene in its current state</p>
 	 */
-	private LeveleditorDrawCompScene dcScene;
+	private LeveleditorScene dcScene;
 	/**
 	 * <p>The DrawComp that enable the user to choose from a pallete of different GameObjects to place in the Scene.
 	 * To add GameObjects to this list see {@link Leveleditor#fillObjectChooser(LeveleditorObjectChooser) fillObjectChooser(..)} for further reference</p>
@@ -49,17 +49,18 @@ public class Leveleditor extends JFrame {
 		
 		JSplitPane splitMain = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		splitMain.setContinuousLayout(true);
-			//------PANEL SCENE
-			dcScene = new LeveleditorDrawCompScene();
-			dcScene.setPreferredSize(new Dimension(500, 500));
-			dcScene.setBackground(Color.GREEN);
-			splitMain.setLeftComponent(dcScene);
 			
 			//------PANEL Object Chooser
 			dcObjects = new LeveleditorObjectChooser(5);
 			dcObjects.setPreferredSize(new Dimension(160, 0));
 			this.fillObjectChooser(dcObjects);
 			splitMain.setRightComponent(dcObjects);
+			
+			//------PANEL SCENE
+			dcScene = new LeveleditorScene(dcObjects);
+			dcScene.setPreferredSize(new Dimension(500, 500));
+			dcScene.setBackground(Color.GREEN);
+			splitMain.setLeftComponent(dcScene);
 
 		this.add(splitMain, BorderLayout.CENTER);
 		
