@@ -13,6 +13,11 @@ import engine.sprites.Sprite;
 public class DrawComp extends JComponent {
 	
 	/**
+	 * SerialVersionUID
+	 */
+	private static final long serialVersionUID = 8610317593291514579L;
+	
+	/**
 	 * states the 'zoom level' of sprites that are currently being displayed<br>
 	 * if the sprite on the screen is double its actual size in the spritesheet file, the value of this would be 2
 	 */	
@@ -29,7 +34,7 @@ public class DrawComp extends JComponent {
 		Scene scene = Engine.getSceneActive();
 		for(GameObject gameObject : scene.getGameObjects()) {
 			sprite = gameObject.getCurrentSprite();
-			img = sprite.getImage();
+			img = sprite.getImage(spriteScale);
 			
 			g.drawImage(img,
 					(int) (   (gameObject.getX() - (sprite.getWidth()/2d)) * pxPerTile   ),
@@ -40,12 +45,5 @@ public class DrawComp extends JComponent {
 			);
 			//TODO draw Sprite on relative position			
 		}
-	}
-	
-	/**
-	 * see {@link DrawComp#spriteScale} for further reference 
-	 */
-	public static double getSpriteScale() {
-		return DrawComp.spriteScale;
 	}
 }

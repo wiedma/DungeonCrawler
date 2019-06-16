@@ -22,11 +22,11 @@ import engine.window.DrawComp;
 /**
  * <p>This class is a JComponent that is added to the main Leveleditor. Its purpose is to show the user a pallet of {@link GameObject GameObjects} as specified in <it>Leveleditor.fillObjectChooser(..)</it>.
  * It is seperated from the main Scenes' DrawComp through a {@link JSplitPane}. While the user drags that SplitPanes Split Element, this Component will ensure that all objects
- * are visible to the user at all times in a nicely way. By setting {@link LeveleditorDrawCompObjects#setContinuousResort(boolean) setContinuousResort(boolean)} to false, this component will only process the
+ * are visible to the user at all times in a neat way. By setting {@link LeveleditorObjectChooser#setContinuousResort(boolean) setContinuousResort(boolean)} to false, this component will only process the
  * heavy sorting algorithm after the user finishes the resizing process. This ensures lower CPU cost. For further reference, see the arguments documentation as linked above.</p>
  * @author Marco, Daniel
  */
-public class LeveleditorDrawCompObjects extends JComponent implements ComponentListener, MouseListener {	
+public class LeveleditorObjectChooser extends JComponent implements ComponentListener, MouseListener {	
 	private static final long serialVersionUID = 6730035525378342464L;
 
 	/**
@@ -46,7 +46,7 @@ public class LeveleditorDrawCompObjects extends JComponent implements ComponentL
 	private boolean continuousResort = true;
 	
 	/**
-	 * <p>this is only used, when {@link LeveleditorDrawCompObjects#continuousResort continuousResort} is equal to false, meaning continuous resort is deactivated</p>
+	 * <p>this is only used, when {@link LeveleditorObjectChooser#continuousResort continuousResort} is equal to false, meaning continuous resort is deactivated</p>
 	 * <p>this timer will be started whenever the user resizes this component. The timer will be reset any time this component gets resized.<br>
 	 * If the timer finishes, the user must have finished resizing the component and all GameObjects can be resorted to fit nicely into the GameObjectChooser, because if
 	 * the timer was still running, the user is still in the means of resizing it</p>
@@ -66,7 +66,13 @@ public class LeveleditorDrawCompObjects extends JComponent implements ComponentL
 	private GameObject selectedGameObject;
 	private final Color colorSelectedGameObject = new Color(1f, 0f, 0f);
 	
-	public LeveleditorDrawCompObjects(int widthTiles) {
+	/**
+	 * The scale with which the {@link GameObject objects} in the ObjectChooser are drawn
+	 */
+	private double drawScale = 2;
+	
+	
+	public LeveleditorObjectChooser(int widthTiles) {
 		this.gameObjectsSorted = new ArrayList<GameObject>();
 		this.widthTiles = widthTiles;
 		
@@ -81,7 +87,7 @@ public class LeveleditorDrawCompObjects extends JComponent implements ComponentL
 		for(GameObject gameObject : gameObjectsSorted) {
 			sprite = gameObject.getCurrentSprite();
 			g.drawImage(
-					sprite.getImage(),
+					sprite.getImage(drawScale),
 					(int)	(gameObject.getX() * pxPerTile),
 					(int)	(gameObject.getY() * pxPerTile),
 					(int)   (sprite.getWidth() * pxPerTile),
@@ -178,15 +184,15 @@ public class LeveleditorDrawCompObjects extends JComponent implements ComponentL
 	
 	private void updateWidthTiles(boolean resortAfterThis) {
 		
-		this.widthTiles = Math.max(1, (int) (this.getWidth() / (DrawComp.getSpriteScale() * DrawComp.SPRITE_SIZE_PX_ORIGINAL)));
+		this.widthTiles = Math.max(1, (int) (this.getWidth() / (drawScale * DrawComp.SPRITE_SIZE_PX_ORIGINAL)));
 		
 		if(resortAfterThis)
 			resortAll();
 	}
 	
 	/**
-	 * Takes all GameObjects out of the {@link LeveleditorDrawCompObjects#gameObjectsSorted} (gameObjectsSorted ArrayList) and resorts them back in.
-	 * This will be called after this component finished it's resizing (for further reference see:{@link LeveleditorDrawCompObjects#continuousResort})
+	 * Takes all GameObjects out of the {@link LeveleditorObjectChooser#gameObjectsSorted} (gameObjectsSorted ArrayList) and resorts them back in.
+	 * This will be called after this component finished it's resizing (for further reference see:{@link LeveleditorObjectChooser#continuousResort})
 	 */
 	private void resortAll() {
 		//cache all gameObjects
@@ -199,17 +205,17 @@ public class LeveleditorDrawCompObjects extends JComponent implements ComponentL
 	}
 	
 	/**
-	 * cache variable: If the current mouse position coincides with this position (and it's y component) the currently being hovered over {@link LeveleditorDrawCompObjects#mouseHoverGameObject} (GameObject) 
+	 * cache variable: If the current mouse position coincides with this position (and it's y component) the currently being hovered over {@link LeveleditorObjectChooser#mouseHoverGameObject} (GameObject) 
 	 * doesn't need to be recalculated again
 	 */
 	private int mousePosXLastFrame = -1;
 	/**
-	 * cache variable: If the current mouse position coincides with this position (and it's x component) the currently being hovered over {@link LeveleditorDrawCompObjects#mouseHoverGameObject} (GameObject) 
+	 * cache variable: If the current mouse position coincides with this position (and it's x component) the currently being hovered over {@link LeveleditorObjectChooser#mouseHoverGameObject} (GameObject) 
 	 * doesn't need to be recalculated again
 	 */
 	private int mousePosYLastFrame = -1;
 	/**
-	 * called every frame, checks if mouse is hovering over this component. If it is, it gets the Objects the mouse is hovering on and stores it in {@link LeveleditorDrawCompObjects#mouseHoverGameObject}
+	 * called every frame, checks if mouse is hovering over this component. If it is, it gets the Objects the mouse is hovering on and stores it in {@link LeveleditorObjectChooser#mouseHoverGameObject}
 	 */
 	public void processMouseHover() {
 		Point mousePos = this.getMousePosition();
@@ -305,7 +311,7 @@ public class LeveleditorDrawCompObjects extends JComponent implements ComponentL
 	/////////////////
 	
 	private double getPxPerTile() {
-		return DrawComp.getSpriteScale() * DrawComp.SPRITE_SIZE_PX_ORIGINAL; 
+		return drawScale * DrawComp.SPRITE_SIZE_PX_ORIGINAL; 
 	}
 	
 	

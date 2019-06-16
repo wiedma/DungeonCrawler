@@ -6,6 +6,10 @@ import javax.swing.JFrame;
 
 public class Window extends JFrame {
 	
+	/**
+	 * SerialVersionUID
+	 */
+	private static final long serialVersionUID = -1918528334655033909L;
 	private DrawComp drawComp;
 	
 	public Window() {

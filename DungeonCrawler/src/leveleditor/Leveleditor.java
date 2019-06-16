@@ -23,9 +23,9 @@ public class Leveleditor extends JFrame {
 	private LeveleditorDrawCompScene dcScene;
 	/**
 	 * <p>The DrawComp that enable the user to choose from a pallete of different GameObjects to place in the Scene.
-	 * To add GameObjects to this list see {@link Leveleditor#fillObjectChooser(LeveleditorDrawCompObjects) fillObjectChooser(..)} for further reference</p>
+	 * To add GameObjects to this list see {@link Leveleditor#fillObjectChooser(LeveleditorObjectChooser) fillObjectChooser(..)} for further reference</p>
 	 */
-	private LeveleditorDrawCompObjects dcObjects;
+	private LeveleditorObjectChooser dcObjects;
 	
 	public Leveleditor() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,7 +50,7 @@ public class Leveleditor extends JFrame {
 			splitMain.setLeftComponent(dcScene);
 			
 			//------PANEL Object Chooser
-			dcObjects = new LeveleditorDrawCompObjects(5);
+			dcObjects = new LeveleditorObjectChooser(5);
 			dcObjects.setPreferredSize(new Dimension(160, 0));
 			this.fillObjectChooser(dcObjects);
 			splitMain.setRightComponent(dcObjects);
@@ -67,10 +67,10 @@ public class Leveleditor extends JFrame {
 	}
 	
 	/**
-	 * called during initialization of {@link LeveleditorDrawCompObjects}<br>
+	 * called during initialization of {@link LeveleditorObjectChooser}<br>
 	 * all GameObjects designated to be in the GameObjectChooser Panel should be added here
 	 */
-	private void fillObjectChooser(LeveleditorDrawCompObjects dcObjects) {
+	private void fillObjectChooser(LeveleditorObjectChooser dcObjects) {
 		dcObjects.addGameObjects(new GameObject[] {
 				new JUnitTestGameObject(0),
 				new JUnitTestGameObject(0),

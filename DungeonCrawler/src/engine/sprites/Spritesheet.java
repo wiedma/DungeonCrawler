@@ -16,23 +16,23 @@ import engine.window.DrawComp;
 public class Spritesheet {
 	
 	/**
-	 * the spriteScale of {@link Spritesheet#imageScaled}<br>
+	 * the spriteScale of {@link Spritesheet#image}<br>
 	 * see {@linkplain DrawComp#getSpriteScale()} for further reference
 	 */
-	private double spriteScale;
+//	private double spriteScale;
 	
 	/**
 	 * the path of this spritesheets File
 	 */
-	private String sheetFilePath;
+//	private String sheetFilePath;
 	
 	/**
 	 * the scaled version of the entire spritesheet, basically the spritesheet file but scaled up
 	 */
-	private BufferedImage imageScaled;
+	private BufferedImage image;
 	
 	public Spritesheet(File sheetFile) {
-		this.sheetFilePath = sheetFile.getAbsolutePath();
+//		this.sheetFilePath = sheetFile.getAbsolutePath();
 		loadSpritesheetFromFile(sheetFile);
 	}
 	
@@ -42,38 +42,33 @@ public class Spritesheet {
 	 */
 	private void loadSpritesheetFromFile(File sheetFile) {
 		
-		this.spriteScale = DrawComp.getSpriteScale();
-		
 		try {
-			BufferedImage imageUnscaled = ImageIO.read(sheetFile);
+			this.image = ImageIO.read(sheetFile);
 			
-			//scale this picture, and at the same time get a BufferedImage out of it			
-			BufferedImageOp op = new AffineTransformOp(
-					AffineTransform.getScaleInstance(spriteScale, spriteScale),
-					new RenderingHints(RenderingHints.KEY_INTERPOLATION,
-							RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR
-					)
-			);
-			this.imageScaled = op.filter(imageUnscaled, null);
-			
-//			this.imageScaled = ((ToolkitImage) imageUnscaled.getScaledInstance((int) (imageUnscaled.getWidth(null) * this.spriteScale), (int) (imageUnscaled.getHeight(null) * this.spriteScale), Image.SCALE_DEFAULT)).getBufferedImage();			
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public Image extractSprite(int xTiles, int yTiles, int widthTiles, int heightTiles) {
-		checkScale();
+	public Image extractSprite(int xTiles, int yTiles, int widthTiles, int heightTiles, double scale) {
+//		checkScale(scale);
 		
-		int imageScaledSize = (int) (DrawComp.SPRITE_SIZE_PX_ORIGINAL * DrawComp.getSpriteScale());
+		//scale this picture, and at the same time get a BufferedImage out of it			
+		BufferedImageOp op = new AffineTransformOp(
+				AffineTransform.getScaleInstance(scale, scale),
+				new RenderingHints(RenderingHints.KEY_INTERPOLATION,
+						RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR
+				)
+		);
+		return op.filter(this.image.getSubimage(xTiles * DrawComp.SPRITE_SIZE_PX_ORIGINAL, yTiles * DrawComp.SPRITE_SIZE_PX_ORIGINAL,
+												widthTiles * DrawComp.SPRITE_SIZE_PX_ORIGINAL, heightTiles * DrawComp.SPRITE_SIZE_PX_ORIGINAL), null);
 					
-		return this.imageScaled.getSubimage(xTiles * imageScaledSize, yTiles * imageScaledSize, widthTiles * imageScaledSize, heightTiles * imageScaledSize);
 	}
 	
-	public void checkScale() {
-		if(this.spriteScale == DrawComp.getSpriteScale())
-			return;
-		
-		this.loadSpritesheetFromFile(new File(this.sheetFilePath));
-	}
+//	public void checkScale(double scale) {
+//		if(this.spriteScale == scale)
+//			return;
+//		
+//		this.loadSpritesheetFromFile(new File(this.sheetFilePath));
+//	}
 }

@@ -127,8 +127,8 @@ abstract public class GameObject {
 		return currentAnimation.getSprite(currentSpriteIndex);
 	}
 	
-	public Image getCurrentImage() {
-		return getCurrentSprite().getImage();
+	public Image getCurrentImage(double scale) {
+		return getCurrentSprite().getImage(scale);
 	}
 	
 	public double getX() {

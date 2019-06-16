@@ -55,12 +55,12 @@ public class Sprite {
 	 * @param scale
 	 * @return
 	 */
-	public Image getImage() {
-		if(DrawComp.getSpriteScale() == currentScale) {
+	public Image getImage(double scale) {
+		if(scale == currentScale) {
 			return this.image;
 		} else {
 			//extract image from spritesheet
-			return (this.image = spritesheet.extractSprite(x, y, width, height));
+			return (this.image = spritesheet.extractSprite(x, y, width, height, scale));
 		}
 	}
 	
