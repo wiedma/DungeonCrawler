@@ -17,6 +17,7 @@ public class Leveleditor extends JFrame {
 		new Leveleditor();
 	}
 	
+	
 	/**
 	 * <p>The DrawComp that will draw the Scene in its current state</p>
 	 */
