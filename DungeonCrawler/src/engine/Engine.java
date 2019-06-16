@@ -20,6 +20,11 @@ public class Engine {
 	 */
 	private static Scene sceneActive = new Scene();
 	
+	/**
+	 * Targeted frames per second
+	 */
+	private static double framerate = 60;
+	
 	
 	private static Window window;
 	
@@ -36,26 +41,45 @@ public class Engine {
 		(new Thread() {
 			public void run() {
 				boolean paused;
+				long time, duration, delay = 0;
 				
 				while(true) {
 					
 					// --MAIN LOOP
-					
+					//Get time
+					time = System.nanoTime();
+					//Get pause
 					paused = GUIManager.shouldPause();
+					//Call update if not paused
 					if(!paused) {
 						for(GameObject gameObject : sceneActive.getGameObjects()) {
 							gameObject.update();
 						}
 					}
+					//Animate GameObjects
 					for(GameObject gameObject : sceneActive.getGameObjects()) {
 						gameObject.animationStep(paused, deltaTime);
 					}
 					
+					//Render the scene
 					sceneActive.sortByRenderOrder();
 					
 					window.repaint();
 					
-					//TODO delay and set deltaTime
+					//Delay to stabilize framerate
+					duration = System.nanoTime() - time;
+					if(duration <= (1000000000/framerate)) {
+						delay = (long) (1000000000/framerate) - duration;
+						try {
+							Thread.sleep((delay/1000000), (int) (delay % 1000000));
+						} catch(Exception e) {}
+						deltaTime = 1/framerate;
+					}
+					else {
+						deltaTime = (duration/1000000000);
+					}
+					
+					System.out.println(delay);
 					
 					// --
 				}				

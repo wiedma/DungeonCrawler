@@ -313,6 +313,10 @@ public class LeveleditorObjectChooser extends JComponent implements ComponentLis
 	private double getPxPerTile() {
 		return drawScale * DrawComp.SPRITE_SIZE_PX_ORIGINAL; 
 	}
+
+	public GameObject getSelectedGameObject() {
+		return selectedGameObject;
+	}
 	
 	public GameObject getSelectedObject() {
 		return this.selectedGameObject;

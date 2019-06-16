@@ -40,4 +40,10 @@ public class Scene {
 	public void addGameObject(GameObject gameObject) {
 		this.gameObjects.add(gameObject);
 	}
+	
+	public void removeGameObject(GameObject gameObject) {
+		if(gameObjects.contains(gameObject)) {
+			this.gameObjects.remove(gameObjects.indexOf(gameObject));			
+		}
+	}
 }

@@ -148,4 +148,40 @@ public class LeveleditorDrawCompScene extends JComponent implements MouseListene
 		
 		System.out.println(this.spriteScale);
 	}
+	
+	
+	//merge fragments:
+//	/**
+//	 * <p>Cache-variable. This indicates whether the mouse was over this component the last time the method was called.</p>
+//	 * <p>It is used when determining whether the selected GameObject of the {@link LeveleditorObjectChooser} should be added or deleted to the {@link Scene}</p>
+//	 */
+//	private boolean mouseOnLastFrame = false;
+//	
+//	public void processMouseHover() {
+//		draggedObject = objectChooser.getSelectedGameObject();				
+//		if(draggedObject == null) {
+//			mouseOnLastFrame = this.getMousePosition() != null;
+//			return;
+//		}
+//		
+//		Point mousePos = this.getMousePosition();
+//		if(mousePos == null) {
+//			if(mouseOnLastFrame) {
+//				scene.removeGameObject(draggedObject);
+//				System.out.println("Removed GameObject " + draggedObject.getClass().toString() + " from Scene!");
+//			}
+//			mouseOnLastFrame = false;
+//			return;
+//		}
+//		
+//		draggedObject.setX(mousePos.getX());
+//		draggedObject.setY(mousePos.getY());
+//		
+//		if(!mouseOnLastFrame) {
+//			scene.addGameObject(draggedObject);
+//			System.out.println("Added GameObject " + draggedObject.getClass().toString() + " to Scene!");
+//		}
+//		
+//		this.mouseOnLastFrame = true;
+//	}
 }

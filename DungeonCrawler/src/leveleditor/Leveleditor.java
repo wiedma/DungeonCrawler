@@ -78,11 +78,26 @@ public class Leveleditor extends JFrame {
 		
 		JSplitPane splitMain = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		splitMain.setContinuousLayout(true);
-		//------PANEL SCENE
-		dcScene = new LeveleditorDrawCompScene(this);
-		dcScene.setPreferredSize(new Dimension(500, 500));
-		dcScene.setBackground(Color.GREEN);
-		splitMain.setLeftComponent(dcScene);
+
+			//------PANEL SCENE
+			dcScene = new LeveleditorDrawCompScene(this);
+			dcScene.setPreferredSize(new Dimension(500, 500));
+			dcScene.setBackground(Color.GREEN);
+			splitMain.setLeftComponent(dcScene);
+
+			//------PANEL Object Chooser
+			dcObjects = new LeveleditorObjectChooser(5);
+			dcObjects.setPreferredSize(new Dimension(160, 0));
+			this.fillObjectChooser(dcObjects);
+			splitMain.setRightComponent(dcObjects);
+			
+//			//------PANEL SCENE
+//			dcScene = new LeveleditorScene(dcObjects);
+//			dcScene.setPreferredSize(new Dimension(500, 500));
+//			dcScene.setBackground(Color.GREEN);
+//			splitMain.setLeftComponent(dcScene);
+
+		this.add(splitMain, BorderLayout.CENTER);
 		
 		//------PANEL Object Chooser
 		dcObjects = new LeveleditorObjectChooser(5);

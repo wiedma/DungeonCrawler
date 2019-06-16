@@ -11,7 +11,7 @@ import engine.sprites.Sprite;
  * @author Marco, Daniel
  *
  */
-abstract public class GameObject {
+abstract public class GameObject implements Cloneable {
 	
 	/**
 	 * The Hitbox of this GameObject
