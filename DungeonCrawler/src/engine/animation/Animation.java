@@ -67,7 +67,6 @@ public class Animation {
 	 * @return returns the current sprite. If it is isnt conform with the given spriteScale ({@link DrawComp#getSpriteScale()}), the spritesheet will reload the file and rescale itself
 	 */
 	public Sprite getSprite(int index) {
-		//TODO: reload sprite if scale changes
 		return sprites[index];
 	}
 	

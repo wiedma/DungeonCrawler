@@ -16,17 +16,17 @@ abstract public class GameObject {
 	/**
 	 * The Hitbox of this GameObject
 	 */
-	private Hitbox hitbox; //TODO
+	private Hitbox hitbox;
 	
 	/**
 	 * x- and y-position of this GameObject within the scene
 	 */
-	private double x, y; //TODO
+	private double x, y;
 	
 	/**
 	 * Z-position for rendering. Objects are rendered in ascending z-position order. Will be added to Y Coordinate of this GameObject to get its absolute Z Value
 	 */
-	protected double zPositionOffset = 0.5D;	//TODO use in sorting
+	protected double zPositionOffset = 0.5D;
 	
 	/**
 	 * Hashmap contains all animations for this GameObject

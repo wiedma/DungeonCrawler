@@ -42,8 +42,7 @@ public class DrawComp extends JComponent {
 					(int)     (sprite.getWidth() * pxPerTile),
 					(int)     (sprite.getHeight() * pxPerTile),
 					null
-			);
-			//TODO draw Sprite on relative position			
+			);	
 		}
 	}
 }

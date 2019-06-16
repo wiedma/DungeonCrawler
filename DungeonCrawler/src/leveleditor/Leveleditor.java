@@ -13,6 +13,11 @@ import junittests.JUnitTestGameObject;
 
 public class Leveleditor extends JFrame {
 	
+	/**
+	 * SerialVersionUID
+	 */
+	private static final long serialVersionUID = -3128924728020046714L;
+
 	public static void main(String[] args) {
 		new Leveleditor();
 	}

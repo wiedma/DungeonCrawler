@@ -13,7 +13,6 @@ public class Scene {
 	
 	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	
-	//TODO
 	/**
 	 * Gives all GameObjects within this scene
 	 * @return ArrayList of all GameObjects

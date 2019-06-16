@@ -4,9 +4,7 @@ import java.awt.Image;
 
 import engine.window.DrawComp;
 
-public class Sprite {
-	//TODO: implement Sprites
-	
+public class Sprite {	
 	/**
 	 * The image this sprite produces
 	 */
