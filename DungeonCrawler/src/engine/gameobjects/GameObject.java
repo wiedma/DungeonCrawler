@@ -139,6 +139,23 @@ abstract public class GameObject {
 		return this.y;
 	}
 	
+	/**
+	 * this method is used by the Leveleditor to obtain a 'copy' of a GameObject to be able to place it in the Scene.
+	 * This method should be overwritten by any class, that does not implement a Constructor without any Parameters
+	 */
+	public GameObject getOtherInstance() {
+		try {
+			return this.getClass().getConstructor().newInstance();
+		}catch(Exception e) {
+			System.err.println("[EXCEPTION]: While trying to make a copy (call GameObject.getOtherInstance()) on the currently selected GameObject (type:'"
+					+ this.getClass().toString() + "') a Exception was thrown. It is very likely that this class does not implement a Constructor without any Parameters."
+					+ "To fix these issues, please create such a Constructor or overwrite the GameObject.getOtherInstance() (=> that method should return a new Object of " + this.getClass().toString() + "; You can pass any relevant data of the Object (for example text, if it's a sign) to it)"
+			);
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	////////////////////////
 	//////////////////////// SETTERS
 	////////////////////////

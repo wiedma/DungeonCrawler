@@ -314,5 +314,9 @@ public class LeveleditorObjectChooser extends JComponent implements ComponentLis
 		return drawScale * DrawComp.SPRITE_SIZE_PX_ORIGINAL; 
 	}
 	
+	public GameObject getSelectedObject() {
+		return this.selectedGameObject;
+	}
+	
 	
 }

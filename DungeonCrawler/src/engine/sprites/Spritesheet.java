@@ -56,8 +56,8 @@ public class Spritesheet {
 		//scale this picture, and at the same time get a BufferedImage out of it			
 		BufferedImageOp op = new AffineTransformOp(
 				AffineTransform.getScaleInstance(scale, scale),
-				new RenderingHints(RenderingHints.KEY_INTERPOLATION,
-						RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR
+				new RenderingHints(RenderingHints.KEY_ALPHA_INTERPOLATION,
+						RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED
 				)
 		);
 		return op.filter(this.image.getSubimage(xTiles * DrawComp.SPRITE_SIZE_PX_ORIGINAL, yTiles * DrawComp.SPRITE_SIZE_PX_ORIGINAL,
