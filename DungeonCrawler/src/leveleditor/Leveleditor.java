@@ -3,11 +3,13 @@ package leveleditor;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.SwingUtilities;
 
 import engine.Scene;
 import engine.gameobjects.GameObject;
@@ -29,7 +31,7 @@ public class Leveleditor extends JFrame {
 //	
 //	
 	
-	
+	private double framerate = 60;
 	
 	/**
 	 * SerialVersionUID
@@ -120,8 +122,10 @@ public class Leveleditor extends JFrame {
 	private void startLoopThread() {
 		(new Thread() {
 			public void run() {
+				
+				long time, duration, delay = 0;
 				while(true) {
-					
+					time = System.nanoTime();
 					processKeyInputs();
 					
 					//check if the user is hovering over anything
@@ -133,9 +137,16 @@ public class Leveleditor extends JFrame {
 					dcScene.repaint();
 					dcObjects.repaint();
 					
-					try {
-						Thread.sleep(16);
-					}catch(Exception e) {}
+					//Delay to stabilize framerate
+					duration = System.nanoTime() - time;
+					if(duration <= (1000000000/framerate)) {
+						delay = (long) (1000000000/framerate) - duration;
+						try {
+							Thread.sleep((delay/1000000), (int) (delay % 1000000));
+						} catch(Exception e) {}
+					}
+					else {
+					}
 				}
 			}
 		}).start();

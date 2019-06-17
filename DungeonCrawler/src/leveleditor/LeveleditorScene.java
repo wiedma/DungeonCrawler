@@ -41,7 +41,9 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 	}
 	
 	@Override
-	public void paintComponent(Graphics g) {		
+	public void paintComponent(Graphics g) {
+		int cameraPosXPx = this.cameraPosXPx;
+		int cameraPosYPx = this.cameraPosYPx;
 		
 		Scene scene = this.leveleditor.getSceneActive();
 		double pxPerTile = spriteScale * DrawComp.SPRITE_SIZE_PX_ORIGINAL;
@@ -69,7 +71,7 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 				sprite = gameObjectSelected.getCurrentSprite();
 				g.drawImage(sprite.getImage(spriteScale),
 						(int) (   ((int)(((mousePos.x+cameraPosXPx) / pxPerTile) + 0.5) - (sprite.getWidth()/2d)) * pxPerTile - cameraPosXPx  ),
-						(int) (   ((int)(((mousePos.y+cameraPosYPx) / pxPerTile) + 0.5) - (sprite.getHeight()/2d)) * pxPerTile -cameraPosYPx  ),
+						(int) (   ((int)(((mousePos.y+cameraPosYPx) / pxPerTile) + 0.5) - (sprite.getHeight()/2d)) * pxPerTile - cameraPosYPx  ),
 //						(int)     (sprite.getWidth() * pxPerTile),
 //						(int)     (sprite.getHeight() * pxPerTile),
 						null
