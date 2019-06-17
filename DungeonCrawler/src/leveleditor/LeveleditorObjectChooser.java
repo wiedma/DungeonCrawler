@@ -1,6 +1,7 @@
 package leveleditor;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -64,7 +65,7 @@ public class LeveleditorObjectChooser extends JComponent implements ComponentLis
 	 * the most recent {@link GameObject} that the user has selected(clicked on)
 	 */
 	private GameObject selectedGameObject;
-	private final Color colorSelectedGameObject = new Color(1f, 0f, 0f);
+	private final Color colorSelectedGameObject = new Color(1f, 0f, 0f, 0.5f);
 	
 	/**
 	 * The scale with which the {@link GameObject objects} in the ObjectChooser are drawn
@@ -113,7 +114,7 @@ public class LeveleditorObjectChooser extends JComponent implements ComponentLis
 		if(gameObjectSelected != null) {
 			sprite = gameObjectSelected.getCurrentSprite();
 			g.setColor(colorSelectedGameObject);
-			g.drawRect(
+			g.fillRect(
 					(int)	(gameObjectSelected.getX() * pxPerTile),
 					(int)	(gameObjectSelected.getY() * pxPerTile),
 					(int)   (sprite.getWidth() * pxPerTile),
@@ -125,12 +126,16 @@ public class LeveleditorObjectChooser extends JComponent implements ComponentLis
 	/**
 	 * Adds and sorts any number GameObjects into this ObjectChoosers list of sorted GameObjects and places it somewhere it fits
 	 * @param gameObjects The GameObjects to sort in
+	 * @return returns the maximal height (int tiles) that all those gameobjects fit into
 	 */
-	public void addGameObjects(GameObject... gameObjects) {
+	public double addGameObjects(GameObject... gameObjects) {
+		double maxHeight = 0;
 		for(GameObject gameObject : gameObjects) {
 			gameObject.copyAllAnimations();
 			sortObject(gameObject);
+			maxHeight = Math.max(maxHeight, (int) (gameObject.getY()+gameObject.getCurrentSprite().getHeight()));
 		}
+		return maxHeight;
 	}
 	
 	/**
@@ -182,26 +187,27 @@ public class LeveleditorObjectChooser extends JComponent implements ComponentLis
 		}
 	}
 	
-	private void updateWidthTiles(boolean resortAfterThis) {
+	private void updateWidthTiles() {
 		
 		this.widthTiles = Math.max(1, (int) (this.getWidth() / (drawScale * DrawComp.SPRITE_SIZE_PX_ORIGINAL)));
 		
-		if(resortAfterThis)
-			resortAll();
+		//update preferred height of this component, to ensure the scroll thingy works well 
+		this.setPreferredSize(new Dimension(100, (int) ( resortAll() * this.drawScale * DrawComp.SPRITE_SIZE_PX_ORIGINAL)));
 	}
 	
 	/**
 	 * Takes all GameObjects out of the {@link LeveleditorObjectChooser#gameObjectsSorted} (gameObjectsSorted ArrayList) and resorts them back in.
 	 * This will be called after this component finished it's resizing (for further reference see:{@link LeveleditorObjectChooser#continuousResort})
+	 * @return returns the maximal height that all objects fit into
 	 */
-	private void resortAll() {
+	private double resortAll() {
 		//cache all gameObjects
 		GameObject[] gameObjectsSortedOLD = gameObjectsSorted.toArray(new GameObject[0]);
 		//empty current GameObjectList
 		this.gameObjectsSorted.clear();
 		
 		//add all GameObjects to the empty 'sorted' list
-		this.addGameObjects(gameObjectsSortedOLD);
+		return this.addGameObjects(gameObjectsSortedOLD);
 	}
 	
 	/**
@@ -279,7 +285,7 @@ public class LeveleditorObjectChooser extends JComponent implements ComponentLis
 						timerResort = null;
 						
 						//this will be executed on resize finish
-						updateWidthTiles(true);					
+						updateWidthTiles();					
 					}
 				});
 				this.timerResort.start();
@@ -289,7 +295,7 @@ public class LeveleditorObjectChooser extends JComponent implements ComponentLis
 			}
 		} else {
 			//resort completely on every resize event
-			updateWidthTiles(true);
+			updateWidthTiles();
 		}
 	}
 

@@ -3,13 +3,12 @@ package leveleditor;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.SwingUtilities;
 
 import engine.Scene;
 import engine.gameobjects.GameObject;
@@ -93,10 +92,12 @@ public class Leveleditor extends JFrame {
 			splitMain.setLeftComponent(dcScene);
 
 			//------PANEL Object Chooser
-			dcObjects = new LeveleditorObjectChooser();
-			dcObjects.setPreferredSize(new Dimension(160, 0));
-			this.fillObjectChooser(dcObjects);
-			splitMain.setRightComponent(dcObjects);
+				dcObjects = new LeveleditorObjectChooser();
+				dcObjects.setPreferredSize(new Dimension(160, 0));
+				this.fillObjectChooser(dcObjects);				
+			JScrollPane scrollObjectChooser = new JScrollPane(dcObjects);
+			scrollObjectChooser.getVerticalScrollBar().setUnitIncrement(20);
+			splitMain.setRightComponent(scrollObjectChooser);
 
 		this.add(splitMain, BorderLayout.CENTER);
 		
