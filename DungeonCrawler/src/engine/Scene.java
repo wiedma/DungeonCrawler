@@ -13,6 +13,8 @@ public class Scene {
 	
 	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	
+	private String initialFilePath;
+	
 	/**
 	 * Gives all GameObjects within this scene
 	 * @return ArrayList of all GameObjects
@@ -45,5 +47,12 @@ public class Scene {
 		if(gameObjects.contains(gameObject)) {
 			this.gameObjects.remove(gameObjects.indexOf(gameObject));			
 		}
+	}
+	
+	public String getInitialFilePath() {
+		return this.initialFilePath;
+	}
+	public void setInitialFilePath(String filePath) {
+		this.initialFilePath = filePath;
 	}
 }

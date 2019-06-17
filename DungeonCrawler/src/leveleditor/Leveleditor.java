@@ -3,12 +3,17 @@ package leveleditor;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTextField;
 
 import engine.Scene;
 import engine.gameobjects.GameObject;
@@ -59,7 +64,7 @@ public class Leveleditor extends JFrame {
 	public Leveleditor() {
 		
 		//create empty scene
-		this.sceneActive = FileLoader.readFromFile("res/scenes/test");
+		loadScene(FileLoader.readFromFile("res/scenes/test"), false);
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		this.addKeyListener(KeyRegister.getKeyRegister());		
@@ -75,21 +80,92 @@ public class Leveleditor extends JFrame {
 		this.setLayout(new BorderLayout());
 		
 		
-		//------PANEL OPTIONS		
-		JPanel pOptions = new JPanel();
-		pOptions.setPreferredSize(new Dimension(50, 0));
-		pOptions.setBackground(Color.BLUE);
+		//------PANEL OPTIONS
+		int pOptionsWidth = 200;
+		int margin = 5;
+		JPanel pOptions = new JPanel(null);
+		pOptions.setPreferredSize(new Dimension(pOptionsWidth,0));
+		pOptions.setBackground(new Color(0, 1, 0, 0.3f));
+		
+		
+			//////////////LOAD SCENE
+		
+			JPanel pLoadScene = new JPanel(null);
+			pLoadScene.setSize(pOptionsWidth, 50);
+				JLabel lLoadScene = new JLabel("Load Scene:");
+				lLoadScene.setBounds(margin, margin, pOptionsWidth-(2*margin), 10);
+				pLoadScene.add(lLoadScene);
+				
+				int height = 23;
+				String sceneLoadPathHead = "res/scenes/";
+				JLabel lLoadScenePathInfo = new JLabel(sceneLoadPathHead);
+				lLoadScenePathInfo.setBounds(lLoadScene.getX(), lLoadScene.getY()+lLoadScene.getHeight()+margin, 67, height);
+				pLoadScene.add(lLoadScenePathInfo);
+				
+				JTextField txtLoadScene = new JTextField();
+				txtLoadScene.setBounds(lLoadScenePathInfo.getX()+lLoadScenePathInfo.getWidth()+margin, lLoadScenePathInfo.getY(), pOptionsWidth-lLoadScenePathInfo.getX()-lLoadScenePathInfo.getWidth()-(2*margin), height);
+				pLoadScene.add(txtLoadScene);
+				
+				int width = 70;
+				JButton bLoadScene = new JButton("Load");
+				bLoadScene.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						loadScene(FileLoader.readFromFile(sceneLoadPathHead + txtLoadScene.getText()), false);
+						dcScene.resetCamera();
+					}
+				});
+				bLoadScene.setBounds(pOptionsWidth-margin-width, txtLoadScene.getY()+txtLoadScene.getHeight()+margin, width, height);
+				pLoadScene.add(bLoadScene);
+			pLoadScene.setBounds(0, 0, pOptionsWidth, bLoadScene.getY()+bLoadScene.getHeight()+margin);
+			pOptions.add(pLoadScene);
+			
+			
+			//////////////SAVE SCENE
+			
+			JPanel pSaveScene = new JPanel(null);
+			pSaveScene.setSize(pOptionsWidth, 50);
+				JLabel lSaveScene = new JLabel("Save Scene:");
+				lSaveScene.setBounds(margin, margin, pOptionsWidth-(2*margin), 10);
+				pSaveScene.add(lSaveScene);
+				
+				height = 23;
+				String sceneSavePathHead = "res/scenes/";
+				JLabel lSaveScenePathInfo = new JLabel(sceneSavePathHead);
+				lSaveScenePathInfo.setBounds(lSaveScene.getX(), lSaveScene.getY()+lSaveScene.getHeight()+margin, 67, height);
+				pSaveScene.add(lSaveScenePathInfo);
+				
+				JTextField txtSaveScene = new JTextField();
+				txtSaveScene.setBounds(lSaveScenePathInfo.getX()+lSaveScenePathInfo.getWidth()+margin, lSaveScenePathInfo.getY(), pOptionsWidth-lSaveScenePathInfo.getX()-lSaveScenePathInfo.getWidth()-(2*margin), height);
+				pSaveScene.add(txtSaveScene);
+				
+				width = 70;
+				JButton bSaveScene = new JButton("Save");
+				bSaveScene.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						FileLoader.writeToFile(sceneActive, sceneSavePathHead + txtSaveScene.getText());
+					}
+				});
+				bSaveScene.setBounds(pOptionsWidth-margin-width, txtSaveScene.getY()+txtSaveScene.getHeight()+margin, width, height);
+				pSaveScene.add(bSaveScene);
+			pSaveScene.setBounds(0, pLoadScene.getY()+pLoadScene.getHeight(), pOptionsWidth, bSaveScene.getY()+bSaveScene.getHeight()+margin);
+			pOptions.add(pSaveScene);
+			
+			
 		this.add(pOptions, BorderLayout.WEST);
 		
 		
 		JSplitPane splitMain = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		splitMain.setResizeWeight(0.80);
+		splitMain.setFocusable(true);
+		splitMain.addKeyListener(KeyRegister.getKeyRegister());
 		splitMain.setContinuousLayout(true);
 
 			//------PANEL SCENE
 			dcScene = new LeveleditorScene(this);
 			dcScene.setPreferredSize(new Dimension(500, 500));
 			dcScene.setBackground(Color.GREEN);
+			dcScene.setFocusable(true);
+			dcScene.addKeyListener(KeyRegister.getKeyRegister());
 			splitMain.setLeftComponent(dcScene);
 
 			//------PANEL Object Chooser
@@ -185,6 +261,17 @@ public class Leveleditor extends JFrame {
 		if(KeyRegister.getKeyRegister().isKeyDown(KeyEvent.VK_ESCAPE)) {
 			this.dcObjects.setSelectedGameObject(null);
 		}
+	}
+	
+	////////////////////////
+	//////////////////////// SETTERS
+	////////////////////////
+	
+	public void loadScene(Scene scene, boolean nullIsOK) {
+		if(scene == null && !nullIsOK)
+			return;
+		this.sceneActive = scene;
+		this.setTitle(scene.getInitialFilePath());
 	}
 	
 	////////////////////////

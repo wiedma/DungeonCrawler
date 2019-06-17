@@ -3,6 +3,7 @@ package engine.io;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -57,6 +58,7 @@ public class FileLoader {
 	 */
 	public static Scene readFromFile(String filePath) {
 		Scene scene = new Scene();
+		scene.setInitialFilePath(filePath);
 		File file = new File(filePath);
 		if(!file.exists()) {
 			System.err.println("The file with the following path '" + filePath + "' could not be found.");
@@ -98,6 +100,10 @@ public class FileLoader {
 					+ "please check if the .toString() method in the specified class outputs a correct string\n"
 					+ "Details:");
 			e.printStackTrace();
+		}catch(FileNotFoundException e) {
+			System.err.println("The file at '" + filePath + "' could not be read");
+			e.printStackTrace();
+			return null;
 		}catch (Exception e) {
 			e.printStackTrace();
 			return null;

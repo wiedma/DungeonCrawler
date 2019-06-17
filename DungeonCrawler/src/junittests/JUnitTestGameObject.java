@@ -47,7 +47,7 @@ public class JUnitTestGameObject extends GameObject {
 	}
 	
 	public String toString() {
-		return this.getClass().getName() + ";0;0;1;java.lang.Double;" + this.zPositionOffset;
+		return this.getClass().getName() + ";" + this.getX() + ";" + this.getY() + ";1;java.lang.Double;" + this.zPositionOffset;
 	}
 	
 	public boolean equals(JUnitTestGameObject other) {
