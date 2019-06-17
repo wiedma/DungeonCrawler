@@ -61,7 +61,6 @@ public class Spritesheet {
 	public Image extractSprite(int xTiles, int yTiles, int widthTiles, int heightTiles, double scale) {
 		if(this.image == null)
 			return null;
-//		checkScale(scale);
 		
 		//scale this picture, and at the same time get a BufferedImage out of it			
 		BufferedImageOp op = new AffineTransformOp(

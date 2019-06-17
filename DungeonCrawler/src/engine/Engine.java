@@ -76,7 +76,7 @@ public class Engine {
 						deltaTime = 1/framerate;
 					}
 					else {
-						deltaTime = (duration/1000000000);
+						deltaTime = (duration/1000000000d);
 					}
 					
 					// --

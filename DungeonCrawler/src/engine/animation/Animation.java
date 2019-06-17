@@ -46,6 +46,17 @@ public class Animation {
 			this.animationAfterThis = animationAfterThis;
 		}
 	}
+	
+	public Animation getOtherInstance() {
+		Sprite[] spritesNew = new Sprite[this.sprites.length];
+		for(int i = 0; i < spritesNew.length; i++) {
+			spritesNew[i] = sprites[i].getOtherInstance();
+		}
+		
+		return new Animation(
+				this.name, spritesNew, this.delayBetweenSprites, this.canBePaused, this.animationAfterThis				
+		);
+	}
 
 	public String getName() {
 		return name;

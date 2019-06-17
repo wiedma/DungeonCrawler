@@ -58,8 +58,13 @@ public class Sprite {
 			return this.image;
 		} else {
 			//extract image from spritesheet
+			this.currentScale = scale;
 			return (this.image = spritesheet.extractSprite(x, y, width, height, scale));
 		}
+	}
+	
+	public Sprite getOtherInstance() {
+		return new Sprite(this.x, this.y, this.width, this.height, this.spritesheet);
 	}
 	
 	public int getWidth() {

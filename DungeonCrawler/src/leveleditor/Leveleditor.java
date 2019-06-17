@@ -124,18 +124,32 @@ public class Leveleditor extends JFrame {
 			public void run() {
 				
 				long time, duration, delay = 0;
+				
 				while(true) {
 					time = System.nanoTime();
+//					duration = System.nanoTime(); 
+					
 					processKeyInputs();
+					
+//					System.out.print(System.nanoTime() - duration + ", "); duration = System.nanoTime();
 					
 					//check if the user is hovering over anything
 					dcScene.processMouseInteractions();
+					
+//					System.out.print(System.nanoTime() - duration + ", "); duration = System.nanoTime();
+					
 					dcObjects.processMouseHover();
+					
+//					System.out.print(System.nanoTime() - duration + ", "); duration = System.nanoTime();
 					
 					sceneActive.sortByRenderOrder();
 					
+//					System.out.print(System.nanoTime() - duration + ", "); duration = System.nanoTime();
+					
 					dcScene.repaint();
 					dcObjects.repaint();
+					
+//					System.out.println(System.nanoTime() - duration + ", "); duration = System.nanoTime();
 					
 					//Delay to stabilize framerate
 					duration = System.nanoTime() - time;
@@ -163,6 +177,10 @@ public class Leveleditor extends JFrame {
 			this.dcScene.moveCamera(-1, 0);
 		} else if(KeyRegister.getKeyRegister().isKeyDown(KeyEvent.VK_D)){
 			this.dcScene.moveCamera(1, 0);
+		}
+		
+		if(KeyRegister.getKeyRegister().isKeyDown(KeyEvent.VK_ESCAPE)) {
+			this.dcObjects.setSelectedGameObject(null);
 		}
 	}
 	
