@@ -41,7 +41,7 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 	}
 	
 	@Override
-	public void paintComponent(Graphics g) {		
+	public void paintComponent(Graphics g) {
 		
 		Scene scene = this.leveleditor.getSceneActive();
 		double pxPerTile = spriteScale * DrawComp.SPRITE_SIZE_PX_ORIGINAL;
@@ -64,7 +64,12 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 		//if the user has selected a GameObject and is hovering over the scene, draw the GameObject as if it was placed a the mouses current position
 		GameObject gameObjectSelected = leveleditor.getSelectedObject();
 		if(gameObjectSelected != null) {
+//			long duration = System.nanoTime();
 			Point mousePos = this.getMousePosition();
+//			if((System.nanoTime() - duration) > 10000000) {
+//				System.out.println("WOOP MORE THAN 10 MILLIS");
+//			}
+//			System.out.println(System.nanoTime() - duration);
 			if(mousePos != null) {
 				sprite = gameObjectSelected.getCurrentSprite();
 				g.drawImage(sprite.getImage(spriteScale),

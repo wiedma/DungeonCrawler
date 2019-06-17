@@ -128,6 +128,7 @@ public class LeveleditorObjectChooser extends JComponent implements ComponentLis
 	 */
 	public void addGameObjects(GameObject... gameObjects) {
 		for(GameObject gameObject : gameObjects) {
+			gameObject.copyAllAnimations();
 			sortObject(gameObject);
 		}
 	}
@@ -217,7 +218,15 @@ public class LeveleditorObjectChooser extends JComponent implements ComponentLis
 	 * called every frame, checks if mouse is hovering over this component. If it is, it gets the Objects the mouse is hovering on and stores it in {@link LeveleditorObjectChooser#mouseHoverGameObject}
 	 */
 	public void processMouseHover() {
+//		long duration = System.nanoTime();
 		Point mousePos = this.getMousePosition();
+//		if((System.nanoTime() - duration) > 10000000) {
+//			System.out.println("WOOP MORE THAN 10 MILLIS");
+//		}
+//		System.out.println("coll:" + (System.nanoTime() - duration) + ", ");
+		
+		
+		
 		if(mousePos == null) {
 			this.mouseHoverGameObject = null;
 			return;
@@ -240,6 +249,8 @@ public class LeveleditorObjectChooser extends JComponent implements ComponentLis
 	private GameObject getGameObjectAtPosPx(Point posPx) {
 		double pxPerTile = getPxPerTile();
 		
+//		long duration = System.nanoTime();
+		
 		for(GameObject gameObject : this.gameObjectsSorted) {
 			
 			if(		posPx.x / pxPerTile >= gameObject.getX()
@@ -247,9 +258,12 @@ public class LeveleditorObjectChooser extends JComponent implements ComponentLis
 				&&	posPx.y / pxPerTile >= gameObject.getY()
 				&&	posPx.y / pxPerTile <= gameObject.getY() + gameObject.getCurrentSprite().getHeight()
 			) {
+				
+//				System.out.println("coll:" + (System.nanoTime() - duration) + ", ");				
 				return gameObject;
 			}
 		}
+//		System.out.println("coll:" + (System.nanoTime() - duration) + ", ");
 		return null;
 	}
 
@@ -303,7 +317,11 @@ public class LeveleditorObjectChooser extends JComponent implements ComponentLis
 	
 	public void setContinuousResort(boolean continuousResort) {
 		this.continuousResort = continuousResort;
-	}	
+	}
+	
+	public void setSelectedGameObject(GameObject gameObject) {
+		this.selectedGameObject = gameObject;
+	}
 	
 	/////////////////	
 	///////////////// GETTERS

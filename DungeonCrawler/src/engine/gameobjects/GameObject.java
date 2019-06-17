@@ -11,7 +11,7 @@ import engine.sprites.Sprite;
  * @author Marco, Daniel
  *
  */
-abstract public class GameObject implements Cloneable {
+abstract public class GameObject {
 	
 	/**
 	 * The Hitbox of this GameObject
@@ -111,6 +111,23 @@ abstract public class GameObject implements Cloneable {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Deepcopies all Animations that this GameObject references.<br>
+	 * <b>SHOULD ONLY BE USED FOR LEVELEDITOR GAMEOBJECTCHOOSERS</b>
+	 */
+	public void copyAllAnimations() {
+		HashMap<String, Animation> animationsNew = new HashMap<String, Animation>();
+		for(String key : this.animations.keySet()) {
+			if(this.currentAnimation == this.animations.get(key)) {
+				this.currentAnimation = this.animations.get(key).getOtherInstance();
+				animationsNew.put(key, this.currentAnimation);
+			} else {
+				animationsNew.put(key, this.animations.get(key).getOtherInstance());
+			}
+		}
+		this.animations = animationsNew;
 	}
 	
 	////////////////////////
