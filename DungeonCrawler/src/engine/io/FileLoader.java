@@ -65,16 +65,23 @@ public class FileLoader {
 		String line = "";
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
+			GameObject gameObject;
 			while((line = br.readLine()) != null) {
 				String[] args = line.split(";");
-				int argsNr = Integer.parseInt(args[1]);
+				
+				
+				int argsNr = args.length > 3 ? Integer.parseInt(args[3]) : 0;
+				
 				Class<?>[] types = new Class[argsNr];
 				Object[] values = new Object[argsNr];
-				for(int i = 2; i < args.length; i+=2) {
-					types[(i-2)/2] = toPrimitive(Class.forName(args[i]));
-					values[(i-2)/2] = Class.forName(args[i]).getConstructor(java.lang.String.class).newInstance(args[i+1]);
+				for(int i = 4; i < args.length; i+=2) {
+					types[(i-4)/2] = toPrimitive(Class.forName(args[i]));
+					values[(i-4)/2] = Class.forName(args[i]).getConstructor(java.lang.String.class).newInstance(args[i+1]);
 				}
-				scene.addGameObject((GameObject)Class.forName(args[0]).getConstructor(types).newInstance(values));
+				gameObject = (GameObject)Class.forName(args[0]).getConstructor(types).newInstance(values);
+				gameObject.setX(Double.parseDouble(args[1]));
+				gameObject.setY(Double.parseDouble(args[2]));
+				scene.addGameObject(gameObject);
 			}
 			br.close();
 		}catch(ArrayIndexOutOfBoundsException er) {
@@ -85,6 +92,12 @@ public class FileLoader {
 			System.err.println("The type of the parameters specified in the line \n'" + line + "'\n"
 					+ "does not match any constructor of the class.\n"
 					+ "Please create a matching constructor or override the toString() method until the parameters match any constructor!");
+		}catch(NumberFormatException e) {
+			System.err.println("The contents of the line \n'" + line + "'\n"
+					+ "in the scene file that was being tried to load threw a NumberFormatException while trying to convert a String to a Number\n"
+					+ "please check if the .toString() method in the specified class outputs a correct string\n"
+					+ "Details:");
+			e.printStackTrace();
 		}catch (Exception e) {
 			e.printStackTrace();
 			return null;

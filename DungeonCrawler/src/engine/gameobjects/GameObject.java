@@ -195,6 +195,7 @@ abstract public class GameObject {
 	 * <p><b>NOTE: If any subclass of GameObject contains any metadata which has to be saved to the File it must override this method to do so!</b></p>
 	 */
 	public String toString() {
-		return getClass().getName() + ";2;java.lang.Double;" + x + ";java.lang.Double;" + y;
+//		return getClass().getName() + ";2;java.lang.Double;" + x + ";java.lang.Double;" + y;
+		return getClass().getName() + ";" + x + ";" + y;
 	}
 }

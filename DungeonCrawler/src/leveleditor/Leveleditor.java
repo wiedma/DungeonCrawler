@@ -12,6 +12,7 @@ import javax.swing.JSplitPane;
 
 import engine.Scene;
 import engine.gameobjects.GameObject;
+import engine.io.FileLoader;
 import engine.window.KeyRegister;
 import junittests.JUnitTestGameObject;
 
@@ -58,7 +59,7 @@ public class Leveleditor extends JFrame {
 	public Leveleditor() {
 		
 		//create empty scene
-		this.sceneActive = new Scene();
+		this.sceneActive = FileLoader.readFromFile("res/scenes/test");
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		this.addKeyListener(KeyRegister.getKeyRegister());		
