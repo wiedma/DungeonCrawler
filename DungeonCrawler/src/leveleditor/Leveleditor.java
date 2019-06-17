@@ -3,6 +3,7 @@ package leveleditor;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -121,8 +122,10 @@ public class Leveleditor extends JFrame {
 			public void run() {
 				while(true) {
 					
+					processKeyInputs();
+					
 					//check if the user is hovering over anything
-					dcScene.processMouseHover();
+					dcScene.processMouseInteractions();
 					dcObjects.processMouseHover();
 					
 					sceneActive.sortByRenderOrder();
@@ -136,6 +139,20 @@ public class Leveleditor extends JFrame {
 				}
 			}
 		}).start();
+	}
+	
+	private void processKeyInputs(){
+		if(KeyRegister.getKeyRegister().isKeyDown(KeyEvent.VK_W)) {
+			this.dcScene.moveCamera(0, -1);
+		} else if(KeyRegister.getKeyRegister().isKeyDown(KeyEvent.VK_S)){
+			this.dcScene.moveCamera(0, 1);
+		}
+		
+		if(KeyRegister.getKeyRegister().isKeyDown(KeyEvent.VK_A)) {
+			this.dcScene.moveCamera(-1, 0);
+		} else if(KeyRegister.getKeyRegister().isKeyDown(KeyEvent.VK_D)){
+			this.dcScene.moveCamera(1, 0);
+		}
 	}
 	
 	////////////////////////
