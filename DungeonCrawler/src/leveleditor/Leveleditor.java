@@ -3,11 +3,13 @@ package leveleditor;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import engine.Scene;
 import engine.gameobjects.GameObject;
 import engine.window.KeyRegister;
 import junittests.JUnitTestGameObject;
@@ -50,19 +52,20 @@ public class Leveleditor extends JFrame {
 	 */
 	private LeveleditorObjectChooser dcObjects;
 	
+	private Scene sceneActive;
+	
 	public Leveleditor() {
+		//create empty scene
+		this.sceneActive = new Scene();
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
-		this.addKeyListener(KeyRegister.getKeyRegister());
-		
-		
+		this.addKeyListener(KeyRegister.getKeyRegister());		
 		this.initJFrameStructure();
-		
-		
-		this.startLoopThread();
-		
 		this.pack();
 		this.setLocationRelativeTo(null);
-		this.setVisible(true);
+		this.setVisible(true);	
+		
+		this.startLoopThread();
 	}
 	
 	private void initJFrameStructure() {
@@ -77,6 +80,7 @@ public class Leveleditor extends JFrame {
 		
 		
 		JSplitPane splitMain = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+		splitMain.setResizeWeight(0.80);
 		splitMain.setContinuousLayout(true);
 
 			//------PANEL SCENE
@@ -86,10 +90,10 @@ public class Leveleditor extends JFrame {
 			splitMain.setLeftComponent(dcScene);
 
 			//------PANEL Object Chooser
-			dcObjects = new LeveleditorObjectChooser(5);
+			dcObjects = new LeveleditorObjectChooser();
 			dcObjects.setPreferredSize(new Dimension(160, 0));
 			this.fillObjectChooser(dcObjects);
-			splitMain.setRightComponent(dcObjects);			
+			splitMain.setRightComponent(dcObjects);
 
 		this.add(splitMain, BorderLayout.CENTER);
 		
@@ -118,9 +122,13 @@ public class Leveleditor extends JFrame {
 			public void run() {
 				while(true) {
 					
+					processKeyInputs();
+					
 					//check if the user is hovering over anything
-					dcScene.processMouseHover();
+					dcScene.processMouseInteractions();
 					dcObjects.processMouseHover();
+					
+					sceneActive.sortByRenderOrder();
 					
 					dcScene.repaint();
 					dcObjects.repaint();
@@ -133,11 +141,29 @@ public class Leveleditor extends JFrame {
 		}).start();
 	}
 	
+	private void processKeyInputs(){
+		if(KeyRegister.getKeyRegister().isKeyDown(KeyEvent.VK_W)) {
+			this.dcScene.moveCamera(0, -1);
+		} else if(KeyRegister.getKeyRegister().isKeyDown(KeyEvent.VK_S)){
+			this.dcScene.moveCamera(0, 1);
+		}
+		
+		if(KeyRegister.getKeyRegister().isKeyDown(KeyEvent.VK_A)) {
+			this.dcScene.moveCamera(-1, 0);
+		} else if(KeyRegister.getKeyRegister().isKeyDown(KeyEvent.VK_D)){
+			this.dcScene.moveCamera(1, 0);
+		}
+	}
+	
 	////////////////////////
 	//////////////////////// GETTERS
 	////////////////////////
 	
 	public GameObject getSelectedObject() {
 		return this.dcObjects.getSelectedObject();
+	}
+	
+	public Scene getSceneActive() {
+		return this.sceneActive;
 	}
 }

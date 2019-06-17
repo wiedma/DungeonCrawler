@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import javax.swing.JComponent;
 
-import engine.Engine;
 import engine.Scene;
 import engine.gameobjects.GameObject;
 import engine.sprites.Sprite;
@@ -28,20 +27,23 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 	 * states the 'zoom level' of sprites that are currently being displayed<br>
 	 * if the sprite on the screen is double its actual size in the spritesheet file, the value of this would be 2
 	 */	
-	private static double spriteScale = 1;
+	private double spriteScale = 1;
 	
 	private Leveleditor leveleditor;
+	
+	private int cameraPosXPx, cameraPosYPx;
+	private final int CAMERA_MOVEMENT_SPEED = 5;
 	
 	public LeveleditorScene(Leveleditor leveleditor) {
 		this.leveleditor = leveleditor;
 		this.addMouseListener(this);
-		this.addMouseWheelListener(this);
+		this.addMouseWheelListener(this);		
 	}
 	
 	@Override
 	public void paintComponent(Graphics g) {		
 		
-		Scene scene = Engine.getSceneActive();
+		Scene scene = this.leveleditor.getSceneActive();
 		double pxPerTile = spriteScale * DrawComp.SPRITE_SIZE_PX_ORIGINAL;
 		
 		
@@ -50,8 +52,8 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 			sprite = gameObject.getCurrentSprite();
 			
 			g.drawImage(sprite.getImage(spriteScale),
-					(int) (   (gameObject.getX() - (sprite.getWidth()/2d)) * pxPerTile   ),
-					(int) (   (gameObject.getY() - (sprite.getHeight()/2d)) * pxPerTile   ),
+					(int) (   (gameObject.getX() - (sprite.getWidth()/2d)) * pxPerTile   ) - cameraPosXPx,
+					(int) (   (gameObject.getY() - (sprite.getHeight()/2d)) * pxPerTile   ) - cameraPosYPx,
 //					(int)     (sprite.getWidth() * pxPerTile),
 //					(int)     (sprite.getHeight() * pxPerTile),
 					null
@@ -66,10 +68,10 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 			if(mousePos != null) {
 				sprite = gameObjectSelected.getCurrentSprite();
 				g.drawImage(sprite.getImage(spriteScale),
-						(int) (   ((int)((mousePos.x / pxPerTile) + 0.5) - (sprite.getWidth()/2d)) * pxPerTile   ), //TODO cameraposition mit einberechnen
-						(int) (   ((int)((mousePos.y / pxPerTile) + 0.5) - (sprite.getHeight()/2d)) * pxPerTile   ),
-						(int)     (sprite.getWidth() * pxPerTile),
-						(int)     (sprite.getHeight() * pxPerTile),
+						(int) (   ((int)(((mousePos.x+cameraPosXPx) / pxPerTile) + 0.5) - (sprite.getWidth()/2d)) * pxPerTile - cameraPosXPx  ),
+						(int) (   ((int)(((mousePos.y+cameraPosYPx) / pxPerTile) + 0.5) - (sprite.getHeight()/2d)) * pxPerTile -cameraPosYPx  ),
+//						(int)     (sprite.getWidth() * pxPerTile),
+//						(int)     (sprite.getHeight() * pxPerTile),
 						null
 				);
 				
@@ -78,7 +80,7 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 	}
 	
 	private KeyRegister cacheKeyRegister = KeyRegister.getKeyRegister();	
-	public void processMouseHover() {
+	public void processMouseInteractions() {
 		//place object
 		if(this.mouseLeftButtonBeingPressed) {
 			Point mousePos = this.getMousePosition();
@@ -88,13 +90,13 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 					return;
 				
 				double pxPerTile = spriteScale * DrawComp.SPRITE_SIZE_PX_ORIGINAL;
-				int x = (int) ((mousePos.x / pxPerTile) + 0.5);
-				int y = (int) ((mousePos.y / pxPerTile) + 0.5);
+				int x = (int) (((mousePos.x+cameraPosXPx) / pxPerTile) + 0.5);
+				int y = (int) (((mousePos.y+cameraPosYPx) / pxPerTile) + 0.5);
 				
 				//check if there is already a GameObject at the same Position (hold CONTROL to circumvent that)
 				boolean collision = false;
 				if(!cacheKeyRegister.isKeyDown(KeyEvent.VK_CONTROL)) {
-					ArrayList<GameObject> gameObjects = Engine.getSceneActive().getGameObjects();
+					ArrayList<GameObject> gameObjects = this.leveleditor.getSceneActive().getGameObjects();
 					for(GameObject gameObjectScene : gameObjects) {
 						if(gameObjectScene.getX() == x && gameObjectScene.getY() == y) {
 							collision = true;
@@ -105,11 +107,11 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 				
 				if(!collision) {
 					GameObject gameObjectNew = gameObjectSelected.getOtherInstance();
-					gameObjectNew.setX(x); //TODO Camera position miteinberechnen
-					gameObjectNew.setY(y); //TODO Camera position miteinberechnen
+					gameObjectNew.setX(x);
+					gameObjectNew.setY(y);
 					
-					Engine.getSceneActive().addGameObject(gameObjectNew);
-					System.out.println("placed");
+					this.leveleditor.getSceneActive().addGameObject(gameObjectNew);
+//					System.out.println("placed");
 				}
 			}
 		}
@@ -155,6 +157,11 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 		}
 		
 		System.out.println(spriteScale);
+	}
+	
+	public void moveCamera(int xDirection, int yDirection) {
+		this.cameraPosXPx += xDirection * CAMERA_MOVEMENT_SPEED;
+		this.cameraPosYPx += yDirection * CAMERA_MOVEMENT_SPEED;
 	}
 	
 	
