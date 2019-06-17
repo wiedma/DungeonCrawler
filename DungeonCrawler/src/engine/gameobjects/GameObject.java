@@ -16,6 +16,7 @@ abstract public class GameObject implements Cloneable {
 	/**
 	 * The Hitbox of this GameObject
 	 */
+	@SuppressWarnings("unused")
 	private Hitbox hitbox;
 	
 	/**

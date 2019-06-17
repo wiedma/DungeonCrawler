@@ -79,8 +79,6 @@ public class Engine {
 						deltaTime = (duration/1000000000);
 					}
 					
-					System.out.println(delay);
-					
 					// --
 				}				
 			}

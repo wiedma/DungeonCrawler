@@ -22,9 +22,9 @@ public class JUnitTestGameObject extends GameObject {
 		this.zPositionOffset = zValue;
 	}
 	
-	public GameObject getOtherInstance() {
-		return new JUnitTestGameObject(this.zPositionOffset);		
-	}
+//	public GameObject getOtherInstance() {
+//		return new JUnitTestGameObject(this.zPositionOffset);		
+//	}
 	
 	public void start() {
 		counterStartMethodCalled++;

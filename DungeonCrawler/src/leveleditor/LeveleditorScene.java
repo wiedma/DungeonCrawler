@@ -135,26 +135,26 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		if(e.getWheelRotation() < 0) {
-			if(this.spriteScale >= 1)
-				this.spriteScale += 0.5;
+			if(spriteScale >= 1)
+				spriteScale += 0.5;
 			else
-				this.spriteScale += 0.1;
+				spriteScale += 0.1;
 		} else {
-			if(this.spriteScale > 1)
-				this.spriteScale -= 0.5;
+			if(spriteScale > 1)
+				spriteScale -= 0.5;
 			else
-				this.spriteScale = Math.max(0.1, this.spriteScale - 0.1);
+				spriteScale = Math.max(0.1, spriteScale - 0.1);
 		}
 		
 		
 		//round number
-		if(this.spriteScale > 1) {
-			this.spriteScale = ((int) ((this.spriteScale*2) + 0.01)) /2d;
+		if(spriteScale > 1) {
+			spriteScale = ((int) ((spriteScale*2) + 0.01)) /2d;
 		} else {
-			this.spriteScale = ((int) ((this.spriteScale*10) + 0.01)) /10d;
+			spriteScale = ((int) ((spriteScale*10) + 0.01)) /10d;
 		}
 		
-		System.out.println(this.spriteScale);
+		System.out.println(spriteScale);
 	}
 	
 	

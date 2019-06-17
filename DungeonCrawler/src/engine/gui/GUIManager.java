@@ -13,6 +13,7 @@ public class GUIManager {
 	/**
 	 * ArrayList containig every active GUI-Element. Each element of this list will be displayed in ascending order.
 	 */
+	@SuppressWarnings("unused")
 	private static ArrayList<GUIElement> guiElements = new ArrayList<GUIElement>();
 	
 	/**
