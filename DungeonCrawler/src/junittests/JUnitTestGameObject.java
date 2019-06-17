@@ -5,6 +5,7 @@ import java.util.HashMap;
 import engine.animation.Animation;
 import engine.gameobjects.GameObject;
 import engine.sprites.Sprite;
+import engine.sprites.Spritesheet;
 
 public class JUnitTestGameObject extends GameObject {
 
@@ -13,7 +14,7 @@ public class JUnitTestGameObject extends GameObject {
 	private static final HashMap<String, Animation> ANIMATION_MAP_JUNITTESTGAMEOBJECT = new HashMap<String, Animation>();
 	
 	static {
-		Animation defaultAnimation = new Animation("default", new Sprite[] {new Sprite(11, 0, 1, 2, "res/spritesheets/baum.jpg")}, 1, false, null);
+		Animation defaultAnimation = new Animation("default", new Sprite[] {new Sprite(11, 0, 1, 2, Spritesheet.DIR_SPRITESHEETS + "baum.png")}, 1, false, null);
 		ANIMATION_MAP_JUNITTESTGAMEOBJECT.put(defaultAnimation.getName(), defaultAnimation);
 	}
 

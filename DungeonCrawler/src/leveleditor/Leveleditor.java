@@ -79,6 +79,7 @@ public class Leveleditor extends JFrame {
 		
 		
 		JSplitPane splitMain = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+		splitMain.setResizeWeight(0.80);
 		splitMain.setContinuousLayout(true);
 
 			//------PANEL SCENE
@@ -88,10 +89,10 @@ public class Leveleditor extends JFrame {
 			splitMain.setLeftComponent(dcScene);
 
 			//------PANEL Object Chooser
-			dcObjects = new LeveleditorObjectChooser(5);
+			dcObjects = new LeveleditorObjectChooser();
 			dcObjects.setPreferredSize(new Dimension(160, 0));
 			this.fillObjectChooser(dcObjects);
-			splitMain.setRightComponent(dcObjects);			
+			splitMain.setRightComponent(dcObjects);
 
 		this.add(splitMain, BorderLayout.CENTER);
 		

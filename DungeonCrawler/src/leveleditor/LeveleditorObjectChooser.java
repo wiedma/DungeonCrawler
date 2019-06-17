@@ -37,7 +37,7 @@ public class LeveleditorObjectChooser extends JComponent implements ComponentLis
 	/**
 	 * specifes how many Tiles / Sprites fit into this component horizontally at this moment
 	 */
-	private int widthTiles;
+	private int widthTiles = 1;
 		
 	/**
 	 * <p>this specifies if, while this component is being resized, the Objects in the GameObjectChooser should be resorted continuously or only once after the resort is finished.
@@ -72,9 +72,8 @@ public class LeveleditorObjectChooser extends JComponent implements ComponentLis
 	private double drawScale = 2;
 	
 	
-	public LeveleditorObjectChooser(int widthTiles) {
+	public LeveleditorObjectChooser() {
 		this.gameObjectsSorted = new ArrayList<GameObject>();
-		this.widthTiles = widthTiles;
 		
 		this.addComponentListener(this);
 		this.addMouseListener(this);
