@@ -1,5 +1,7 @@
 package engine;
 
+import engine.io.FileLoader;
+
 /**
  * Main class used for testing
  * @author Marco
@@ -8,7 +10,8 @@ package engine;
 public class Main {
 
 	public static void main(String[] args) {
-		Engine.init();
+//		Engine.init();
+		FileLoader.readFromFile("res/scenes/JUnitTestScene");
 	}
 
 }

@@ -57,6 +57,7 @@ public class Leveleditor extends JFrame {
 	private Scene sceneActive;
 	
 	public Leveleditor() {
+		
 		//create empty scene
 		this.sceneActive = new Scene();
 		

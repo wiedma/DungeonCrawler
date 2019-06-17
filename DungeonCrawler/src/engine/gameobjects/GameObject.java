@@ -57,6 +57,10 @@ abstract public class GameObject {
 		this.currentAnimation = startAnimation;
 	}
 	
+	public GameObject(double x, double y) {
+		
+	}
+	
 	/**
 	 * Initialized this GameObject
 	 */
@@ -184,5 +188,13 @@ abstract public class GameObject {
 	
 	public void setY(double y) {
 		this.y = y;
+	}
+	
+	/**
+	 * <p>Used to generate String which store the GameObject in a file.</p>
+	 * <p><b>NOTE: If any subclass of GameObject contains any metadata which has to be saved to the File it must override this method to do so!</b></p>
+	 */
+	public String toString() {
+		return getClass().getName() + ";2;java.lang.Double;" + x + ";java.lang.Double;" + y;
 	}
 }

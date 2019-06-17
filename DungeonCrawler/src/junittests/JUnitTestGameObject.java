@@ -42,4 +42,12 @@ public class JUnitTestGameObject extends GameObject {
 	public int getCounterUpdateMethodCalled() {
 		return counterUpdateMethodCalled;
 	}
+	
+	public String toString() {
+		return this.getClass().getName() + ";1;java.lang.Double;" + this.zPositionOffset;
+	}
+	
+	public boolean equals(JUnitTestGameObject other) {
+		return this.zPositionOffset == other.zPositionOffset;
+	}
 }
