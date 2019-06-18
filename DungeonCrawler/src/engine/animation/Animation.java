@@ -1,5 +1,7 @@
 package engine.animation;
 
+import java.io.Serializable;
+
 import engine.sprites.Sprite;
 import engine.window.DrawComp;
 
@@ -8,8 +10,13 @@ import engine.window.DrawComp;
  * @author Marco, Daniel
  *
  */
-public class Animation {
+public class Animation implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4304665586660466484L;
+
 	/**
 	 * Array of all sprites used in this animation (in order)
 	 */

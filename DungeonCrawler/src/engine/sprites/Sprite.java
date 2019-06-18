@@ -1,14 +1,20 @@
 package engine.sprites;
 
 import java.awt.Image;
+import java.io.Serializable;
 
 import engine.window.DrawComp;
 
-public class Sprite {	
+public class Sprite implements Serializable{	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4272690128835519086L;
+
 	/**
 	 * The image this sprite produces
 	 */
-	private Image image;
+	private transient Image image;
 	
 	/**
 	 * this sprites' position on the spritesheet in 16-pixel units
@@ -54,7 +60,7 @@ public class Sprite {
 	 * @return
 	 */
 	public Image getImage(double scale) {
-		if(scale == currentScale) {
+		if(scale == currentScale && image != null) {
 			return this.image;
 		} else {
 			//extract image from spritesheet

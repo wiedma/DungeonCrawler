@@ -64,7 +64,7 @@ public class Leveleditor extends JFrame {
 	public Leveleditor() {
 		
 		//create empty scene
-		loadScene(FileLoader.readFromFile("res/scenes/test"), false);
+		loadScene(FileLoader.readFromFile("res/scenes/JUnitTestScene"), false);
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		this.addKeyListener(KeyRegister.getKeyRegister());		

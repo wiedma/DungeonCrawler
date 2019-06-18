@@ -8,19 +8,27 @@ import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
 import engine.window.DrawComp;
 
-public class Spritesheet {
+public class Spritesheet implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6011892443250319257L;
+
 	public static final String DIR_SPRITESHEETS = "res/spritesheets/"; 
 	
 	/**
 	 * the scaled version of the entire spritesheet, basically the spritesheet file but scaled up
 	 */
-	private BufferedImage image;
+	private transient BufferedImage image;
 	
 	public Spritesheet(File sheetFile) {
 		loadSpritesheetFromFile(sheetFile);
@@ -73,4 +81,14 @@ public class Spritesheet {
 												widthTiles * DrawComp.SPRITE_SIZE_PX_ORIGINAL, heightTiles * DrawComp.SPRITE_SIZE_PX_ORIGINAL), null);
 					
 	}
+	
+	private void writeObject(ObjectOutputStream out) throws IOException {
+	        out.defaultWriteObject();
+            ImageIO.write(image, "png", out); // png is lossless
+    }
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+	        in.defaultReadObject();
+	        image = ImageIO.read(in);
+    }
 }

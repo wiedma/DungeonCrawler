@@ -1,5 +1,7 @@
 package engine.hitbox;
 
+import java.io.Serializable;
+
 import engine.gameobjects.GameObject;
 
 /**
@@ -7,7 +9,11 @@ import engine.gameobjects.GameObject;
  * @author Marco, Daniel
  *
  */
-public class Hitbox {
+public class Hitbox implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4617402936920975606L;
 	/**
 	 * Width of the hitbox in units
 	 */

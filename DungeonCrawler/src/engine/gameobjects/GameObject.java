@@ -1,6 +1,7 @@
 package engine.gameobjects;
 
 import java.awt.Image;
+import java.io.Serializable;
 import java.util.HashMap;
 
 import engine.animation.Animation;
@@ -11,12 +12,16 @@ import engine.sprites.Sprite;
  * @author Marco, Daniel
  *
  */
-abstract public class GameObject {
+abstract public class GameObject implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2570222766199986936L;
+
 	/**
 	 * The Hitbox of this GameObject
 	 */
-	@SuppressWarnings("unused")
 	private Hitbox hitbox;
 	
 	/**
