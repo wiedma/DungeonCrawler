@@ -178,6 +178,10 @@ abstract public class GameObject {
 		}
 	}
 	
+	public Hitbox getHitbox() {
+		return this.hitbox;
+	}
+	
 	////////////////////////
 	//////////////////////// SETTERS
 	////////////////////////

@@ -13,6 +13,7 @@ import javax.swing.JComponent;
 
 import engine.Scene;
 import engine.gameobjects.GameObject;
+import engine.hitbox.Hitbox;
 import engine.sprites.Sprite;
 import engine.window.DrawComp;
 import engine.window.KeyRegister;
@@ -88,38 +89,76 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 	
 	private KeyRegister cacheKeyRegister = KeyRegister.getKeyRegister();	
 	public void processMouseInteractions() {
-		//place object
+		
 		if(this.mouseLeftButtonBeingPressed) {
-			Point mousePos = this.getMousePosition();
-			if(mousePos != null) {
-				GameObject gameObjectSelected = leveleditor.getSelectedObject();
-				if(gameObjectSelected == null)
-					return;
-				
-				double pxPerTile = spriteScale * DrawComp.SPRITE_SIZE_PX_ORIGINAL;
-				int x = (int) (((mousePos.x+cameraPosXPx) / pxPerTile) + 0.5);
-				int y = (int) (((mousePos.y+cameraPosYPx) / pxPerTile) + 0.5);
-				
-				//check if there is already a GameObject at the same Position (hold CONTROL to circumvent that)
-				boolean collision = false;
-				if(!cacheKeyRegister.isKeyDown(KeyEvent.VK_CONTROL)) {
-					ArrayList<GameObject> gameObjects = this.leveleditor.getSceneActive().getGameObjects();
-					for(GameObject gameObjectScene : gameObjects) {
-						if(gameObjectScene.getX() == x && gameObjectScene.getY() == y) {
-							collision = true;
-							break;
-						}
+			if(cacheKeyRegister.isKeyDown(KeyEvent.VK_SHIFT)) {
+				removeObject();
+			}
+			else {
+				placeObject();				
+			}
+		}
+	}
+	
+	public void removeObject() {
+		Point mousePos = this.getMousePosition();
+		if(mousePos == null) {
+			return;
+		}
+		double pxPerTile = spriteScale * DrawComp.SPRITE_SIZE_PX_ORIGINAL;
+		double x = (((mousePos.getX()+cameraPosXPx) / pxPerTile));
+		double y = (((mousePos.getY()+cameraPosYPx) / pxPerTile));
+		GameObject collisionObject = null;
+		Hitbox hitbox;
+		Sprite sprite;
+		for(GameObject obj : this.leveleditor.getSceneActive().getGameObjects()) {
+			if((hitbox = obj.getHitbox()) != null) {
+				collisionObject = hitbox.collidesWith(x, y) ? obj : collisionObject;
+			}
+			else if((sprite = obj.getCurrentSprite()) != null){
+				hitbox = new Hitbox(sprite.getWidth(), sprite.getHeight(), obj);
+				collisionObject = hitbox.collidesWith(x, y) ? obj : collisionObject;
+			}
+		}
+		if(collisionObject != null) {
+			this.leveleditor.getSceneActive().removeGameObject(collisionObject);			
+		}
+	}
+	
+	/**
+	 * <p>Places the selected {@link GameObject} on the mouse position.</p>
+	 * If no Object is selected this method does nothing.
+	 */
+	public void placeObject() {
+		GameObject gameObjectSelected = leveleditor.getSelectedObject();
+		if(gameObjectSelected == null)
+			{return;}
+		Point mousePos = this.getMousePosition();
+		if(mousePos != null) {
+			
+			double pxPerTile = spriteScale * DrawComp.SPRITE_SIZE_PX_ORIGINAL;
+			int x = (int) (((mousePos.x+cameraPosXPx) / pxPerTile) + 0.5);
+			int y = (int) (((mousePos.y+cameraPosYPx) / pxPerTile) + 0.5);
+			
+			//check if there is already a GameObject at the same Position (hold CONTROL to circumvent that)
+			boolean collision = false;
+			if(!cacheKeyRegister.isKeyDown(KeyEvent.VK_CONTROL)) {
+				ArrayList<GameObject> gameObjects = this.leveleditor.getSceneActive().getGameObjects();
+				for(GameObject gameObjectScene : gameObjects) {
+					if(gameObjectScene.getX() == x && gameObjectScene.getY() == y) {
+						collision = true;
+						break;
 					}
 				}
+			}
+			
+			if(!collision) {
+				GameObject gameObjectNew = gameObjectSelected.getOtherInstance();
+				gameObjectNew.setX(x);
+				gameObjectNew.setY(y);
 				
-				if(!collision) {
-					GameObject gameObjectNew = gameObjectSelected.getOtherInstance();
-					gameObjectNew.setX(x);
-					gameObjectNew.setY(y);
-					
-					this.leveleditor.getSceneActive().addGameObject(gameObjectNew);
+				this.leveleditor.getSceneActive().addGameObject(gameObjectNew);
 //					System.out.println("placed");
-				}
 			}
 		}
 	}
