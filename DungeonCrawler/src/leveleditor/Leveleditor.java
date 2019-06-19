@@ -19,6 +19,7 @@ import engine.Scene;
 import engine.gameobjects.GameObject;
 import engine.io.FileLoader;
 import engine.window.KeyRegister;
+import junittests.JUnitTestDynamicGameObject;
 import junittests.JUnitTestGameObject;
 
 public class Leveleditor extends JFrame {
@@ -186,12 +187,8 @@ public class Leveleditor extends JFrame {
 	 */
 	private void fillObjectChooser(LeveleditorObjectChooser dcObjects) {
 		dcObjects.addGameObjects(new GameObject[] {
-				new JUnitTestGameObject(0),
-				new JUnitTestGameObject(0),
-				new JUnitTestGameObject(0),
-				new JUnitTestGameObject(0),
-				new JUnitTestGameObject(0),
-				new JUnitTestGameObject(0)
+				new JUnitTestGameObject(1),
+				new JUnitTestDynamicGameObject(0,0)
 		});
 	}
 	

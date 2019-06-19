@@ -15,6 +15,8 @@ import engine.gameobjects.GameObject;
  */
 public class FileLoader {
 	
+	//TODO MaKe the I/O-System adapt to changes in class definition
+	
 	/**
 	 * This contains the first bit of the path to all {@link Scene} files. The filename is the only thing which needs to be added to this String.
 	 */

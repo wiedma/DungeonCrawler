@@ -22,12 +22,12 @@ abstract public class GameObject implements Serializable{
 	/**
 	 * The Hitbox of this GameObject
 	 */
-	private Hitbox hitbox;
+	protected Hitbox hitbox;
 	
 	/**
 	 * x- and y-position of this GameObject within the scene
 	 */
-	private double x, y;
+	protected double x, y;
 	
 	/**
 	 * Z-position for rendering. Objects are rendered in ascending z-position order. Will be added to Y Coordinate of this GameObject to get its absolute Z Value
@@ -63,7 +63,8 @@ abstract public class GameObject implements Serializable{
 	}
 	
 	public GameObject(double x, double y) {
-		
+		this.x = x;
+		this.y = y;
 	}
 	
 	/**
@@ -139,6 +140,15 @@ abstract public class GameObject implements Serializable{
 		this.animations = animationsNew;
 	}
 	
+	/**
+	 * This method does nothing by default. It is meant to be overridden by {@link GameObject GameObjects} with a {@link Hitbox} which is a trigger.
+	 * @param other The {@link GameObject} which caused the trigger.
+	 */
+	public void onTrigger(GameObject other) {
+		
+	}
+	
+	
 	////////////////////////
 	//////////////////////// GETTERS
 	////////////////////////
@@ -198,6 +208,7 @@ abstract public class GameObject implements Serializable{
 	public void setY(double y) {
 		this.y = y;
 	}
+	
 	
 	/**
 	 * <p>Used to generate String which store the GameObject in a file.</p>

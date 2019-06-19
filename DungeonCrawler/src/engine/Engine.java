@@ -1,5 +1,6 @@
 package engine;
 
+import engine.gameobjects.DynamicGameObject;
 import engine.gameobjects.GameObject;
 import engine.gui.GUIManager;
 import engine.window.Window;
@@ -54,6 +55,9 @@ public class Engine {
 					if(!paused) {
 						for(GameObject gameObject : sceneActive.getGameObjects()) {
 							gameObject.update();
+							if(gameObject instanceof DynamicGameObject) {
+								move((DynamicGameObject)gameObject);
+							}
 						}
 					}
 					//Animate GameObjects
@@ -106,5 +110,34 @@ public class Engine {
 	
 	public static Scene getSceneActive() {
 		return sceneActive;
+	}
+	
+	private static void move(DynamicGameObject obj) {
+		double xSpeed = obj.getSpeedX();
+		double ySpeed = obj.getSpeedY();
+		if(xSpeed == 0 && ySpeed == 0) {
+			return;
+		}
+		double oldX = obj.getX();
+		double oldY = obj.getY();
+		
+		double newX = oldX + xSpeed * deltaTime;
+		double newY = oldY + ySpeed * deltaTime;
+		obj.setX(newX);
+		obj.setY(newY);
+		//Try to move object to its new position
+		boolean collision = false;
+		for(GameObject other : sceneActive.getGameObjects()) {
+			//TODO: Avoid triggers, if GameObject doesn't actually move there
+			if(obj != other && obj.getHitbox().collidesWith(other.getHitbox())) {
+				collision = true;
+			}
+		}
+		//If it collides there, don't move there
+		//TODO: Move as close as possible to target destination
+		if(collision) {
+			obj.setX(oldX);
+			obj.setY(oldY);
+		}
 	}
 }

@@ -4,11 +4,14 @@ import java.util.HashMap;
 
 import engine.animation.Animation;
 import engine.gameobjects.GameObject;
+import engine.hitbox.Hitbox;
 import engine.sprites.Sprite;
 import engine.sprites.Spritesheet;
 
 public class JUnitTestGameObject extends GameObject {
 
+
+	private static final long serialVersionUID = -6980373835975577220L;
 	private int counterStartMethodCalled = 0;
 	private int counterUpdateMethodCalled = 0;
 	private static final HashMap<String, Animation> ANIMATION_MAP_JUNITTESTGAMEOBJECT = new HashMap<String, Animation>();
@@ -24,6 +27,7 @@ public class JUnitTestGameObject extends GameObject {
 	public JUnitTestGameObject(double zValue) {
 		super(0, 0, null, ANIMATION_MAP_JUNITTESTGAMEOBJECT.get("default"), ANIMATION_MAP_JUNITTESTGAMEOBJECT);
 		this.zPositionOffset = zValue;
+		this.hitbox = new Hitbox(5, 8, this);
 	}
 	
 	public GameObject getOtherInstance() {
