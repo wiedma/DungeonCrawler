@@ -1,14 +1,22 @@
 package engine.sprites;
 
 import java.awt.Image;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 
 import engine.window.DrawComp;
 
-public class Sprite {	
+public class Sprite implements Serializable{	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4272690128835519086L;
+
 	/**
 	 * The image this sprite produces
 	 */
-	private Image image;
+	private transient Image image;
 	
 	/**
 	 * this sprites' position on the spritesheet in 16-pixel units
@@ -23,12 +31,17 @@ public class Sprite {
 	/**
 	 * the scale the image has been loaded with
 	 */
-	private double currentScale;
+	private transient double currentScale;
 	
 	/**
 	 * the spritesheet this sprite is from
 	 */
-	private Spritesheet spritesheet;
+	private transient Spritesheet spritesheet;
+	
+	/**
+	 * FilePath of {@link Spritesheet}
+	 */
+	private String pathToSheet;
 	
 	
 	public Sprite(int xpos, int ypos, int width, int height, Spritesheet sheet) {
@@ -37,6 +50,7 @@ public class Sprite {
 		this.width = width;
 		this.height = height;
 		this.spritesheet = sheet;
+		this.pathToSheet = sheet.getFilePath();
 	}
 	
 	public Sprite(int xpos, int ypos, int width, int height, String sheetPath) {
@@ -45,6 +59,7 @@ public class Sprite {
 		this.width = width;
 		this.height = height;
 		this.spritesheet = SpriteLoader.request(sheetPath);
+		this.pathToSheet = spritesheet.getFilePath();
 	}
 	
 	/**
@@ -54,7 +69,7 @@ public class Sprite {
 	 * @return
 	 */
 	public Image getImage(double scale) {
-		if(scale == currentScale) {
+		if(scale == currentScale && image != null) {
 			return this.image;
 		} else {
 			//extract image from spritesheet
@@ -73,5 +88,10 @@ public class Sprite {
 	
 	public int getHeight() {
 		return this.height;
+	}
+	
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+		in.defaultReadObject();
+		spritesheet = SpriteLoader.request(pathToSheet);
 	}
 }

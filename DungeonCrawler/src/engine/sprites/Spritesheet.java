@@ -13,17 +13,21 @@ import javax.imageio.ImageIO;
 
 import engine.window.DrawComp;
 
-public class Spritesheet {
+public class Spritesheet{
 	
+
 	public static final String DIR_SPRITESHEETS = "res/spritesheets/"; 
 	
 	/**
 	 * the scaled version of the entire spritesheet, basically the spritesheet file but scaled up
 	 */
-	private BufferedImage image;
+	private transient BufferedImage image;
+	
+	private String filePath;
 	
 	public Spritesheet(File sheetFile) {
 		loadSpritesheetFromFile(sheetFile);
+		filePath = DIR_SPRITESHEETS + sheetFile.getName();
 	}
 	
 	/**
@@ -72,5 +76,9 @@ public class Spritesheet {
 		return op.filter(this.image.getSubimage(xTiles * DrawComp.SPRITE_SIZE_PX_ORIGINAL, yTiles * DrawComp.SPRITE_SIZE_PX_ORIGINAL,
 												widthTiles * DrawComp.SPRITE_SIZE_PX_ORIGINAL, heightTiles * DrawComp.SPRITE_SIZE_PX_ORIGINAL), null);
 					
+	}
+	
+	public String getFilePath() {
+		return this.filePath;
 	}
 }

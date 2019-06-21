@@ -6,5 +6,10 @@ package engine.gameobjects;
  *
  */
 abstract public class Smartie extends DynamicGameObject {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4153893609737590966L;
 	//TODO: implement AI basics
 }

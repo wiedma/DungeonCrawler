@@ -1,5 +1,6 @@
 package leveleditor;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
@@ -35,6 +36,11 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 	private int cameraPosXPx, cameraPosYPx;
 	private final int CAMERA_MOVEMENT_SPEED = 5;
 	
+	//TODO Make some UI to set this variable
+	private boolean drawHitboxes = true;
+	
+	public static final Color HITBOX_COLOR = new Color(1f, 0f, 0f, 0.5f);
+	
 	public LeveleditorScene(Leveleditor leveleditor) {
 		this.leveleditor = leveleditor;
 		this.addMouseListener(this);
@@ -61,6 +67,16 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 //					(int)     (sprite.getHeight() * pxPerTile),
 					null
 			);
+			
+			Hitbox hitbox;
+			if(drawHitboxes && (hitbox = gameObject.getHitbox()) != null) {
+				g.setColor(HITBOX_COLOR);
+				g.fillRect(
+							(int)	(gameObject.getX() * pxPerTile) - (int) (hitbox.getWidth() * 0.5 * pxPerTile) - cameraPosXPx,
+							(int)	(gameObject.getY() * pxPerTile) - (int) (hitbox.getHeight() * 0.5 * pxPerTile) -  cameraPosYPx,
+							(int)   (hitbox.getWidth() * pxPerTile),
+							(int)   (hitbox.getHeight() * pxPerTile));
+			}
 		}
 		
 		

@@ -1,28 +1,36 @@
 package engine.gameobjects;
 
 import java.awt.Image;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 
 import engine.animation.Animation;
 import engine.hitbox.Hitbox;
+import engine.io.AnimationLoader;
 import engine.sprites.Sprite;
 /**
  * Basic superclass for all Objects in a scene. Every object within this game must be a subclass of GameObject
  * @author Marco, Daniel
  *
  */
-abstract public class GameObject {
+abstract public class GameObject implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2570222766199986936L;
+
 	/**
 	 * The Hitbox of this GameObject
 	 */
-	@SuppressWarnings("unused")
-	private Hitbox hitbox;
+	protected Hitbox hitbox;
 	
 	/**
 	 * x- and y-position of this GameObject within the scene
 	 */
-	private double x, y;
+	protected double x, y;
 	
 	/**
 	 * Z-position for rendering. Objects are rendered in ascending z-position order. Will be added to Y Coordinate of this GameObject to get its absolute Z Value
@@ -32,33 +40,33 @@ abstract public class GameObject {
 	/**
 	 * Hashmap contains all animations for this GameObject
 	 */
-	protected HashMap<String, Animation> animations;
+	protected transient HashMap<String, Animation> animations;
 	
 	/**
 	 * The animation which is currently displayed
 	 */
-	protected Animation currentAnimation;
+	protected transient Animation currentAnimation;
 	
 	/**
 	 * Time until the next sprite is to be displayed
 	 */
-	protected double timeUntilNextSprite;
+	protected transient double timeUntilNextSprite;
 	
 	/**
 	 * The Index of the current Sprite in the current Animation
 	 */
-	protected int currentSpriteIndex = 0;
+	protected transient int currentSpriteIndex = 0;
 	
-	public GameObject(double x, double y, Hitbox hitbox, Animation startAnimation, HashMap<String, Animation> animations) {
+	public GameObject(double x, double y, Hitbox hitbox) {
 		this.x = x;
 		this.y = y;
 		this.hitbox = hitbox;
-		this.animations = animations;
-		this.currentAnimation = startAnimation;
+		this.animations = AnimationLoader.loadAnimations(this.getClass());
+		this.currentAnimation = animations.get("default");
 	}
 	
 	public GameObject(double x, double y) {
-		
+		this(x,y,null);
 	}
 	
 	/**
@@ -134,6 +142,15 @@ abstract public class GameObject {
 		this.animations = animationsNew;
 	}
 	
+	/**
+	 * This method does nothing by default. It is meant to be overridden by {@link GameObject GameObjects} with a {@link Hitbox} which is a trigger.
+	 * @param other The {@link GameObject} which caused the trigger.
+	 */
+	public void onTrigger(GameObject other) {
+		
+	}
+	
+	
 	////////////////////////
 	//////////////////////// GETTERS
 	////////////////////////
@@ -193,6 +210,14 @@ abstract public class GameObject {
 	public void setY(double y) {
 		this.y = y;
 	}
+	
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+		in.defaultReadObject();
+		this.animations = AnimationLoader.loadAnimations(this.getClass());
+		this.currentAnimation = animations.get("default");
+		this.timeUntilNextSprite = this.currentAnimation.getDelayBetweenSprites();
+	}
+	
 	
 	/**
 	 * <p>Used to generate String which store the GameObject in a file.</p>

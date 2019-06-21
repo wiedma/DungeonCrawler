@@ -1,5 +1,6 @@
 package engine;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import engine.gameobjects.GameObject;
@@ -9,8 +10,13 @@ import engine.gameobjects.GameObject;
  * @author Marco, Daniel
  *
  */
-public class Scene {
+public class Scene implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1638704375085189268L;
+
 	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	
 	private String initialFilePath;
