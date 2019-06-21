@@ -1,11 +1,14 @@
 package engine.gameobjects;
 
 import java.awt.Image;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 
 import engine.animation.Animation;
 import engine.hitbox.Hitbox;
+import engine.io.AnimationLoader;
 import engine.sprites.Sprite;
 /**
  * Basic superclass for all Objects in a scene. Every object within this game must be a subclass of GameObject
@@ -37,34 +40,33 @@ abstract public class GameObject implements Serializable{
 	/**
 	 * Hashmap contains all animations for this GameObject
 	 */
-	protected HashMap<String, Animation> animations;
+	protected transient HashMap<String, Animation> animations;
 	
 	/**
 	 * The animation which is currently displayed
 	 */
-	protected Animation currentAnimation;
+	protected transient Animation currentAnimation;
 	
 	/**
 	 * Time until the next sprite is to be displayed
 	 */
-	protected double timeUntilNextSprite;
+	protected transient double timeUntilNextSprite;
 	
 	/**
 	 * The Index of the current Sprite in the current Animation
 	 */
-	protected int currentSpriteIndex = 0;
+	protected transient int currentSpriteIndex = 0;
 	
-	public GameObject(double x, double y, Hitbox hitbox, Animation startAnimation, HashMap<String, Animation> animations) {
+	public GameObject(double x, double y, Hitbox hitbox) {
 		this.x = x;
 		this.y = y;
 		this.hitbox = hitbox;
-		this.animations = animations;
-		this.currentAnimation = startAnimation;
+		this.animations = AnimationLoader.loadAnimations(this.getClass());
+		this.currentAnimation = animations.get("default");
 	}
 	
 	public GameObject(double x, double y) {
-		this.x = x;
-		this.y = y;
+		this(x,y,null);
 	}
 	
 	/**
@@ -207,6 +209,13 @@ abstract public class GameObject implements Serializable{
 	
 	public void setY(double y) {
 		this.y = y;
+	}
+	
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+		in.defaultReadObject();
+		this.animations = AnimationLoader.loadAnimations(this.getClass());
+		this.currentAnimation = animations.get("default");
+		this.timeUntilNextSprite = this.currentAnimation.getDelayBetweenSprites();
 	}
 	
 	

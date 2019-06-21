@@ -21,6 +21,8 @@ import engine.io.FileLoader;
 import engine.window.KeyRegister;
 import junittests.JUnitTestDynamicGameObject;
 import junittests.JUnitTestGameObject;
+import junittests.JUnitTestObstacle;
+import junittests.JUnitTestTriggerGameObject;
 
 public class Leveleditor extends JFrame {
 	
@@ -65,7 +67,7 @@ public class Leveleditor extends JFrame {
 	public Leveleditor() {
 		
 		//create empty scene
-		loadScene(FileLoader.readFromFile("res/scenes/JUnitTestScene"), false);
+		loadScene(new Scene(), false);
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		this.addKeyListener(KeyRegister.getKeyRegister());		
@@ -188,7 +190,9 @@ public class Leveleditor extends JFrame {
 	private void fillObjectChooser(LeveleditorObjectChooser dcObjects) {
 		dcObjects.addGameObjects(new GameObject[] {
 				new JUnitTestGameObject(1),
-				new JUnitTestDynamicGameObject(0,0)
+				new JUnitTestDynamicGameObject(0,0),
+				new JUnitTestTriggerGameObject(0,0),
+				new JUnitTestObstacle(0,0)
 		});
 	}
 	

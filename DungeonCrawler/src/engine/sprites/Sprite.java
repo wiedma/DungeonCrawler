@@ -1,6 +1,8 @@
 package engine.sprites;
 
 import java.awt.Image;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 import engine.window.DrawComp;
@@ -29,12 +31,17 @@ public class Sprite implements Serializable{
 	/**
 	 * the scale the image has been loaded with
 	 */
-	private double currentScale;
+	private transient double currentScale;
 	
 	/**
 	 * the spritesheet this sprite is from
 	 */
-	private Spritesheet spritesheet;
+	private transient Spritesheet spritesheet;
+	
+	/**
+	 * FilePath of {@link Spritesheet}
+	 */
+	private String pathToSheet;
 	
 	
 	public Sprite(int xpos, int ypos, int width, int height, Spritesheet sheet) {
@@ -43,6 +50,7 @@ public class Sprite implements Serializable{
 		this.width = width;
 		this.height = height;
 		this.spritesheet = sheet;
+		this.pathToSheet = sheet.getFilePath();
 	}
 	
 	public Sprite(int xpos, int ypos, int width, int height, String sheetPath) {
@@ -51,6 +59,7 @@ public class Sprite implements Serializable{
 		this.width = width;
 		this.height = height;
 		this.spritesheet = SpriteLoader.request(sheetPath);
+		this.pathToSheet = spritesheet.getFilePath();
 	}
 	
 	/**
@@ -79,5 +88,10 @@ public class Sprite implements Serializable{
 	
 	public int getHeight() {
 		return this.height;
+	}
+	
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+		in.defaultReadObject();
+		spritesheet = SpriteLoader.request(pathToSheet);
 	}
 }

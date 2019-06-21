@@ -1,8 +1,5 @@
 package engine.gameobjects;
 
-import java.util.HashMap;
-
-import engine.animation.Animation;
 import engine.hitbox.Hitbox;
 
 /**
@@ -27,11 +24,11 @@ abstract public class DynamicGameObject extends GameObject {
 	protected double speedY;
 
 	public DynamicGameObject() {
-		super(0, 0, null, null, null);
+		super(0, 0, null);
 	}
 	
-	public DynamicGameObject(double x, double y, Hitbox hitbox, Animation startAnimation, HashMap<String, Animation> animations) {
-		super(x,y,hitbox,startAnimation, animations);
+	public DynamicGameObject(double x, double y, Hitbox hitbox) {
+		super(x,y,hitbox);
 	}
 	
 	//Getters and Setters

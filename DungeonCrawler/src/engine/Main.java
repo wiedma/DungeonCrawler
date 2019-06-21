@@ -8,7 +8,7 @@ import engine.io.FileLoader;
  *
  */
 public class Main {
-
+	
 	public static void main(String[] args) {
 		Engine.init();
 		Engine.loadScene(FileLoader.readFromFile(FileLoader.PATH_TO_FILES + "test"));

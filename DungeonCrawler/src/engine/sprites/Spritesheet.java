@@ -8,20 +8,13 @@ import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 import java.io.File;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
 import engine.window.DrawComp;
 
-public class Spritesheet implements Serializable{
+public class Spritesheet{
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6011892443250319257L;
 
 	public static final String DIR_SPRITESHEETS = "res/spritesheets/"; 
 	
@@ -30,8 +23,11 @@ public class Spritesheet implements Serializable{
 	 */
 	private transient BufferedImage image;
 	
+	private String filePath;
+	
 	public Spritesheet(File sheetFile) {
 		loadSpritesheetFromFile(sheetFile);
+		filePath = DIR_SPRITESHEETS + sheetFile.getName();
 	}
 	
 	/**
@@ -82,13 +78,7 @@ public class Spritesheet implements Serializable{
 					
 	}
 	
-	private void writeObject(ObjectOutputStream out) throws IOException {
-	        out.defaultWriteObject();
-            ImageIO.write(image, "png", out); // png is lossless
-    }
-
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-	        in.defaultReadObject();
-	        image = ImageIO.read(in);
-    }
+	public String getFilePath() {
+		return this.filePath;
+	}
 }
