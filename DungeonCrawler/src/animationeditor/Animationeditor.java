@@ -41,6 +41,7 @@ public class Animationeditor extends JFrame {
 	private ButtonGroup groupRadioButtonDefault = new ButtonGroup();
 	
 	private Animation animationSelected;
+	private JLabel lAnimationWrapperTopBarAnimationName;
 	private JPanel pAnimation;
 
 	private JPanel pSpritesheetChooserWrapper;
@@ -57,7 +58,7 @@ public class Animationeditor extends JFrame {
 		loadAnimationMap(new HashMap<String, Animation>(), false);
 		
 //		this.pack();
-		this.setSize(1000, 500);
+		this.setSize(1100, 500);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);	
 	}
@@ -76,7 +77,8 @@ public class Animationeditor extends JFrame {
 						try {
 							animationMapRequester = Class.forName(txtTopBarLoad.getText());
 							txtTopBarSave.setText(txtTopBarLoad.getText());
-							loadAnimationMap(AnimationLoader.loadAnimations(animationMapRequester), false);
+							animationMapActive = AnimationLoader.loadAnimations(animationMapRequester); //TODO the default system doesnt yet work completely => tick a different animation as default and reload, it will stay as you ticked it!
+							System.out.println(animationMapActive.get("default").getName());
 							setTitle(txtTopBarLoad.getText());
 							redrawAnimationMap();
 						}catch(Exception exc) {
@@ -96,7 +98,7 @@ public class Animationeditor extends JFrame {
 						bTopBarSave.doClick();
 					}
 				});
-				pTopBarSaving.add(txtTopBarSave); //TODO add button to add new Sprite, check if loading doesnt work anymore if animationset is currently loaded
+				pTopBarSaving.add(txtTopBarSave);
 			
 				bTopBarSave = new JButton("Save");
 				bTopBarSave.addActionListener(new ActionListener() {					
@@ -173,9 +175,33 @@ public class Animationeditor extends JFrame {
 				
 				//Sprite Overview				
 				JPanel pAnimationWrapper = new JPanel(new BorderLayout());
+				
+					//display name of animation
+					JPanel pAnimationWrapperTopBar = new JPanel();
+						lAnimationWrapperTopBarAnimationName = new JLabel();
+						pAnimationWrapperTopBar.add(lAnimationWrapperTopBarAnimationName);
+					pAnimationWrapper.add(pAnimationWrapperTopBar, BorderLayout.NORTH);
+				
 					pAnimation = new JPanel();
 					pAnimationWrapper.add(pAnimation, BorderLayout.CENTER);
 					
+					JPanel pAnimationAddSprite = new JPanel();
+						JButton bAnimationAddSprite = new JButton("Add new Sprite");
+						bAnimationAddSprite.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								Sprite[] spritesNew = new Sprite[animationSelected.getSprites().length + 1];
+								for(int i = 0; i < animationSelected.getSprites().length; i++)
+									spritesNew[i] = animationSelected.getSprites()[i];
+								
+								spritesNew[spritesNew.length-1] = null;
+								
+								animationSelected.setSprites(spritesNew);
+								
+								redrawAnimation();
+							}
+						});
+						pAnimationAddSprite.add(bAnimationAddSprite);
+					pAnimationWrapper.add(pAnimationAddSprite, BorderLayout.SOUTH);
 				splitAnimation.setRightComponent(pAnimationWrapper);
 				//Animation				
 			splitMain.setLeftComponent(splitAnimation);
@@ -218,6 +244,9 @@ public class Animationeditor extends JFrame {
 			return;
 		this.animationMapActive = animationMap;
 		
+//		if(animationMap.keySet().size() > 0)
+//			System.out.println(animationMap.get("default").getName());
+		
 		//filter out the default animation
 		
 		//load animation map
@@ -242,6 +271,10 @@ public class Animationeditor extends JFrame {
 		
 		this.loadAnimationMap(this.animationMapActive, true);
 		
+		//print name of current animation onto the top bar on the Aanimation view
+		if(animationSelected != null)
+			this.lAnimationWrapperTopBarAnimationName.setText(animationSelected.getName());
+		
 		this.pAnimationMap.revalidate();
 	}
 	
@@ -265,6 +298,10 @@ public class Animationeditor extends JFrame {
 		this.pAnimation.removeAll();
 		
 		this.loadAnimation(this.animationSelected, true);
+		
+		//print name of current animation onto the top bar on the Aanimation view
+		if(animationSelected != null)
+			this.lAnimationWrapperTopBarAnimationName.setText(animationSelected.getName());
 		
 		this.pAnimation.revalidate();
 		this.pAnimation.repaint();
@@ -320,6 +357,9 @@ public class Animationeditor extends JFrame {
 	}
 	
 	public void extractSpriteFromCurrentSpritesheetInto(Animation animation, int spriteIndex) {
+		if(this.spritesheetSelectorActive == null)
+			return;
+		
 		Sprite sprite = this.spritesheetSelectorActive.extractSelectedSprite();
 		if(sprite == null)
 			return;

@@ -22,7 +22,7 @@ public class JPanelElementSprite extends JPanel {
 	
 	private Animationeditor animationeditor;
 	
-	public JPanelElementSprite(Animationeditor animationeditor, Animation animation, int index, Sprite img) {
+	public JPanelElementSprite(Animationeditor animationeditor, Animation animation, int index, Sprite sprite) {
 		this.animation = animation;
 		
 		this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
@@ -34,12 +34,13 @@ public class JPanelElementSprite extends JPanel {
 		c.gridy = 5;
 		
 		//JIcon of the Image?
-		c.gridx = 2;
-		Icon icon = new ImageIcon(img.getImage(1));
-		JLabel lIcon = new JLabel(icon);
-		
-		this.add(lIcon, c);
-		
+		if(sprite != null) {
+			c.gridx = 2;
+			Icon icon = new ImageIcon(sprite.getImage(1));
+			JLabel lIcon = new JLabel(icon);
+			
+			this.add(lIcon, c);
+		}
 		
 		c.gridx = 5;
 		JButton bAnimationSelect = new JButton("<<");

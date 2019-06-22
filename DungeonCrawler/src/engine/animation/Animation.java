@@ -115,4 +115,8 @@ public class Animation implements Serializable{
 	public Sprite[] getSprites() {
 		return this.sprites;
 	}
+	
+	public void setSprites(Sprite[] sprites) {
+		this.sprites = sprites;
+	}
 }

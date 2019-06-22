@@ -29,6 +29,9 @@ public class JPanelElementAnimation extends JPanel {
 		this.animationeditor = animationeditor;
 		this.animation = animation;
 		
+//		if(defaultAnimation)
+//			System.out.println("Im default: " + animation.getName());
+		
 		this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
 		this.setBorder(BorderFactory.createTitledBorder(this.animation.getName()));
 		
