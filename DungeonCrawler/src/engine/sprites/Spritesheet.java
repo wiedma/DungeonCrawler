@@ -81,4 +81,8 @@ public class Spritesheet{
 	public String getFilePath() {
 		return this.filePath;
 	}
+	
+	public BufferedImage getImage() {
+		return this.image;
+	}
 }

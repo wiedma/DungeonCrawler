@@ -107,4 +107,12 @@ public class Animation implements Serializable{
 	public int getLength() {
 		return sprites.length;
 	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public Sprite[] getSprites() {
+		return this.sprites;
+	}
 }
