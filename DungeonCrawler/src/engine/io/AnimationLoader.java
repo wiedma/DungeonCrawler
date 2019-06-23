@@ -21,31 +21,38 @@ public class AnimationLoader {
 	 * @param requester the class which wants its fucking HashMap
 	 * @return its fucking HashMap
 	 */
-	@SuppressWarnings("unchecked")
 	public static HashMap<String, Animation> loadAnimations(Class<?> requester){
 		if(hashMap == null) {
 			hashMap = new HashMap <Class<?>, HashMap<String, Animation>>();
 		}
 		if(!hashMap.containsKey(requester)) {
-			File file = new File(PATH_TO_ANIMATIONS + requester.getName().replaceAll("\\.", "/") + ".animations");
-			if(!file.exists()) {
-				System.err.println("The file with the following path '" + file.getPath() + "' could not be found.");
-				return null;
-			}
-			try {
-				FileInputStream fis = new FileInputStream(file);
-				ObjectInputStream in = new ObjectInputStream(fis);
-				HashMap<String, Animation> animationMap = (HashMap<String, Animation>) in.readObject();
-				in.close();
-				hashMap.put(requester, animationMap);
-				return animationMap;
-			}catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
+			return forceLoadAnimations(requester);
 		}
 		
 		return hashMap.get(requester);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static HashMap<String, Animation> forceLoadAnimations(Class<?> requester){
+		if(hashMap == null) {
+			hashMap = new HashMap <Class<?>, HashMap<String, Animation>>();
+		}
+		File file = new File(PATH_TO_ANIMATIONS + requester.getName().replaceAll("\\.", "/") + ".animations");
+		if(!file.exists()) {
+			System.err.println("The file with the following path '" + file.getPath() + "' could not be found.");
+			return null;
+		}
+		try {
+			FileInputStream fis = new FileInputStream(file);
+			ObjectInputStream in = new ObjectInputStream(fis);
+			HashMap<String, Animation> animationMap = (HashMap<String, Animation>) in.readObject();
+			in.close();
+			hashMap.put(requester, animationMap);
+			return animationMap;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public static void writeAnimations(Class<?> requester, HashMap<String, Animation> animationMap) {
