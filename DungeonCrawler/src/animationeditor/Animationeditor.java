@@ -27,6 +27,11 @@ import engine.window.KeyRegister;
 
 public class Animationeditor extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8810485022803061065L;
+
 	public static void main(String[] args) {
 		new Animationeditor();
 	}
@@ -83,7 +88,7 @@ public class Animationeditor extends JFrame {
 						try {
 							animationMapRequester = Class.forName(txtTopBarLoad.getText());
 							txtTopBarSave.setText(txtTopBarLoad.getText());
-							animationMapActive = AnimationLoader.loadAnimations(animationMapRequester); //TODO the default system doesnt yet work completely => tick a different animation as default and reload, it will stay as you ticked it!
+							animationMapActive = AnimationLoader.forceLoadAnimations(animationMapRequester); //TODO the default system doesnt yet work completely => tick a different animation as default and reload, it will stay as you ticked it!
 							System.out.println(animationMapActive.get("default").getName());
 							setTitle(txtTopBarLoad.getText());
 							redrawAnimationMap();
