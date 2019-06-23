@@ -2,6 +2,7 @@ package animationeditor;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
@@ -63,8 +64,11 @@ public class SpritesheetSelector extends JComponent implements MouseListener, Mo
 						break;
 					
 					if(mouseSelecting) {
-						mouseClickSelectionEndXTiles = (int) getPosTilesX(getMousePosition().x);
-						mouseClickSelectionEndYTiles = (int) getPosTilesY(getMousePosition().y);
+						Point mousePos = getMousePosition();
+						if(mousePos != null) {
+							mouseClickSelectionEndXTiles = (int) getPosTilesX(mousePos.x);
+							mouseClickSelectionEndYTiles = (int) getPosTilesY(mousePos.y);
+						}
 					}
 					
 					if(mouseDragging || mouseSelecting)
@@ -81,10 +85,12 @@ public class SpritesheetSelector extends JComponent implements MouseListener, Mo
 	public void paintComponent(Graphics g) {
 		BufferedImage image = spritesheet.getImage();
 		
+		Point mousePos = getMousePosition();
+		
 		g.drawImage(
 				image,
-				(int) ((this.getWidth()/2) - ((this.cameraFocusPosXTiles - (!mouseDragging ? 0 : getPosTilesX(getMousePosition().x) - mouseDragClickXTiles))*pxPerTile)),
-				(int) ((this.getHeight()/2) - ((this.cameraFocusPosYTiles - (!mouseDragging ? 0 : getPosTilesY(getMousePosition().y) - mouseDragClickYTiles))*pxPerTile)),
+				(int) ((this.getWidth()/2) - ((this.cameraFocusPosXTiles - (!mouseDragging || mousePos == null ? 0 : getPosTilesX(mousePos.x) - mouseDragClickXTiles))*pxPerTile)),
+				(int) ((this.getHeight()/2) - ((this.cameraFocusPosYTiles - (!mouseDragging || mousePos == null ? 0 : getPosTilesY(mousePos.y) - mouseDragClickYTiles))*pxPerTile)),
 				(int) (image.getWidth()*(this.pxPerTile/DrawComp.SPRITE_SIZE_PX_ORIGINAL)),
 				(int) (image.getHeight()*(this.pxPerTile/DrawComp.SPRITE_SIZE_PX_ORIGINAL)),
 				null
@@ -95,13 +101,13 @@ public class SpritesheetSelector extends JComponent implements MouseListener, Mo
 			g.setColor(Color.red);
 			g.drawRect(				
 					(int) ((this.getWidth()/2) - ((
-							this.cameraFocusPosXTiles - (!mouseDragging ? 0 : getPosTilesX(getMousePosition().x) - mouseDragClickXTiles)
+							this.cameraFocusPosXTiles - (!mouseDragging || mousePos == null ? 0 : getPosTilesX(getMousePosition().x) - mouseDragClickXTiles)
 							- Math.min(this.mouseClickSelectionStartXTiles, this.mouseClickSelectionEndXTiles)
 							
 					)*pxPerTile)),
 					
 					(int) ((this.getHeight()/2) - ((
-							this.cameraFocusPosYTiles - (!mouseDragging ? 0 : getPosTilesY(getMousePosition().y) - mouseDragClickYTiles)
+							this.cameraFocusPosYTiles - (!mouseDragging || mousePos == null ? 0 : getPosTilesY(getMousePosition().y) - mouseDragClickYTiles)
 							- Math.min(this.mouseClickSelectionStartYTiles, this.mouseClickSelectionEndYTiles)
 					)*pxPerTile)),
 					

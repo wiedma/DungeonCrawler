@@ -50,7 +50,13 @@ public class Animationeditor extends JFrame {
 	
 	public Animationeditor() {
 		
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
+		//TODO knopf for deleteing animations
+		//TODO write into sprite view <empty> if there is no sprite
+		//TODO sprites auswählbar machen, den Knopf zum reinladen ins Spritesheet Panel (top bar)
+		//TODO mark selected animation
+		//TODO way of deleting sprites
+		
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.addKeyListener(KeyRegister.getKeyRegister());		
 		this.initJFrameStructure();
 		
@@ -109,7 +115,7 @@ public class Animationeditor extends JFrame {
 								System.err.println("The class '" + txtTopBarSave.getText() + "'does not exist");
 								return;
 							}
-							AnimationLoader.writeAnimations(animationMapRequester, animationMapActive);							
+							AnimationLoader.writeAnimations(animationMapRequester, animationMapActive);
 						}catch(Exception exc) {
 							exc.printStackTrace();
 						}
