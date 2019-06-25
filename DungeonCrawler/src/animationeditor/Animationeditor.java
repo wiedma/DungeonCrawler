@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 import engine.animation.Animation;
 import engine.io.AnimationLoader;
@@ -55,21 +56,15 @@ public class Animationeditor extends JFrame {
 	
 	public Animationeditor() {
 		
-		//TODO knopf for deleteing animations
-		//TODO write into sprite view <empty> if there is no sprite
-		//TODO sprites auswählbar machen, den Knopf zum reinladen ins Spritesheet Panel (top bar)
-		//TODO mark selected animation
-		//TODO way of deleting sprites
-		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.addKeyListener(KeyRegister.getKeyRegister());		
+		this.addKeyListener(KeyRegister.getKeyRegister());
 		this.initJFrameStructure();
 		
 		//create empty scene
 		loadAnimationMap(new HashMap<String, Animation>(), false);
 		
 //		this.pack();
-		this.setSize(1100, 500);
+		this.setSize(1150, 500);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);	
 	}
@@ -148,6 +143,7 @@ public class Animationeditor extends JFrame {
 					 BoxLayout boxAnimationMap = new BoxLayout(pAnimationMap, BoxLayout.Y_AXIS);
 					 pAnimationMap.setLayout(boxAnimationMap);				
 					 JScrollPane scrollAnimationMap = new JScrollPane(pAnimationMap);
+					 scrollAnimationMap.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 					 scrollAnimationMap.getVerticalScrollBar().setUnitIncrement(20);					
 					pAnimationMapWrapper.add(scrollAnimationMap);
 					
@@ -194,12 +190,21 @@ public class Animationeditor extends JFrame {
 					pAnimationWrapper.add(pAnimationWrapperTopBar, BorderLayout.NORTH);
 				
 					pAnimation = new JPanel();
-					pAnimationWrapper.add(pAnimation, BorderLayout.CENTER);
+					BoxLayout boxPAnimation = new BoxLayout(pAnimation, BoxLayout.Y_AXIS);
+					pAnimation.setLayout(boxPAnimation);
+						JScrollPane scrollSprites = new JScrollPane(pAnimation);
+						scrollSprites.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+						scrollSprites.getVerticalScrollBar().setUnitIncrement(20);					
+					pAnimationWrapper.add(scrollSprites, BorderLayout.CENTER);
 					
 					JPanel pAnimationAddSprite = new JPanel();
 						JButton bAnimationAddSprite = new JButton("Add new Sprite");
 						bAnimationAddSprite.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
+								if(animationSelected == null) {
+									System.err.println("Please select a animation before you try to add a new sprite");
+									return;
+								}
 								Sprite[] spritesNew = new Sprite[animationSelected.getSprites().length + 1];
 								for(int i = 0; i < animationSelected.getSprites().length; i++)
 									spritesNew[i] = animationSelected.getSprites()[i];
@@ -211,7 +216,7 @@ public class Animationeditor extends JFrame {
 								redrawAnimation();
 							}
 						});
-						pAnimationAddSprite.add(bAnimationAddSprite);
+						pAnimationAddSprite.add(bAnimationAddSprite);						
 					pAnimationWrapper.add(pAnimationAddSprite, BorderLayout.SOUTH);
 				splitAnimation.setRightComponent(pAnimationWrapper);
 				//Animation				
@@ -269,7 +274,8 @@ public class Animationeditor extends JFrame {
 					this,
 					animationMap.get(animationName),
 					groupRadioButtonDefault,
-					animationMap.get(animationName) == animationMap.get("default")
+					animationMap.get(animationName) == animationMap.get("default"),
+					animationMap.get(animationName) == animationSelected
 			));
 		}
 		
@@ -287,6 +293,7 @@ public class Animationeditor extends JFrame {
 			this.lAnimationWrapperTopBarAnimationName.setText(animationSelected.getName());
 		
 		this.pAnimationMap.revalidate();
+		this.pAnimationMap.repaint();
 	}
 	
 	private void loadAnimation(Animation animation, boolean nullIsOK) {
@@ -299,6 +306,10 @@ public class Animationeditor extends JFrame {
 		//load animation map
 		for(int spriteI = 0; spriteI < animation.getSprites().length; spriteI++) {
 			pAnimation.add(new JPanelElementSprite(this, animation, spriteI, animation.getSprite(spriteI)));
+		}
+		
+		if(animation.getSprites().length == 0) {
+			pAnimation.add(new JLabel("<empty>"));
 		}
 		
 		//tick the radioDefaultButton of the Animation that's actually the default
@@ -377,6 +388,32 @@ public class Animationeditor extends JFrame {
 		
 		animation.getSprites()[spriteIndex] = sprite;
 		redrawAnimation();
+	}
+	
+	public void deleteAnimation(Animation animation) {
+		
+		if(this.animationMapActive.get("default") == animation)
+			this.animationMapActive.remove("default");
+		
+		for(String key : this.animationMapActive.keySet()) {
+			if(!key.equals(animation.getName()))
+				continue;
+			
+			this.animationMapActive.remove(key);
+			break;
+		}
+		
+		this.redrawAnimationMap();
+	}
+	
+	public void deleteSprite(Animation animation, int spriteIndex) {
+		Sprite[] spritesNew = new Sprite[Math.max(0, animation.getSprites().length-1)];
+		for(int i = 0; i < spritesNew.length; i++) {
+			spritesNew[i] = animation.getSprite(i < spriteIndex ? i : i + 1);
+		}
+		animation.setSprites(spritesNew);
+		
+		this.redrawAnimation();
 	}
 	
 	////////////////////////

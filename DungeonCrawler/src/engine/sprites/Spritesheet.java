@@ -23,6 +23,16 @@ public class Spritesheet{
 	 */
 	private transient BufferedImage image;
 	
+	/**
+	 * width of the original sprite sheet file in Tiles
+	 */
+	private transient int widthTiles; 
+	
+	/**
+	 * height of the original sprite sheet file in Tiles
+	 */
+	private transient int heightTiles;
+	
 	private String filePath;
 	
 	public Spritesheet(File sheetFile) {
@@ -38,6 +48,8 @@ public class Spritesheet{
 		
 		try {
 			this.image = ImageIO.read(sheetFile);
+			this.widthTiles = this.image.getWidth() / DrawComp.SPRITE_SIZE_PX_ORIGINAL;
+			this.heightTiles = this.image.getHeight() / DrawComp.SPRITE_SIZE_PX_ORIGINAL;
 			
 		} catch(IOException e) {
 			System.err.print("ERROR while trying to load spritesheet at '" + sheetFile.getAbsolutePath() + "'\n\n"
@@ -63,7 +75,7 @@ public class Spritesheet{
 	 * @param scale the scale to which the sprite should be upscaled to
 	 */
 	public Image extractSprite(int xTiles, int yTiles, int widthTiles, int heightTiles, double scale) {
-		if(this.image == null)
+		if(this.image == null || xTiles < 0 || yTiles < 0 || xTiles + widthTiles > this.widthTiles || yTiles + heightTiles > this.heightTiles)
 			return null;
 		
 		//scale this picture, and at the same time get a BufferedImage out of it			
@@ -84,5 +96,13 @@ public class Spritesheet{
 	
 	public BufferedImage getImage() {
 		return this.image;
+	}
+	
+	public int getWidthTiles() {
+		return this.widthTiles;
+	}
+	
+	public int getHeightTiles() {
+		return this.heightTiles;
 	}
 }

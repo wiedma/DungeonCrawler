@@ -121,7 +121,7 @@ public class SpritesheetSelector extends JComponent implements MouseListener, Mo
 	public void mouseClicked(MouseEvent e) {}
 
 	public void mousePressed(MouseEvent e) {
-		if(e.getButton() == MouseEvent.BUTTON2) {
+		if(e.getButton() == MouseEvent.BUTTON2 || e.getButton() == MouseEvent.BUTTON3) {
 			mouseDragging = true;
 			mouseDragClickXTiles = getPosTilesX(e.getPoint().x);
 			mouseDragClickYTiles = getPosTilesY(e.getPoint().y);
@@ -129,13 +129,13 @@ public class SpritesheetSelector extends JComponent implements MouseListener, Mo
 		} else if(e.getButton() == MouseEvent.BUTTON1) {
 			this.mouseClickSelectionExists = true;
 			mouseSelecting = true;
-			mouseClickSelectionStartXTiles = (int) getPosTilesX(e.getX());
-			mouseClickSelectionStartYTiles = (int) getPosTilesY(e.getY());
+			mouseClickSelectionStartXTiles = Math.max(0, Math.min( spritesheet.getWidthTiles()-1, (int) getPosTilesX(e.getX())));
+			mouseClickSelectionStartYTiles = Math.max(0, Math.min( spritesheet.getHeightTiles()-1, (int) getPosTilesY(e.getY())));
 		}
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		if(e.getButton() == MouseEvent.BUTTON2) {
+		if(e.getButton() == MouseEvent.BUTTON2 || e.getButton() == MouseEvent.BUTTON3) {
 			mouseDragging = false;
 			cameraFocusPosXTiles -= getPosTilesX(e.getPoint().x) - mouseDragClickXTiles;
 			cameraFocusPosYTiles -= getPosTilesY(e.getPoint().y) - mouseDragClickYTiles;
@@ -143,8 +143,8 @@ public class SpritesheetSelector extends JComponent implements MouseListener, Mo
 			
 		} else if(e.getButton() == MouseEvent.BUTTON1) {
 			mouseSelecting = false;
-			mouseClickSelectionEndXTiles = (int) getPosTilesX(e.getX());
-			mouseClickSelectionEndYTiles = (int) getPosTilesY(e.getY());
+			mouseClickSelectionEndXTiles = Math.max(0, Math.min( spritesheet.getWidthTiles()-1, (int) getPosTilesX(e.getX())));
+			mouseClickSelectionEndYTiles = Math.max(0, Math.min( spritesheet.getHeightTiles()-1, (int) getPosTilesY(e.getY())));
 			repaint();
 		}
 	}
@@ -161,6 +161,8 @@ public class SpritesheetSelector extends JComponent implements MouseListener, Mo
 			pxPerTile += DrawComp.SPRITE_SIZE_PX_ORIGINAL/4;
 		}else {
 			pxPerTile -= DrawComp.SPRITE_SIZE_PX_ORIGINAL/4;
+			if(pxPerTile <= 0)
+				pxPerTile = DrawComp.SPRITE_SIZE_PX_ORIGINAL/4;
 		}
 		
 		//reposition camera, so that the mouseposition (in Tiles) doesn't change throughout the zoom
