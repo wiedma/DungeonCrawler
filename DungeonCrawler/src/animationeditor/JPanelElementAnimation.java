@@ -12,6 +12,7 @@ import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -75,6 +76,12 @@ public class JPanelElementAnimation extends JPanel implements MouseListener {
 		});
 		this.add(txtAnimationName, c);
 		
+		c.gridy = 6;
+		JLabel lWo = new JLabel("delay:" + animation.getDelayBetweenSprites());
+		this.add(lWo, c);
+		
+		
+		c.gridy = 5;
 		c.gridx = 3;
 		bAnimationNameSet = new JButton("Set");
 		bAnimationNameSet.addActionListener(new ActionListener() {
@@ -98,6 +105,9 @@ public class JPanelElementAnimation extends JPanel implements MouseListener {
 			}
 		});
 		this.add(bAnimationSelect, c);
+		
+		
+		
 		
 		this.updateDisplay();
 	}

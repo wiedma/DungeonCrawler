@@ -184,9 +184,38 @@ public class Animationeditor extends JFrame {
 				JPanel pAnimationWrapper = new JPanel(new BorderLayout());
 				
 					//display name of animation
-					JPanel pAnimationWrapperTopBar = new JPanel();
+					JPanel pAnimationWrapperTopBar = new JPanel(new BorderLayout());
 						lAnimationWrapperTopBarAnimationName = new JLabel();
-						pAnimationWrapperTopBar.add(lAnimationWrapperTopBarAnimationName);
+						pAnimationWrapperTopBar.add(lAnimationWrapperTopBarAnimationName, BorderLayout.NORTH);
+						
+						JPanel pAnimationWrapperTopBarSettings = new JPanel();
+						GridBagLayout gridBagLayoutAnimationTopBar = new GridBagLayout();
+						pAnimationWrapperTopBarSettings.setLayout(gridBagLayoutAnimationTopBar);
+						GridBagConstraints gridBagConstraintsAnimationTopBar = gridBagLayoutAnimationTopBar.getConstraints(pAnimationWrapperTopBarSettings);
+						
+							gridBagConstraintsAnimationTopBar.gridx = 5;
+							gridBagConstraintsAnimationTopBar.gridy = 4;
+							pAnimationWrapperTopBarSettings.add(new JLabel("delay (seconds)"), gridBagConstraintsAnimationTopBar);
+							
+							JTextField txtAnimationTopBarDelayBetweenSprites = new JTextField(10);
+							gridBagConstraintsAnimationTopBar.gridx = 5;
+							gridBagConstraintsAnimationTopBar.gridy = 5;
+							txtAnimationTopBarDelayBetweenSprites.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent e) {
+									try {
+										if(animationSelected == null)
+											return;
+										
+										animationSelected.setDelayBetweenSprites(Double.parseDouble(txtAnimationTopBarDelayBetweenSprites.getText()));
+										redrawAnimationMap();
+										
+									}catch(Exception exc) {
+										exc.printStackTrace();
+									}
+								}
+							});
+							pAnimationWrapperTopBarSettings.add(txtAnimationTopBarDelayBetweenSprites, gridBagConstraintsAnimationTopBar);
+						pAnimationWrapperTopBar.add(pAnimationWrapperTopBarSettings, BorderLayout.CENTER);
 					pAnimationWrapper.add(pAnimationWrapperTopBar, BorderLayout.NORTH);
 				
 					pAnimation = new JPanel();

@@ -119,4 +119,8 @@ public class Animation implements Serializable{
 	public void setSprites(Sprite[] sprites) {
 		this.sprites = sprites;
 	}
+	
+	public void setDelayBetweenSprites(double delayBetweenSprites) {
+		this.delayBetweenSprites = delayBetweenSprites;
+	}
 }
