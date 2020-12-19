@@ -57,7 +57,7 @@ abstract public class GameObject implements Serializable{
 	 */
 	protected transient int currentSpriteIndex = 0;
 	
-	public GameObject(double x, double y, Hitbox hitbox) {
+	private GameObject(double x, double y, Hitbox hitbox) {
 		this.x = x;
 		this.y = y;
 		this.hitbox = hitbox;

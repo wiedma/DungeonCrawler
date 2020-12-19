@@ -13,13 +13,13 @@ public class JUnitTestTriggerGameObject extends GameObject {
 	private transient int numberOfTriggers = 0;
 	
 	public JUnitTestTriggerGameObject() {
-		super(0,0,null);
+		super(0,0);
 		this.hitbox = new Hitbox(2,2,this);
 		this.hitbox.setIsTrigger(true);
 	}
 
 	public JUnitTestTriggerGameObject(double x, double y) {
-		super(x,y,null);
+		super(x,y);
 		this.hitbox = new Hitbox(2,2,this);
 		this.hitbox.setIsTrigger(true);
 	}

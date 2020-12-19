@@ -129,6 +129,8 @@ public class Engine {
 		boolean collision = false;
 		for(GameObject other : sceneActive.getGameObjects()) {
 			//TODO: Avoid triggers, if GameObject doesn't actually move there
+			if(obj.getHitbox() == null || other.getHitbox() == null)
+				continue;
 			if(obj != other && obj.getHitbox().collidesWith(other.getHitbox())) {
 				collision = true;
 			}

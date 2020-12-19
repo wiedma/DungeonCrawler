@@ -36,6 +36,11 @@ public class DrawComp extends JComponent {
 			sprite = gameObject.getCurrentSprite();
 			img = sprite.getImage(spriteScale);
 			
+//			if(gameObject == scene.getGameObjects().get(0)) {
+//				System.out.println((int) (   (gameObject.getX() - (sprite.getWidth()/2d)) * pxPerTile   ));
+//				System.out.println(img);
+//			}
+			
 			g.drawImage(img,
 					(int) (   (gameObject.getX() - (sprite.getWidth()/2d)) * pxPerTile   ),
 					(int) (   (gameObject.getY() - (sprite.getHeight()/2d)) * pxPerTile   ),
@@ -44,5 +49,7 @@ public class DrawComp extends JComponent {
 					null
 			);	
 		}
+		
+//		System.out.println(scene.getGameObjects().get(0).getX());
 	}
 }

@@ -17,7 +17,7 @@ public class JUnitTestDynamicGameObject extends DynamicGameObject {
 	}
 	
 	public JUnitTestDynamicGameObject(double x, double y) {
-		super(x, y, null);
+		super(x, y);
 		this.hitbox = new Hitbox(2,1.5,this);
 		this.zPositionOffset = 0.5;
 	}

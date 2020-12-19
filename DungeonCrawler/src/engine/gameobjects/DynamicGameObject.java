@@ -1,7 +1,5 @@
 package engine.gameobjects;
 
-import engine.hitbox.Hitbox;
-
 /**
  * Superclass of all GameObjects which are able to move
  * @author Marco, Daniel
@@ -24,11 +22,11 @@ abstract public class DynamicGameObject extends GameObject {
 	protected double speedY;
 
 	public DynamicGameObject() {
-		super(0, 0, null);
+		this(0, 0);
 	}
 	
-	public DynamicGameObject(double x, double y, Hitbox hitbox) {
-		super(x,y,hitbox);
+	public DynamicGameObject(double x, double y) {
+		super(x,y);
 	}
 	
 	//Getters and Setters

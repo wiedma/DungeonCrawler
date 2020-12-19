@@ -12,7 +12,7 @@ public class JUnitTestGameObject extends GameObject {
 	
 	
 	public JUnitTestGameObject(double zValue) {
-		super(0, 0, null);
+		super(0, 0);
 		this.zPositionOffset = zValue;
 		this.hitbox = new Hitbox(5, 8, this);
 	}

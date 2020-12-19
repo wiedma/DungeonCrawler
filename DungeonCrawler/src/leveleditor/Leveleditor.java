@@ -17,12 +17,11 @@ import javax.swing.JTextField;
 
 import engine.Scene;
 import engine.gameobjects.GameObject;
+import engine.gameobjects.GameObject_Slime;
+import engine.gameobjects.GameObject_Tree;
+import engine.gameobjects.GameObject_TreeSmol;
 import engine.io.FileLoader;
 import engine.window.KeyRegister;
-import junittests.JUnitTestDynamicGameObject;
-import junittests.JUnitTestGameObject;
-import junittests.JUnitTestObstacle;
-import junittests.JUnitTestTriggerGameObject;
 
 public class Leveleditor extends JFrame {
 	
@@ -188,11 +187,16 @@ public class Leveleditor extends JFrame {
 	 * all GameObjects designated to be in the GameObjectChooser Panel should be added here
 	 */
 	private void fillObjectChooser(LeveleditorObjectChooser dcObjects) {
+//		dcObjects.addGameObjects(new GameObject[] {
+//				new JUnitTestGameObject(1),
+//				new JUnitTestDynamicGameObject(0,0),
+//				new JUnitTestTriggerGameObject(0,0),
+//				new JUnitTestObstacle(0,0)
+//		});
 		dcObjects.addGameObjects(new GameObject[] {
-				new JUnitTestGameObject(1),
-				new JUnitTestDynamicGameObject(0,0),
-				new JUnitTestTriggerGameObject(0,0),
-				new JUnitTestObstacle(0,0)
+				new GameObject_Tree(5, 5),
+				new GameObject_TreeSmol(),
+				new GameObject_Slime()
 		});
 	}
 	
