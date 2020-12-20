@@ -22,6 +22,8 @@ import engine.animation.Animation;
 
 public class JPanelElementAnimation extends JPanel implements MouseListener {
 	
+	private static final long serialVersionUID = 7156985189153786104L;
+
 	private Animationeditor animationeditor;
 	
 	private Animation animation;

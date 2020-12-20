@@ -20,6 +20,8 @@ import engine.sprites.Sprite;
 
 public class JPanelElementSprite extends JPanel implements MouseListener {
 	
+	private static final long serialVersionUID = -5632749280384920871L;
+
 	private static final double SPRITE_SCALE = 1;
 	
 	private Animation animation;

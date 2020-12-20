@@ -18,11 +18,11 @@ import engine.window.DrawComp;
 
 public class SpritesheetSelector extends JComponent implements MouseListener, MouseWheelListener {
 	
+	private static final long serialVersionUID = -7813601296844426521L;
+	
 	private double pxPerTile = 16;
 	private double cameraFocusPosXTiles = 0;
 	private double cameraFocusPosYTiles = 0;
-	
-	private Animationeditor animationeditor;
 	
 	private Spritesheet spritesheet;
 	

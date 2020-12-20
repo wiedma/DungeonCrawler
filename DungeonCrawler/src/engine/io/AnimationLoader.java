@@ -32,7 +32,7 @@ public class AnimationLoader {
 		return hashMap.get(requester);
 	}
 	
-//	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public static HashMap<String, Animation> forceLoadAnimations(Class<?> requester){
 		if(hashMap == null) {
 			hashMap = new HashMap <Class<?>, HashMap<String, Animation>>();
