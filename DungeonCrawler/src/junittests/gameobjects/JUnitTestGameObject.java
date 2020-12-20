@@ -1,6 +1,5 @@
-package junittests;
+package junittests.gameobjects;
 
-import engine.hitbox.Hitbox;
 import gameobjects.GameObject;
 
 public class JUnitTestGameObject extends GameObject {
@@ -11,14 +10,8 @@ public class JUnitTestGameObject extends GameObject {
 	private int counterUpdateMethodCalled = 0;
 	
 	
-	public JUnitTestGameObject(double zValue) {
+	public JUnitTestGameObject() {
 		super(0, 0);
-		this.zPositionOffset = zValue;
-		this.hitbox = new Hitbox(5, 8, this);
-	}
-	
-	public GameObject getOtherInstance() {
-		return new JUnitTestGameObject(this.zPositionOffset);		
 	}
 	
 	public void start() {

@@ -61,8 +61,14 @@ abstract public class GameObject implements Serializable{
 		this.x = x;
 		this.y = y;
 		this.hitbox = hitbox;
-		this.animations = AnimationLoader.loadAnimations(this.getClass());
-		this.currentAnimation = animations.get("default");
+		
+		HashMap<String, Animation> animations = AnimationLoader.loadAnimations(this.getClass());
+		if(animations == null) {
+//			Logger.warn("There are no animations specified for class '" + this.getClass() + "'", "This could be a cause for following misbehaiviours");
+		} else {
+			this.animations = animations;
+			this.currentAnimation = animations.get("default");
+		}
 	}
 	
 	public GameObject(double x, double y) {
@@ -209,6 +215,10 @@ abstract public class GameObject implements Serializable{
 	
 	public void setY(double y) {
 		this.y = y;
+	}
+	
+	public void setZPositionOffset(double zPositionOffset) {
+		this.zPositionOffset = zPositionOffset;
 	}
 	
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{

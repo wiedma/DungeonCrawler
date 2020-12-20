@@ -14,7 +14,7 @@ public class AnimationLoader {
 	
 	public static final String PATH_TO_ANIMATIONS = "res/animations/";
 	
-	private static HashMap <Class<?>, HashMap<String, Animation>> hashMap;
+	private static HashMap <Class<?>, HashMap<String, Animation>> hashMap = new HashMap <Class<?>, HashMap<String, Animation>>();
 	
 	/**
 	 * Loads the {@link Animation} HashMap for a specific class
@@ -22,9 +22,9 @@ public class AnimationLoader {
 	 * @return its fucking HashMap
 	 */
 	public static HashMap<String, Animation> loadAnimations(Class<?> requester){
-		if(hashMap == null) {
-			hashMap = new HashMap <Class<?>, HashMap<String, Animation>>();
-		}
+//		if(hashMap == null) {
+//			hashMap = new HashMap <Class<?>, HashMap<String, Animation>>();
+//		}
 		if(!hashMap.containsKey(requester)) {
 			return forceLoadAnimations(requester);
 		}
@@ -34,12 +34,13 @@ public class AnimationLoader {
 	
 	@SuppressWarnings("unchecked")
 	public static HashMap<String, Animation> forceLoadAnimations(Class<?> requester){
-		if(hashMap == null) {
-			hashMap = new HashMap <Class<?>, HashMap<String, Animation>>();
-		}
+//		if(hashMap == null) {
+//			hashMap = new HashMap <Class<?>, HashMap<String, Animation>>();
+//		}
 		File file = new File(PATH_TO_ANIMATIONS + requester.getName().replaceAll("\\.", "/") + ".animations");
 		if(!file.exists()) {
-			System.err.println("The file with the following path '" + file.getPath() + "' could not be found.");
+			Logger.warn("The Animation file for class '" + requester.getName() + "'", "was searched for at path '" + file.getPath() + "',", "but could not be found.");
+//			System.err.println();
 			return null;
 		}
 		try {

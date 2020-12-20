@@ -1,4 +1,4 @@
-package junittests;
+package junittests.gameobjects;
 
 import engine.hitbox.Hitbox;
 import gameobjects.DynamicGameObject;

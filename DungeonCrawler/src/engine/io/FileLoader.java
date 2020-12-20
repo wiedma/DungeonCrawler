@@ -25,7 +25,7 @@ public class FileLoader {
 	/**
 	 * Writes all the Objects in a given {@link Scene} to a file.
 	 * @param s The {@link Scene} which is to be written.
-	 * @param filePath The targeted file.
+	 * @param fullFilePath The targeted file.
 	 * @return indicates if all the I/O-Operations were successfull
 	 */
 //	public static boolean writeToFile(Scene s, String filePath) {
@@ -48,8 +48,8 @@ public class FileLoader {
 //		return true;
 //	}
 	
-	public static boolean writeToFile(Scene s, String filePath) {
-		File file = new File(filePath);
+	public static boolean writeSceneToFile(Scene s, String fullFilePath) {
+		File file = new File(fullFilePath);
 		if(file.exists()) {
 			file.delete();
 		}
@@ -69,7 +69,7 @@ public class FileLoader {
 	
 	/**
 	 * Reads all the {@link GameObject objects} in a given file and adds them to a {@link Scene}.
-	 * @param filePath The path of the file which is to be read
+	 * @param fullFilePath The path of the file which is to be read
 	 * @return the created {@link Scene} which contains all of the {@link GameObject objects} specified in the file
 	 * @exception ArrayIndexOutOfBoundsException This Exception is thrown when the specified number of parameters in the file does not match the actual number.
 	 * @exception NoSuchMethodException This Exception is thrown when there is no constructor specified for the given parameters.
@@ -129,10 +129,10 @@ public class FileLoader {
 //		return scene;
 //	}
 	
-	public static Scene readFromFile(String filePath) {
-		File file = new File(filePath);
+	public static Scene readSceneFromFile(String fullFilePath) {
+		File file = new File(fullFilePath);
 		if(!file.exists()) {
-			System.err.println("The file with the following path '" + filePath + "' could not be found.");
+			System.err.println("The file with the following path '" + fullFilePath + "' could not be found.");
 			return null;
 		}
 		try {

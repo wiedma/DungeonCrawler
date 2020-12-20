@@ -15,7 +15,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		Engine.init();
-		Engine.loadScene(FileLoader.readFromFile(FileLoader.PATH_TO_FILES + "testRow"));
+		Engine.loadScene(FileLoader.readSceneFromFile(FileLoader.PATH_TO_FILES + "testRow"));
 		
 		ArrayList<GameObject> go = Engine.getSceneActive().getGameObjects();
 		for(GameObject o : go) {

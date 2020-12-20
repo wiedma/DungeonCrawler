@@ -113,7 +113,7 @@ public class Leveleditor extends JFrame {
 				JButton bLoadScene = new JButton("Load");
 				bLoadScene.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						loadScene(FileLoader.readFromFile(sceneLoadPathHead + txtLoadScene.getText()), false);
+						loadScene(FileLoader.readSceneFromFile(sceneLoadPathHead + txtLoadScene.getText()), false);
 						dcScene.resetCamera();
 					}
 				});
@@ -145,7 +145,7 @@ public class Leveleditor extends JFrame {
 				JButton bSaveScene = new JButton("Save");
 				bSaveScene.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						FileLoader.writeToFile(sceneActive, sceneSavePathHead + txtSaveScene.getText());
+						FileLoader.writeSceneToFile(sceneActive, sceneSavePathHead + txtSaveScene.getText());
 					}
 				});
 				bSaveScene.setBounds(pOptionsWidth-margin-width, txtSaveScene.getY()+txtSaveScene.getHeight()+margin, width, height);
