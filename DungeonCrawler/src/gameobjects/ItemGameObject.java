@@ -1,4 +1,4 @@
-package engine.gameobjects;
+package gameobjects;
 
 /**
  * Superclass of all GameObjects, which are takeable by the player

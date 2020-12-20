@@ -2,9 +2,9 @@ package engine;
 
 import java.util.ArrayList;
 
-import engine.gameobjects.GameObject;
-import engine.gameobjects.GameObject_Slime;
 import engine.io.FileLoader;
+import gameobjects.GameObject;
+import gameobjects.dynamic.GameObject_Slime;
 
 /**
  * Main class used for testing

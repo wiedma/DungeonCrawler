@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import javax.swing.JComponent;
 
 import engine.Scene;
-import engine.gameobjects.GameObject;
 import engine.hitbox.Hitbox;
 import engine.sprites.Sprite;
 import engine.window.DrawComp;
 import engine.window.KeyRegister;
+import gameobjects.GameObject;
 
 public class LeveleditorScene extends JComponent implements MouseListener, MouseWheelListener {
 	/**

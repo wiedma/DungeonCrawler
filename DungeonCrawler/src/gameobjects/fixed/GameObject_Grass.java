@@ -1,4 +1,6 @@
-package engine.gameobjects;
+package gameobjects.fixed;
+
+import gameobjects.GameObject;
 
 public class GameObject_Grass extends GameObject {
 

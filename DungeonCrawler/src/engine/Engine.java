@@ -1,9 +1,9 @@
 package engine;
 
-import engine.gameobjects.DynamicGameObject;
-import engine.gameobjects.GameObject;
 import engine.gui.GUIManager;
 import engine.window.Window;
+import gameobjects.DynamicGameObject;
+import gameobjects.GameObject;
 
 /**
  * The main engine for the game. Incluedes game-loop and basic functionalities

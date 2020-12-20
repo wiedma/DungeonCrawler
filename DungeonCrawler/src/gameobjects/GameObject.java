@@ -1,4 +1,4 @@
-package engine.gameobjects;
+package gameobjects;
 
 import java.awt.Image;
 import java.io.IOException;

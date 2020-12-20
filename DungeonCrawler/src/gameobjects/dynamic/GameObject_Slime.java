@@ -1,6 +1,7 @@
-package engine.gameobjects;
+package gameobjects.dynamic;
 
 import engine.hitbox.Hitbox;
+import gameobjects.DynamicGameObject;
 
 public class GameObject_Slime extends DynamicGameObject {
 

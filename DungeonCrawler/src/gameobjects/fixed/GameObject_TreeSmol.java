@@ -1,6 +1,7 @@
-package engine.gameobjects;
+package gameobjects.fixed;
 
 import engine.hitbox.Hitbox;
+import gameobjects.GameObject;
 
 public class GameObject_TreeSmol extends GameObject {
 

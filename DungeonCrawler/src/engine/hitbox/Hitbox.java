@@ -2,7 +2,7 @@ package engine.hitbox;
 
 import java.io.Serializable;
 
-import engine.gameobjects.GameObject;
+import gameobjects.GameObject;
 
 /**
  * Hitboxes used for collision detection

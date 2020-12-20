@@ -1,7 +1,7 @@
 package junittests;
 
-import engine.gameobjects.GameObject;
 import engine.hitbox.Hitbox;
+import gameobjects.GameObject;
 
 public class JUnitTestGameObject extends GameObject {
 

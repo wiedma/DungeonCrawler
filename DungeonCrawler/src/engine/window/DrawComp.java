@@ -7,8 +7,8 @@ import javax.swing.JComponent;
 
 import engine.Engine;
 import engine.Scene;
-import engine.gameobjects.GameObject;
 import engine.sprites.Sprite;
+import gameobjects.GameObject;
 
 public class DrawComp extends JComponent {
 	

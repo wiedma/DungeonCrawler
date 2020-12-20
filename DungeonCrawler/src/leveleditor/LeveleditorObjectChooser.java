@@ -16,9 +16,9 @@ import javax.swing.JComponent;
 import javax.swing.JSplitPane;
 import javax.swing.Timer;
 
-import engine.gameobjects.GameObject;
 import engine.sprites.Sprite;
 import engine.window.DrawComp;
+import gameobjects.GameObject;
 
 /**
  * <p>This class is a JComponent that is added to the main Leveleditor. Its purpose is to show the user a pallet of {@link GameObject GameObjects} as specified in <it>Leveleditor.fillObjectChooser(..)</it>.

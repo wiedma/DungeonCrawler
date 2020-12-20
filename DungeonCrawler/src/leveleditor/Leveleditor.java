@@ -16,13 +16,13 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 
 import engine.Scene;
-import engine.gameobjects.GameObject;
-import engine.gameobjects.GameObject_Grass;
-import engine.gameobjects.GameObject_Slime;
-import engine.gameobjects.GameObject_Tree;
-import engine.gameobjects.GameObject_TreeSmol;
 import engine.io.FileLoader;
 import engine.window.KeyRegister;
+import gameobjects.GameObject;
+import gameobjects.dynamic.GameObject_Slime;
+import gameobjects.fixed.GameObject_Grass;
+import gameobjects.fixed.GameObject_Tree;
+import gameobjects.fixed.GameObject_TreeSmol;
 
 public class Leveleditor extends JFrame {
 	

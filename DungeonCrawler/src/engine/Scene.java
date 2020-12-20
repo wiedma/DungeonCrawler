@@ -3,7 +3,7 @@ package engine;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import engine.gameobjects.GameObject;
+import gameobjects.GameObject;
 
 /**
  * Scenes

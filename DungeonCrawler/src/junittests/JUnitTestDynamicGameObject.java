@@ -1,7 +1,7 @@
 package junittests;
 
-import engine.gameobjects.DynamicGameObject;
 import engine.hitbox.Hitbox;
+import gameobjects.DynamicGameObject;
 
 public class JUnitTestDynamicGameObject extends DynamicGameObject {
 

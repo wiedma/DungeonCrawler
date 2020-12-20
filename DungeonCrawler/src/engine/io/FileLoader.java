@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import engine.Scene;
-import engine.gameobjects.GameObject;
+import gameobjects.GameObject;
 /**
  * This class provides basic utilities to save Scenes to a file and load them from the file
  * @author Marco, Daniel

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import engine.Engine;
 import engine.Scene;
-import engine.gameobjects.GameObject;
+import gameobjects.GameObject;
 
 class TestSortingOrder {
 
