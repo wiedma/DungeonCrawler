@@ -60,7 +60,7 @@ public class Animationeditor extends JFrame {
 		this.addKeyListener(KeyRegister.getKeyRegister());
 		this.initJFrameStructure();
 		
-		//create empty scene
+		//create empty animationMap
 		loadAnimationMap(new HashMap<String, Animation>(), false);
 		
 //		this.pack();
@@ -83,7 +83,10 @@ public class Animationeditor extends JFrame {
 						try {
 							animationMapRequester = Class.forName(txtTopBarLoad.getText());
 							txtTopBarSave.setText(txtTopBarLoad.getText());
-							animationMapActive = AnimationLoader.forceLoadAnimations(animationMapRequester); //TODO the default system doesnt yet work completely => tick a different animation as default and reload, it will stay as you ticked it!
+							HashMap<String, Animation> animationMapActiveNew = AnimationLoader.forceLoadAnimations(animationMapRequester); //TODO the default system doesnt yet work completely => tick a different animation as default and reload, it will stay as you ticked it!
+							if(animationMapActiveNew == null)
+								return;
+							animationMapActive = animationMapActiveNew;
 							System.out.println(animationMapActive.get("default").getName());
 							setTitle(txtTopBarLoad.getText());
 							redrawAnimationMap();
@@ -150,7 +153,7 @@ public class Animationeditor extends JFrame {
 					JPanel pAnimationMapAddAnimation = new JPanel();
 						JButton bAnimationMapAddAnimation = new JButton("Add new Animation");
 						bAnimationMapAddAnimation.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
+							public void actionPerformed(ActionEvent e) {								
 								//check if there is a Animation of name default
 								if(checkForAnimationsOfNameDefault())
 									return;

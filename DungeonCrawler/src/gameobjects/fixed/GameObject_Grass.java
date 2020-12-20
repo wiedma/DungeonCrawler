@@ -8,7 +8,7 @@ public class GameObject_Grass extends GameObject {
 
 	public GameObject_Grass() {
 		super(0, 0);
-		this.zPositionOffset = -10;
+		this.zPositionOffset = Double.NEGATIVE_INFINITY;
 	}
 
 	public void start() {}
