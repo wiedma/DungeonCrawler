@@ -4,6 +4,8 @@ import engine.hitbox.Hitbox;
 
 public class GameObject_Tree extends GameObject {
 
+	private static final long serialVersionUID = -6350700197722013786L;
+
 	public GameObject_Tree() {
 		this(0, 0);
 		

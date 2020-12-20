@@ -161,6 +161,8 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 			if(!cacheKeyRegister.isKeyDown(KeyEvent.VK_CONTROL)) {
 				ArrayList<GameObject> gameObjects = this.leveleditor.getSceneActive().getGameObjects();
 				for(GameObject gameObjectScene : gameObjects) {
+					if(gameObjectScene.getClass() != gameObjectSelected.getClass())
+						continue;					
 					if(gameObjectScene.getX() == x && gameObjectScene.getY() == y) {
 						collision = true;
 						break;

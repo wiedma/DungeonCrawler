@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 
 import engine.Scene;
 import engine.gameobjects.GameObject;
+import engine.gameobjects.GameObject_Grass;
 import engine.gameobjects.GameObject_Slime;
 import engine.gameobjects.GameObject_Tree;
 import engine.gameobjects.GameObject_TreeSmol;
@@ -196,7 +197,8 @@ public class Leveleditor extends JFrame {
 		dcObjects.addGameObjects(new GameObject[] {
 				new GameObject_Tree(5, 5),
 				new GameObject_TreeSmol(),
-				new GameObject_Slime()
+				new GameObject_Slime(),
+				new GameObject_Grass()
 		});
 	}
 	

@@ -13,3 +13,4 @@
 
 ##Leveleditor
 - Add Button to refresh/reload ObjectChooser
+- Checkbox to show/hide hitboxes
