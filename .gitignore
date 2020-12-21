@@ -26,3 +26,6 @@ hs_err_pid*
 
 #embarrassing plan images
 DungeonCrawler/plan.png
+
+#(re)include sprites
+!/DungeonCrawler/res/spritesheets/*
