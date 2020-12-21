@@ -36,8 +36,7 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 	private int cameraPosXPx, cameraPosYPx;
 	private final int CAMERA_MOVEMENT_SPEED = 5;
 	
-	//TODO Make some UI to set this variable
-	private boolean drawHitboxes = true;
+	private boolean drawHitboxes = false;
 	
 	public static final Color HITBOX_COLOR = new Color(1f, 0f, 0f, 0.5f);
 	
@@ -220,7 +219,7 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 			spriteScale = ((int) ((spriteScale*10) + 0.01)) /10d;
 		}
 		
-		System.out.println(spriteScale);
+//		System.out.println(spriteScale);
 	}
 	
 	public void moveCamera(int xDirection, int yDirection) {
@@ -231,6 +230,10 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 	public void resetCamera() {
 		this.cameraPosXPx = 0;
 		this.cameraPosYPx = 0;
+	}
+	
+	public void setDisplayHitboxes(boolean displayHitboxes) {
+		this.drawHitboxes = displayHitboxes;
 	}
 	
 }

@@ -11,7 +11,14 @@
 
 ##Animationeditor
 - Add Button to quick add a new GameObject
+- Add Hitbox-editor (after Hitbox offset is implemented)
 
 ##Leveleditor
 - ~~Add Button to refresh/reload ObjectChooser~~ (not possible as a reload would require recompiling the source code of the program itself)
+
+
+
+---
+
+## Done
 - Checkbox to show/hide hitboxes

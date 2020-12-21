@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -152,6 +153,22 @@ public class Leveleditor extends JFrame {
 				pSaveScene.add(bSaveScene);
 			pSaveScene.setBounds(0, pLoadScene.getY()+pLoadScene.getHeight(), pOptionsWidth, bSaveScene.getY()+bSaveScene.getHeight()+margin);
 			pOptions.add(pSaveScene);
+			
+			
+			//////////////OTHER OPTIONS
+			
+			JPanel pOtherOptions = new JPanel(null);
+				JCheckBox checkBoxShowHitboxes = new JCheckBox("Show Hitboxes");
+//				checkBoxShowHitboxes.setBackground(Color.red);
+				checkBoxShowHitboxes.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dcScene.setDisplayHitboxes(checkBoxShowHitboxes.isSelected());
+					}
+				});
+				checkBoxShowHitboxes.setBounds(margin, margin, pOptionsWidth-(margin*2), 20);
+				pOtherOptions.add(checkBoxShowHitboxes);
+			pOtherOptions.setBounds(0, pSaveScene.getY()+pSaveScene.getHeight(), pOptionsWidth, checkBoxShowHitboxes.getHeight() + checkBoxShowHitboxes.getY() + margin);
+			pOptions.add(pOtherOptions);
 			
 			
 		this.add(pOptions, BorderLayout.WEST);
