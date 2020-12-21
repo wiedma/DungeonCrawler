@@ -106,7 +106,7 @@ public class Leveleditor extends JFrame {
 				lLoadScenePathInfo.setBounds(lLoadScene.getX(), lLoadScene.getY()+lLoadScene.getHeight()+margin, 67, height);
 				pLoadScene.add(lLoadScenePathInfo);
 				
-				JTextField txtLoadScene = new JTextField();
+				JTextField txtLoadScene = new JTextField("default");
 				txtLoadScene.setBounds(lLoadScenePathInfo.getX()+lLoadScenePathInfo.getWidth()+margin, lLoadScenePathInfo.getY(), pOptionsWidth-lLoadScenePathInfo.getX()-lLoadScenePathInfo.getWidth()-(2*margin), height);
 				pLoadScene.add(txtLoadScene);
 				

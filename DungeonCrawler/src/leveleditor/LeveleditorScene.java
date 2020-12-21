@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
@@ -199,6 +200,9 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 	}
 
 	public void mouseWheelMoved(MouseWheelEvent e) {
+		
+		Point2D.Double mousePositionWorldBeforeZoom = this.getWorldPositionAtMousePosition(this.getMousePosition());
+		
 		if(e.getWheelRotation() < 0) {
 			if(spriteScale >= 1)
 				spriteScale += 0.5;
@@ -211,7 +215,6 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 				spriteScale = Math.max(0.1, spriteScale - 0.1);
 		}
 		
-		
 		//round number
 		if(spriteScale > 1) {
 			spriteScale = ((int) ((spriteScale*2) + 0.01)) /2d;
@@ -219,7 +222,33 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 			spriteScale = ((int) ((spriteScale*10) + 0.01)) /10d;
 		}
 		
-//		System.out.println(spriteScale);
+		//Zoom 'towards' the mouse-cursor by shifting the camera after the zoom with MATHZ
+		Point2D.Double mousePositionWorldAfterZoom = this.getWorldPositionAtMousePosition(this.getMousePosition());		
+		if(mousePositionWorldAfterZoom != null && mousePositionWorldAfterZoom != null) {
+			double pixelPerTile = getPixelPerTile();
+			this.moveCameraByPixels(
+					(int) -(pixelPerTile*(mousePositionWorldAfterZoom.x-mousePositionWorldBeforeZoom.x)),
+					(int) -(pixelPerTile*(mousePositionWorldAfterZoom.y-mousePositionWorldBeforeZoom.y))
+			);
+		}
+	}
+	
+	private Point2D.Double getWorldPositionAtMousePosition(Point mousePosition) {
+		Point mousePos = this.getMousePosition();
+		if(mousePos == null) {
+			return null;
+		}
+		double pxPerTile = getPixelPerTile();
+		return new Point2D.Double((mousePos.getX()+cameraPosXPx) / pxPerTile, (mousePos.getY()+cameraPosYPx) / pxPerTile);
+	}
+	
+	private double getPixelPerTile() {
+		return spriteScale * DrawComp.SPRITE_SIZE_PX_ORIGINAL;
+	}
+	
+	public void moveCameraByPixels(int xd, int yd) {
+		this.cameraPosXPx += xd;
+		this.cameraPosYPx += yd;
 	}
 	
 	public void moveCamera(int xDirection, int yDirection) {
