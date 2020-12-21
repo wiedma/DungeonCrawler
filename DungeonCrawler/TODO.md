@@ -5,6 +5,7 @@
 	=> The scene should only have a quite minimal list of gameobject-names and basic values which are sufficient to initialize them
 		when loading the scene. That way changes to all kinds of behaivior of the gameobject is decoupled from the scene
 			=> Backwards-compatability!
+- Hitbox offset
 
 
 

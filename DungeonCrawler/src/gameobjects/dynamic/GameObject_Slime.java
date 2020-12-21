@@ -13,7 +13,7 @@ public class GameObject_Slime extends DynamicGameObject {
 	
 	public GameObject_Slime(double x, double y) {
 		super(x, y);
-		this.hitbox = new Hitbox(2, 2, this);
+		this.hitbox = new Hitbox(1, 1, this);
 	}
 
 	public void start() {}
