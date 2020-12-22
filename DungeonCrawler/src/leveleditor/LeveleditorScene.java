@@ -72,8 +72,8 @@ public class LeveleditorScene extends JComponent implements MouseListener, Mouse
 			if(drawHitboxes && (hitbox = gameObject.getHitbox()) != null) {
 				g.setColor(HITBOX_COLOR);
 				g.fillRect(
-							(int)	(gameObject.getX() * pxPerTile) - (int) (hitbox.getWidth() * 0.5 * pxPerTile) - cameraPosXPx,
-							(int)	(gameObject.getY() * pxPerTile) - (int) (hitbox.getHeight() * 0.5 * pxPerTile) -  cameraPosYPx,
+							(int)	((gameObject.getX()+hitbox.getOffsetX()) * pxPerTile) - (int) (hitbox.getWidth() * 0.5 * pxPerTile) - cameraPosXPx,
+							(int)	((gameObject.getY()+hitbox.getOffsetY()) * pxPerTile) - (int) (hitbox.getHeight() * 0.5 * pxPerTile) -  cameraPosYPx,
 							(int)   (hitbox.getWidth() * pxPerTile),
 							(int)   (hitbox.getHeight() * pxPerTile));
 			}

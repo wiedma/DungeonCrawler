@@ -10,7 +10,8 @@ public class GameObject_TreeSmol extends GameObject {
 
 	public GameObject_TreeSmol(double x, double y) {
 		super(x, y);
-		this.hitbox = new Hitbox(1, 2, this);
+		this.hitbox = new Hitbox(0.5, (5/16d), 0, 10.5/16d, this);
+//		this.hitbox = new Hitbox(1, 2, this);
 	}
 	
 	public GameObject_TreeSmol() {
