@@ -5,13 +5,12 @@
 	=> The scene should only have a quite minimal list of gameobject-names and basic values which are sufficient to initialize them
 		when loading the scene. That way changes to all kinds of behaivior of the gameobject is decoupled from the scene
 			=> Backwards-compatability!
-- Hitbox offset
 
 
 
 ##Animationeditor
 - Add Button to quick add a new GameObject
-- Add Hitbox-editor (after Hitbox offset is implemented)
+- Add Hitbox-editor
 
 ##Leveleditor
 - ~~Add Button to refresh/reload ObjectChooser~~ (not possible as a reload would require recompiling the source code of the program itself)
@@ -21,5 +20,6 @@
 ---
 
 ## Done
-### Leveleditor
-- Checkbox to show/hide hitboxes
+- Hitbox offset
+- Leveleditor: Zoom relative to mouse cursor
+- Leveleditor: Checkbox to show/hide hitboxes
