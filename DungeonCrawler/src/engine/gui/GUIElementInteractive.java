@@ -5,6 +5,6 @@ package engine.gui;
  * @author Marco, Daniel
  *
  */
-public class GUIElementInteractive extends GUIElement {
+abstract public class GUIElementInteractive extends GUIElement {
 
 }
