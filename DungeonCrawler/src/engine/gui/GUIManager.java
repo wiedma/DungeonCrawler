@@ -1,6 +1,7 @@
 package engine.gui;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Stack;
 
 /**
@@ -91,6 +92,10 @@ public class GUIManager {
 	
 	public static int getAmountGUIElementsInteractive() {
 		return guiStackInteractive.size();
+	}
+	
+	public static Iterator<GUIElement> getGUIElements() {
+		return guiElements.iterator();
 	}
 	
 }

@@ -36,11 +36,23 @@ public class KeyRegister implements KeyListener {
 		return register[keyID];
 	}
 	
-	public void keyPressed(KeyEvent e) {		
+	/**
+	 * Method from Interface {@link KeyListener}. Use isKeyDown(int) to check whether a key is currently being pressed.
+	 */
+	@Deprecated
+	public void keyPressed(KeyEvent e) {
 		this.register[e.getKeyCode()] = true;
 	}
+	/**
+	 * Method from Interface {@link KeyListener}. Use isKeyDown(int) to check whether a key is currently being pressed.
+	 */
+	@Deprecated
 	public void keyReleased(KeyEvent e) {
 		this.register[e.getKeyCode()] = false;
 	}
+	/**
+	 * Method from Interface {@link KeyListener}. Use isKeyDown(int) to check whether a key is currently being pressed.
+	 */
+	@Deprecated
 	public void keyTyped(KeyEvent e) {}
 }

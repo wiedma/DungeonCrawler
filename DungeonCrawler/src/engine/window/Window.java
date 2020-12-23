@@ -19,6 +19,8 @@ public class Window extends JFrame {
 		drawComp.setPreferredSize(new Dimension(500,500));
 		this.add(drawComp);
 		
+		this.addKeyListener(KeyRegister.getKeyRegister());
+		
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);

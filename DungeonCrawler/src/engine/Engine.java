@@ -1,6 +1,10 @@
 package engine;
 
+import java.awt.event.KeyEvent;
+
 import engine.gui.GUIManager;
+import engine.gui.elements.GUIElement_TextBox;
+import engine.window.KeyRegister;
 import engine.window.Window;
 import gameobjects.DynamicGameObject;
 import gameobjects.GameObject;
@@ -64,6 +68,17 @@ public class Engine {
 					for(GameObject gameObject : sceneActive.getGameObjects()) {
 						gameObject.animationStep(paused, deltaTime);
 					}
+					
+					
+					///////////DEBUG
+					
+					//open text window gui when pressing t
+					if(KeyRegister.getKeyRegister().isKeyDown(KeyEvent.VK_T) && GUIManager.getRegisteredGUIElementOfClass(GUIElement_TextBox.class) == null)
+						GUIManager.registerGUIElement(new GUIElement_TextBox("Hello World!"));
+						
+					
+					///////////-DEBUG
+					
 					
 					//Render the scene
 					sceneActive.sortByRenderOrder();
